@@ -1,0 +1,590 @@
+<!doctype html>
+<html amp lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
+	
+<!-- Jetpack Open Graph Tags -->
+<meta property="og:type" content="article" />
+<meta property="og:title" content="Monads, Monoids, and Categories" />
+<meta property="og:url" content="https://bartoszmilewski.com/2017/09/06/monads-monoids-and-categories/" />
+<meta property="og:description" content="This is part 31 of Categories for Programmers. Previously: Lawvere Theories. See the Table of Contents. There is no good place to end a book on category theory. There&#8217;s always more to learn. …" />
+<meta property="article:published_time" content="2017-09-07T06:07:35+00:00" />
+<meta property="article:modified_time" content="2017-09-07T06:07:35+00:00" />
+<meta property="og:site_name" content="  Bartosz Milewski&#039;s Programming Cafe" />
+<meta property="og:image" content="https://bartoszmilewski.files.wordpress.com/2017/09/span.png" />
+<meta property="og:image:width" content="312" />
+<meta property="og:image:height" content="202" />
+<meta property="og:locale" content="en_US" />
+<meta name="twitter:site" content="@BartoszMilewski" />
+<meta name="twitter:text:title" content="Monads, Monoids, and Categories" />
+<meta name="twitter:image" content="https://bartoszmilewski.files.wordpress.com/2017/09/twocat.png?w=240" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:creator" content="@BartoszMilewski" />
+<meta property="article:publisher" content="https://www.facebook.com/WordPresscom" />
+	<title>Monads, Monoids, and Categories &#8211;   Bartosz Milewski&#039;s Programming Cafe</title>
+		<link rel="canonical" href="../trackback/index.html" />
+			<script custom-element="amp-ad" src="https://cdn.ampproject.org/v0/amp-ad-0.1.js" async></script>
+		<script src="https://cdn.ampproject.org/v0.js" async></script>
+			<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Merriweather:400,400italic,700,700italic">
+		<style amp-boilerplate>body{-webkit-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-moz-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-ms-animation:-amp-start 8s steps(1,end) 0s 1 normal both;animation:-amp-start 8s steps(1,end) 0s 1 normal both}@-webkit-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-moz-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-ms-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-o-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}</style><noscript><style amp-boilerplate>body{-webkit-animation:none;-moz-animation:none;-ms-animation:none;animation:none}</style></noscript>
+		<script type="application/ld+json">{"@context":"http:\/\/schema.org","@type":"BlogPosting","mainEntityOfPage":"https:\/\/bartoszmilewski.com\/2017\/09\/06\/monads-monoids-and-categories\/","publisher":{"@type":"Organization","name":"\u00a0\u00a0Bartosz Milewski&#039;s Programming Cafe","logo":{"@type":"ImageObject","url":"https:\/\/s2.wp.com\/i\/favicons\/apple-touch-icon-60x60.png","width":60,"height":60}},"headline":"Monads, Monoids, and Categories","datePublished":"2017-09-06T23:07:35+00:00","dateModified":"2017-09-06T23:07:35+00:00","author":{"@type":"Person","name":"Bartosz Milewski"},"image":{"@type":"ImageObject","url":"https:\/\/bartoszmilewski.files.wordpress.com\/2017\/09\/bicat.png","width":406,"height":288}}</script>
+		<style amp-custom>
+		/* Generic WP styling */
+
+.alignright {
+	float: right;
+}
+
+.alignleft {
+	float: left;
+}
+
+.aligncenter {
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.amp-wp-enforced-sizes {
+	/** Our sizes fallback is 100vw, and we have a padding on the container; the max-width here prevents the element from overflowing. **/
+	max-width: 100%;
+	margin: 0 auto;
+}
+
+.amp-wp-unknown-size img {
+	/** Worst case scenario when we can't figure out dimensions for an image. **/
+	/** Force the image into a box of fixed dimensions and use object-fit to scale. **/
+	object-fit: contain;
+}
+
+/* Template Styles */
+
+.amp-wp-content,
+.amp-wp-title-bar div {
+		margin: 0 auto;
+	max-width: 510px;
+	}
+
+html {
+	background: #0a89c0;
+}
+
+body {
+	background: #fff;
+	color: #353535;
+	font-family: 'Merriweather', 'Times New Roman', Times, Serif;
+	font-weight: 300;
+	line-height: 1.75em;
+}
+
+p,
+ol,
+ul,
+figure {
+	margin: 0 0 1em;
+	padding: 0;
+}
+
+a,
+a:visited {
+	color: #0a89c0;
+}
+
+a:hover,
+a:active,
+a:focus {
+	color: #353535;
+}
+
+/* Quotes */
+
+blockquote {
+	color: #353535;
+	background: rgba(127,127,127,.125);
+	border-left: 2px solid #0a89c0;
+	margin: 8px 0 24px 0;
+	padding: 16px;
+}
+
+blockquote p:last-child {
+	margin-bottom: 0;
+}
+
+/* UI Fonts */
+
+.amp-wp-meta,
+.amp-wp-header div,
+.amp-wp-title,
+.wp-caption-text,
+.amp-wp-tax-category,
+.amp-wp-tax-tag,
+.amp-wp-comments-link,
+.amp-wp-footer p,
+.back-to-top {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen-Sans", "Ubuntu", "Cantarell", "Helvetica Neue", sans-serif;
+}
+
+/* Header */
+
+.amp-wp-header {
+	background-color: #0a89c0;
+}
+
+.amp-wp-header div {
+	color: #fff;
+	font-size: 1em;
+	font-weight: 400;
+	margin: 0 auto;
+	max-width: calc(840px - 32px);
+	padding: .875em 16px;
+	position: relative;
+}
+
+.amp-wp-header a {
+	color: #fff;
+	text-decoration: none;
+}
+
+/* Site Icon */
+
+.amp-wp-header .amp-wp-site-icon {
+	/** site icon is 32px **/
+	background-color: #fff;
+	border: 1px solid #fff;
+	border-radius: 50%;
+	position: absolute;
+	right: 18px;
+	top: 10px;
+}
+
+/* Article */
+
+.amp-wp-article {
+	color: #353535;
+	font-weight: 400;
+	margin: 1.5em auto;
+	max-width: 840px;
+	overflow-wrap: break-word;
+	word-wrap: break-word;
+}
+
+/* Article Header */
+
+.amp-wp-article-header {
+	align-items: center;
+	align-content: stretch;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	margin: 1.5em 16px 1.5em;
+}
+
+.amp-wp-title {
+	color: #353535;
+	display: block;
+	flex: 1 0 100%;
+	font-weight: 900;
+	margin: 0 0 .625em;
+	width: 100%;
+}
+
+/* Article Meta */
+
+.amp-wp-meta {
+	color: #696969;
+	display: inline-block;
+	flex: 2 1 50%;
+	font-size: .875em;
+	line-height: 1.5em;
+	margin: 0;
+	padding: 0;
+}
+
+.amp-wp-article-header .amp-wp-meta:last-of-type {
+	text-align: right;
+}
+
+.amp-wp-article-header .amp-wp-meta:first-of-type {
+	text-align: left;
+}
+
+.amp-wp-byline amp-img,
+.amp-wp-byline .amp-wp-author {
+	display: inline-block;
+	vertical-align: middle;
+}
+
+.amp-wp-byline amp-img {
+	border: 1px solid #0a89c0;
+	border-radius: 50%;
+	position: relative;
+	margin-right: 6px;
+}
+
+.amp-wp-posted-on {
+	text-align: right;
+}
+
+/* Featured image */
+
+.amp-wp-article-featured-image {
+	margin: 0 0 1em;
+}
+.amp-wp-article-featured-image amp-img {
+	margin: 0 auto;
+}
+.amp-wp-article-featured-image.wp-caption .wp-caption-text {
+	margin: 0 18px;
+}
+
+/* Article Content */
+
+.amp-wp-article-content {
+	margin: 0 16px;
+}
+
+.amp-wp-article-content ul,
+.amp-wp-article-content ol {
+	margin-left: 1em;
+}
+
+.amp-wp-article-content amp-img {
+	margin: 0 auto;
+}
+
+.amp-wp-article-content amp-img.alignright {
+	margin: 0 0 1em 16px;
+}
+
+.amp-wp-article-content amp-img.alignleft {
+	margin: 0 16px 1em 0;
+}
+
+/* Captions */
+
+.wp-caption {
+	padding: 0;
+}
+
+.wp-caption.alignleft {
+	margin-right: 16px;
+}
+
+.wp-caption.alignright {
+	margin-left: 16px;
+}
+
+.wp-caption .wp-caption-text {
+	border-bottom: 1px solid #c2c2c2;
+	color: #696969;
+	font-size: .875em;
+	line-height: 1.5em;
+	margin: 0;
+	padding: .66em 10px .75em;
+}
+
+/* AMP Media */
+
+amp-carousel {
+	background: #c2c2c2;
+	margin: 0 -16px 1.5em;
+}
+amp-iframe,
+amp-youtube,
+amp-instagram,
+amp-vine {
+	background: #c2c2c2;
+	margin: 0 -16px 1.5em;
+}
+
+.amp-wp-article-content amp-carousel amp-img {
+	border: none;
+}
+
+amp-carousel > amp-img > img {
+	object-fit: contain;
+}
+
+.amp-wp-iframe-placeholder {
+	background: #c2c2c2 url( https://s2.wp.com/wp-content/plugins/amp/assets/images/placeholder-icon.png ) no-repeat center 40%;
+	background-size: 48px 48px;
+	min-height: 48px;
+}
+
+/* Article Footer Meta */
+
+.amp-wp-article-footer .amp-wp-meta {
+	display: block;
+}
+
+.amp-wp-tax-category,
+.amp-wp-tax-tag {
+	color: #696969;
+	font-size: .875em;
+	line-height: 1.5em;
+	margin: 1.5em 16px;
+}
+
+.amp-wp-comments-link {
+	color: #696969;
+	font-size: .875em;
+	line-height: 1.5em;
+	text-align: center;
+	margin: 2.25em 0 1.5em;
+}
+
+.amp-wp-comments-link a {
+	border-style: solid;
+	border-color: #c2c2c2;
+	border-width: 1px 1px 2px;
+	border-radius: 4px;
+	background-color: transparent;
+	color: #0a89c0;
+	cursor: pointer;
+	display: block;
+	font-size: 14px;
+	font-weight: 600;
+	line-height: 18px;
+	margin: 0 auto;
+	max-width: 200px;
+	padding: 11px 16px;
+	text-decoration: none;
+	width: 50%;
+	-webkit-transition: background-color 0.2s ease;
+			transition: background-color 0.2s ease;
+}
+
+/* AMP Footer */
+
+.amp-wp-footer {
+	border-top: 1px solid #c2c2c2;
+	margin: calc(1.5em - 1px) 0 0;
+}
+
+.amp-wp-footer div {
+	margin: 0 auto;
+	max-width: calc(840px - 32px);
+	padding: 1.25em 16px 1.25em;
+	position: relative;
+}
+
+.amp-wp-footer h2 {
+	font-size: 1em;
+	line-height: 1.375em;
+	margin: 0 0 .5em;
+}
+
+.amp-wp-footer p {
+	color: #696969;
+	font-size: .8em;
+	line-height: 1.5em;
+	margin: 0 85px 0 0;
+}
+
+.amp-wp-footer a {
+	text-decoration: none;
+}
+
+.back-to-top {
+	bottom: 1.275em;
+	font-size: .8em;
+	font-weight: 600;
+	line-height: 2em;
+	position: absolute;
+	right: 16px;
+}
+				/* WordAds */
+		.wpcnt {
+			text-align: center;
+			line-height: 0;
+			display: block;
+			clear: both;
+			margin: 1em 0;
+		}
+
+		.rtl .wpcnt {
+			direction: ltr;
+		}
+
+		.wpa {
+			position: relative;
+			display: inline-block;
+			max-width: 100%;
+			text-align: left;
+			padding: 10px 0 0;
+			min-width: 300px;
+			-webkit-transform: translate3d(0, 0, 0);
+			transform: translate3d(0, 0, 0);
+		}
+
+		.wpa-about {
+			position: absolute;
+			top: 5px;
+			left: 0;
+			right: 0;
+			display: block;
+			min-width: 160px;
+			border-bottom: none;
+			font: 10px/1 "Open Sans", Arial, sans-serif;
+			text-align: left;
+			text-decoration: none;
+			opacity: 0.85;
+		}
+
+		.wpa .u>div, .wpadvert>div>* {
+			display: block;
+			margin-top: 5px;
+			margin-bottom: 1em;
+		}
+
+		div.wpa>div {
+			margin-top: 10px;
+		}/* Inline styles */
+.amp-wp-inline-92beffb936d6f6aa089c576b422f5f3d{max-width:174px;}.amp-wp-inline-e96af04283c3ffd4fb3ffe131554d99d{max-width:157px;}	</style>
+</head>
+
+<body class="">
+
+<header id="#top" class="amp-wp-header">
+	<div>
+		<a href="https://bartoszmilewski.com">
+						  Bartosz Milewski&#039;s Programming Cafe		</a>
+	</div>
+</header>
+
+<article class="amp-wp-article">
+
+	<header class="amp-wp-article-header">
+		<h1 class="amp-wp-title">Monads, Monoids, and Categories</h1>
+				<div class="amp-wp-meta amp-wp-byline">
+					<amp-img src="https://secure.gravatar.com/avatar/c018f213204496b4bbf481e7c8e6c15c?s=24&#038;d=mm&#038;r=g" width="24" height="24" layout="fixed"></amp-img>
+				<span class="amp-wp-author author vcard">Bartosz Milewski</span>
+	</div>
+<div class="amp-wp-meta amp-wp-posted-on">
+	<time datetime="2017-09-06T23:07:35+00:00">
+		1 month ago	</time>
+</div>
+	</header>
+
+	
+	<div class="amp-wp-article-content">
+				<div class="wpcnt">
+			<div class="wpa wpmrec">
+				<span class="wpa-about">Advertisements</span>
+				<div class="u">
+					<amp-ad width="300" height="250" type="pubmine" data-adsafe="1" data-section="2" data-siteid="2694" data-wordads="0"><div placeholder="" class="amp-wp-iframe-placeholder"></div>
+					</amp-ad></div>
+			</div>
+		</div><blockquote><p>This is part 31 of Categories for Programmers. Previously: <a href="../../../../08/26/lawvere-theories/trackback/index.html" target="_blank" rel="noopener">Lawvere Theories</a>. See the <a title="Table of Contents" href="../../../../../2014/10/28/category-theory-for-programmers-the-preface/trackback/index.html" target="_blank" rel="noopener noreferrer">Table of Contents</a><a href="../../../../07/22/topoi/trackback/index.html" target="_blank" rel="noopener">.</a></p></blockquote>
+<p>There is no good place to end a book on category theory. There’s always more to learn. Category theory is a vast subject. At the same time, it’s obvious that the same themes, concepts, and patterns keep showing up over and over again. There is a saying that all concepts are Kan extensions and, indeed, you can use Kan extensions to derive limits, colimits, adjunctions, monads, the Yoneda lemma, and much more. The notion of a category itself arises at all levels of abstraction, and so does the concept of a monoid and a monad. Which one is the most basic? As it turns out they are all interrelated, one leading to another in a never-ending cycle of abstractions. I decided that showing these interconnections might be a good way to end this book.</p>
+<h2>Bicategories</h2>
+<p>One of the most difficult aspects of category theory is the constant switching of perspectives. Take the category of sets, for instance. We are used to defining sets in terms of elements. An empty set has no elements. A singleton set has one element. A cartesian product of two sets is a set of pairs, and so on. But when talking about the category <b>Set</b> I asked you to forget about the contents of sets and instead concentrate on morphisms (arrows) between them. You were allowed, from time to time, to peek under the covers to see what a particular universal construction in <b>Set</b> described in terms of elements. The terminal object turned out to be a set with one element, and so on. But these were just sanity checks.</p>
+<p>A functor is defined as a mapping of categories. It’s natural to consider a mapping as a morphism in a category. A functor turned out to be a morphism in the category of categories (small categories, if we want to avoid questions about size). By treating a functor as an arrow, we forfeit the information about its action on the internals of a category (its objects and morphisms), just like we forfeit the information about the action of a function on elements of a set when we treat it as an arrow in <b>Set</b>. But functors between any two categories also form a category. This time you are asked to consider something that was an arrow in one category to be an object in another. In a functor category functors are objects and natural transformations are morphisms. We have discovered that the same thing can be an arrow in one category and an object in another. The naive view of objects as nouns and arrows as verbs doesn’t hold.</p>
+<p>Instead of switching between two views, we can try to merge them into one. This is how we get the concept of a 2-category, in which objects are called 0-cells, morphisms are 1-cells, and morphisms between morphisms are 2-cells.</p>
+<div data-shortcode="caption" id="attachment_9117" class="wp-caption alignnone amp-wp-inline-e96af04283c3ffd4fb3ffe131554d99d"><a href="https://bartoszmilewski.files.wordpress.com/2017/09/twocat.png"><amp-img class="wp-image-9117 amp-wp-enforced-sizes" src="https://bartoszmilewski.files.wordpress.com/2017/09/twocat.png?w=147&amp;h=130" alt="" width="147" height="130" srcset="https://bartoszmilewski.files.wordpress.com/2017/09/twocat.png?w=147&amp;h=130 147w, https://bartoszmilewski.files.wordpress.com/2017/09/twocat.png?w=294&amp;h=260 294w, https://bartoszmilewski.files.wordpress.com/2017/09/twocat.png?w=150&amp;h=132 150w" sizes="(min-width: 147px) 147px, 100vw"></amp-img></a><p class="wp-caption-text">0-cells a, b; 1-cells f, g; and a 2-cell α.</p></div>
+<p>The category of categories <b>Cat</b> is an immediate example. We have categories as 0-cells, functors as 1-cells, and natural transformations as 2-cells. The laws of a 2-category tell us that 1-cells between any two 0-cells form a category (in other words, <code>C(a, b)</code> is a hom-category rather than a hom-set). This fits nicely with our earlier assertion that functors between any two categories form a functor category.</p>
+<p>In particular, 1-cells from any 0-cell back to itself also form a category, the hom-category <code>C(a, a)</code>; but that category has even more structure. Members of <code>C(a, a)</code> can be viewed as arrows in <b>C</b> or as objects in <code>C(a, a)</code>. As arrows, they can be composed with each other. But when we look at them as objects, the composition becomes a mapping from a pair of objects to an object. In fact it looks very much like a product — a tensor product to be precise. This tensor product has a unit: the identity 1-cell. It turns out that, in any 2-category, a hom-category <code>C(a, a)</code> is automatically a monoidal category with the tensor product defined as composition of 1-cells. Associativity and unit laws simply fall out from the corresponding category laws.</p>
+<p>Let’s see what this means in our canonical example of a 2-category <b>Cat</b>. The hom-category <code>Cat(a, a)</code> is the category of endofunctors on <code>a</code>. Endofunctor composition plays the role of a tensor product in it. The identity functor is the unit with respect to this product. We’ve seen before that endofunctors form a monoidal category (we used this fact in the definition of a monad), but now we see that this is a more general phenomenon: endo-1-cells in any 2-category form a monoidal category. We’ll come back to it later when we generalize monads.</p>
+<p>You might recall that, in a general monoidal category, we did not insist on the monoid laws being satisfied on the nose. It was often enough for the unit laws and the associativity laws to be satisfied up to isomorphism. In a 2-category, monoidal laws in <code>C(a, a)</code> follow from composition laws for 1-cells. These laws are strict, so we will always get a strict monoidal category. It is, however, possible to relax these laws as well. We can say, for instance, that a composition of the identity 1-cell <code>id<sub>a</sub></code> with another 1-cell, <code>f :: a -&gt; b</code>, is isomorphic, rather than equal, to <code>f</code>. Isomorphism of 1-cells is defined using 2-cells. In other words, there is a 2-cell:</p>
+<pre>ρ :: f ∘ id<sub>a</sub> -&gt; f</pre>
+<p>that has an inverse.</p>
+<div data-shortcode="caption" id="attachment_9107" class="wp-caption alignnone amp-wp-inline-92beffb936d6f6aa089c576b422f5f3d"><a href="https://bartoszmilewski.files.wordpress.com/2017/09/bicat.png"><amp-img class=" wp-image-9107 amp-wp-enforced-sizes" src="https://bartoszmilewski.files.wordpress.com/2017/09/bicat.png?w=164&amp;h=116" alt="" width="164" height="116" srcset="https://bartoszmilewski.files.wordpress.com/2017/09/bicat.png?w=164&amp;h=116 164w, https://bartoszmilewski.files.wordpress.com/2017/09/bicat.png?w=328&amp;h=232 328w, https://bartoszmilewski.files.wordpress.com/2017/09/bicat.png?w=150&amp;h=106 150w, https://bartoszmilewski.files.wordpress.com/2017/09/bicat.png?w=300&amp;h=213 300w" sizes="(min-width: 164px) 164px, 100vw"></amp-img></a><p class="wp-caption-text">Identity law in a bicategory holds up to isomorphism (an invertible 2-cell ρ).</p></div>
+<p>We can do the same for the left identity and associativity laws. This kind of relaxed 2-category is called a bicategory (there are some additional coherency laws, which I will omit here).</p>
+<p>As expected, endo-1-cells in a bicategory form a general monoidal category with non-strict laws.</p>
+<p>An interesting example of a bicategory is the category of spans. A span between two objects <code>a</code> and <code>b</code> is an object <code>x</code> and a pair of morphisms:</p>
+<pre>f :: x -&gt; a&#13;
+g :: x -&gt; b</pre>
+<p><a href="https://bartoszmilewski.files.wordpress.com/2017/09/span.png"><amp-img class="alignnone wp-image-9113 amp-wp-enforced-sizes" src="https://bartoszmilewski.files.wordpress.com/2017/09/span.png?w=141&amp;h=91" alt="" width="141" height="91" srcset="https://bartoszmilewski.files.wordpress.com/2017/09/span.png?w=141&amp;h=91 141w, https://bartoszmilewski.files.wordpress.com/2017/09/span.png?w=282&amp;h=182 282w, https://bartoszmilewski.files.wordpress.com/2017/09/span.png?w=150&amp;h=97 150w" sizes="(min-width: 141px) 141px, 100vw"></amp-img></a><br/>
+You might recall that we used spans in the definition of a categorical product. Here, we want to look at spans as 1-cells in a bicategory. The first step is to define a composition of spans. Suppose that we have an adjoining span:</p>
+<pre>f':: y -&gt; b&#13;
+g':: y -&gt; c</pre>
+<p><a href="https://bartoszmilewski.files.wordpress.com/2017/09/compspan.png"><amp-img class="alignnone wp-image-9109 amp-wp-enforced-sizes" src="https://bartoszmilewski.files.wordpress.com/2017/09/compspan.png?w=217&amp;h=88" alt="" width="217" height="88" srcset="https://bartoszmilewski.files.wordpress.com/2017/09/compspan.png?w=217&amp;h=88 217w, https://bartoszmilewski.files.wordpress.com/2017/09/compspan.png?w=434&amp;h=176 434w, https://bartoszmilewski.files.wordpress.com/2017/09/compspan.png?w=150&amp;h=61 150w, https://bartoszmilewski.files.wordpress.com/2017/09/compspan.png?w=300&amp;h=122 300w" sizes="(min-width: 217px) 217px, 100vw"></amp-img></a><br/>
+The composition would be a third span, with some apex <code>z</code>. The most natural choice for it is the pullback of <code>g</code> along <code>f'</code>. Remember that a pullback is the object <code>z</code> together with two morphisms:</p>
+<pre>h :: z -&gt; x&#13;
+h':: z -&gt; y</pre>
+<p>such that:</p>
+<pre>g ∘ h = f' ∘ h'</pre>
+<p>which is universal among all such objects.</p>
+<p><a href="https://bartoszmilewski.files.wordpress.com/2017/09/pullspan.png"><amp-img class="alignnone wp-image-9112 amp-wp-enforced-sizes" src="https://bartoszmilewski.files.wordpress.com/2017/09/pullspan.png?w=233&amp;h=146" alt="" width="233" height="146" srcset="https://bartoszmilewski.files.wordpress.com/2017/09/pullspan.png?w=233&amp;h=146 233w, https://bartoszmilewski.files.wordpress.com/2017/09/pullspan.png?w=466&amp;h=292 466w, https://bartoszmilewski.files.wordpress.com/2017/09/pullspan.png?w=150&amp;h=94 150w, https://bartoszmilewski.files.wordpress.com/2017/09/pullspan.png?w=300&amp;h=188 300w" sizes="(min-width: 233px) 233px, 100vw"></amp-img></a><br/>
+For now, let’s concentrate on spans over the category of sets. In that case, the pullback is just a set of pairs <code>(p, q)</code> from the cartesian product <code>x × y</code> such that:</p>
+<pre>g p = f' q</pre>
+<p>A morphism between two spans that share the same endpoints is defined as a morphism <code>h</code> between their apices, such that the appropriate triangles commute.</p>
+<div data-shortcode="caption" id="attachment_9111" class="wp-caption alignnone amp-wp-inline-92beffb936d6f6aa089c576b422f5f3d"><a href="https://bartoszmilewski.files.wordpress.com/2017/09/morphspan.png"><amp-img class=" wp-image-9111 amp-wp-enforced-sizes" src="https://bartoszmilewski.files.wordpress.com/2017/09/morphspan.png?w=164&amp;h=144" alt="" width="164" height="144" srcset="https://bartoszmilewski.files.wordpress.com/2017/09/morphspan.png?w=164&amp;h=144 164w, https://bartoszmilewski.files.wordpress.com/2017/09/morphspan.png?w=328&amp;h=288 328w, https://bartoszmilewski.files.wordpress.com/2017/09/morphspan.png?w=150&amp;h=132 150w, https://bartoszmilewski.files.wordpress.com/2017/09/morphspan.png?w=300&amp;h=264 300w" sizes="(min-width: 164px) 164px, 100vw"></amp-img></a><p class="wp-caption-text">A 2-cell in <b>Span</b>.</p></div>
+<p>To summarize, in the bicategory <b>Span</b>: 0-cells are sets, 1-cells are spans, 2-cells are span morphisms. An identity 1-cell is a degenerate span in which all three objects are the same, and the two morphisms are identities.</p>
+<p>We’ve seen another example of a bicategory before: the bicategory <b>Prof</b> of <a href="../../../../03/29/ends-and-coends/trackback/index.html" target="_blank" rel="noopener">profunctors</a>, where 0-cells are categories, 1-cells are profunctors, and 2-cells are natural transformations. The composition of profunctors was given by a coend.</p>
+<h2>Monads</h2>
+<p>By now you should be pretty familiar with the definition of a monad as a monoid in the category of endofunctors. Let’s revisit this definition with the new understanding that the category of endofunctors is just one small hom-category of endo-1-cells in the bicategory <b>Cat</b>. We know it’s a monoidal category: the tensor product comes from the composition of endofunctors. A monoid is defined as an object in a monoidal category — here it will be an endofunctor <code>T</code> — together with two morphisms. Morphisms between endofunctors are natural transformations. One morphism maps the monoidal unit — the identity endofunctor — to <code>T</code>:</p>
+<pre>η :: I -&gt; T</pre>
+<p>The second morphism maps the tensor product of <code>T ⊗ T</code> to <code>T</code>. The tensor product is given by endofunctor composition, so we get:</p>
+<pre>μ :: T ∘ T -&gt; T</pre>
+<p><a href="https://bartoszmilewski.files.wordpress.com/2017/09/monad.png"><amp-img class="alignnone wp-image-9110 amp-wp-enforced-sizes" src="https://bartoszmilewski.files.wordpress.com/2017/09/monad.png?w=130&amp;h=124" alt="" width="130" height="124" srcset="https://bartoszmilewski.files.wordpress.com/2017/09/monad.png?w=130&amp;h=124 130w, https://bartoszmilewski.files.wordpress.com/2017/09/monad.png?w=260&amp;h=248 260w, https://bartoszmilewski.files.wordpress.com/2017/09/monad.png?w=150&amp;h=143 150w" sizes="(min-width: 130px) 130px, 100vw"></amp-img></a><br/>
+We recognize these as the two operations defining a monad (they are called <code>return</code> and <code>join</code> in Haskell), and we know that monoid laws turn to monad laws.</p>
+<p>Now let’s remove all mention of endofunctors from this definition. We start with a bicategory <code>C</code> and pick a 0-cell <code>a</code> in it. As we’ve seen earlier, the hom-category <code>C(a, a)</code> is a monoidal category. We can therefore define a monoid in <code>C(a, a)</code> by picking a 1-cell, <code>T</code>, and two 2-cells:</p>
+<pre>η :: I -&gt; T&#13;
+μ :: T ∘ T -&gt; T</pre>
+<p>satisfying the monoid laws. We call <i>this</i> a monad.</p>
+<p><a href="https://bartoszmilewski.files.wordpress.com/2017/09/bimonad.png"><amp-img class="alignnone wp-image-9108 amp-wp-enforced-sizes" src="https://bartoszmilewski.files.wordpress.com/2017/09/bimonad.png?w=134&amp;h=179" alt="" width="134" height="179" srcset="https://bartoszmilewski.files.wordpress.com/2017/09/bimonad.png?w=134&amp;h=179 134w, https://bartoszmilewski.files.wordpress.com/2017/09/bimonad.png?w=268&amp;h=358 268w, https://bartoszmilewski.files.wordpress.com/2017/09/bimonad.png?w=112&amp;h=150 112w" sizes="(min-width: 134px) 134px, 100vw"></amp-img></a><br/>
+That’s a much more general definition of a monad using only 0-cells, 1-cells, and 2-cells. It reduces to the usual monad when applied to the bicategory <b>Cat</b>. But let’s see what happens in other bicategories.</p>
+<p>Let’s construct a monad in <b>Span</b>. We pick a 0-cell, which is a set that, for reasons that will become clear soon, I will call <code>Ob</code>. Next, we pick an endo-1-cell: a span from <code>Ob</code> back to <code>Ob</code>. It has a set at the apex, which I will call <code>Ar</code>, equipped with two functions:</p>
+<pre>dom :: Ar -&gt; Ob&#13;
+cod :: Ar -&gt; Ob</pre>
+<p><a href="https://bartoszmilewski.files.wordpress.com/2017/09/spanmonad.png"><amp-img class="alignnone wp-image-9114 amp-wp-enforced-sizes" src="https://bartoszmilewski.files.wordpress.com/2017/09/spanmonad.png?w=184&amp;h=143" alt="" width="184" height="143" srcset="https://bartoszmilewski.files.wordpress.com/2017/09/spanmonad.png?w=184&amp;h=143 184w, https://bartoszmilewski.files.wordpress.com/2017/09/spanmonad.png?w=368&amp;h=286 368w, https://bartoszmilewski.files.wordpress.com/2017/09/spanmonad.png?w=150&amp;h=117 150w, https://bartoszmilewski.files.wordpress.com/2017/09/spanmonad.png?w=300&amp;h=233 300w" sizes="(min-width: 184px) 184px, 100vw"></amp-img></a><br/>
+Let’s call the elements of the set <code>Ar</code> “arrows.” If I also tell you to call the elements of <code>Ob</code> “objects,” you might get a hint where this is leading to. The two functions <code>dom</code> and <code>cod</code> assign the domain and the codomain to an “arrow.”</p>
+<p>To make our span into a monad, we need two 2-cells, <code>η</code> and <code>μ</code>. The monoidal unit, in this case, is the trivial span from <code>Ob</code> to <code>Ob</code> with the apex at <code>Ob</code> and two identity functions. The 2-cell <code>η</code> is a function between the apices <code>Ob</code> and <code>Arr</code>. In other words, <code>η</code> assigns an “arrow” to every “object.” A 2-cell in <b>Span</b> must satisfy commutation conditions — in this case:</p>
+<pre>dom ∘ η = id&#13;
+cod ∘ η = id</pre>
+<p><a href="https://bartoszmilewski.files.wordpress.com/2017/09/spanunit.png"><amp-img class="alignnone wp-image-9116 amp-wp-enforced-sizes" src="https://bartoszmilewski.files.wordpress.com/2017/09/spanunit.png?w=218&amp;h=148" alt="" width="218" height="148" srcset="https://bartoszmilewski.files.wordpress.com/2017/09/spanunit.png?w=218&amp;h=148 218w, https://bartoszmilewski.files.wordpress.com/2017/09/spanunit.png?w=436&amp;h=296 436w, https://bartoszmilewski.files.wordpress.com/2017/09/spanunit.png?w=150&amp;h=102 150w, https://bartoszmilewski.files.wordpress.com/2017/09/spanunit.png?w=300&amp;h=203 300w" sizes="(min-width: 218px) 218px, 100vw"></amp-img></a><br/>
+In components, this becomes:</p>
+<pre>dom (η ob) = ob = cod (η ob)</pre>
+<p>where <code>ob</code> is an “object” in <code>Ob</code>. In other words, <code>η</code> assigns to every “object” and “arrow” whose domain and codomain are that “object.” We’ll call this special “arrow” the “identity arrow.”</p>
+<p>The second 2-cell <code>μ</code> acts on the composition of the span <code>Ar</code> with itself. The composition is defined as a pullback, so its elements are pairs of elements from <code>Ar</code> — pairs of “arrows” <code>(a<sub>1</sub>, a<sub>2</sub>)</code>. The pullback condition is:</p>
+<pre>cod a<sub>1</sub> = dom a<sub>2</sub></pre>
+<p>We say that <code>a<sub>1</sub></code> and <code>a<sub>1</sub></code> are “composable,” because the domain of one is the codomain of the other.<br/><a href="https://bartoszmilewski.files.wordpress.com/2017/09/spanmul.png"><amp-img class="alignnone wp-image-9115 amp-wp-enforced-sizes" src="https://bartoszmilewski.files.wordpress.com/2017/09/spanmul.png?w=264&amp;h=158" alt="" width="264" height="158" srcset="https://bartoszmilewski.files.wordpress.com/2017/09/spanmul.png?w=264&amp;h=158 264w, https://bartoszmilewski.files.wordpress.com/2017/09/spanmul.png?w=528&amp;h=316 528w, https://bartoszmilewski.files.wordpress.com/2017/09/spanmul.png?w=150&amp;h=90 150w, https://bartoszmilewski.files.wordpress.com/2017/09/spanmul.png?w=300&amp;h=179 300w" sizes="(min-width: 264px) 264px, 100vw"></amp-img></a></p>
+<p>The 2-cell <code>μ</code> is a function that maps a pair of composable arrows <code>(a<sub>1</sub>, a<sub>2</sub>)</code> to a single arrow <code>a<sub>3</sub></code> from <code>Ar</code>. In other words <code>μ</code> defines composition of arrows.</p>
+<p>It’s easy to check that monad laws correspond to identity and associativity laws for arrows. We have just defined a category (a small category, mind you, in which objects and arrows form sets).</p>
+<p>So, all told, a category is just a monad in the bicategory of spans.</p>
+<p>What is amazing about this result is that it puts categories on the same footing as other algebraic structures like monads and monoids. There is nothing special about being a category. It’s just two sets and four functions. In fact we don’t even need a separate set for objects, because objects can be identified with identity arrows (they are in one-to-one correspondence). So it’s really just a set and a few functions. Considering the pivotal role that category theory plays in all of mathematics, this is a very humbling realization.</p>
+<h2>Challenges</h2>
+<ol><li>Derive unit and associativity laws for the tensor product defined as composition of endo-1-cells in a bicategory.</li>
+<li>Check that monad laws for a monad in <b>Span</b> correspond to identity and associativity laws in the resulting category.</li>
+<li>Show that a monad in <b>Prof</b> is an identity-on-objects functor.</li>
+<li>What’s a monad algebra for a monad in <b>Span</b>?</li>
+</ol><h2>Bibliography</h2>
+<ol><li><a href="https://graphicallinearalgebra.net/2017/04/16/a-monoid-is-a-category-a-category-is-a-monad-a-monad-is-a-monoid/" target="_blank" rel="noopener">Paweł Sobociński’s blog.</a></li>
+</ol><div class="wpcnt">
+			<div class="wpa wpmrec">
+				<span class="wpa-about">Advertisements</span>
+				<div class="u">
+					<amp-ad width="300" height="250" type="pubmine" data-adsafe="1" data-section="0" data-siteid="11416" data-wordads="0"><div placeholder="" class="amp-wp-iframe-placeholder"></div>
+					</amp-ad></div>
+			</div>
+		</div>	</div>
+
+	<footer class="amp-wp-article-footer">
+			<div class="amp-wp-meta amp-wp-tax-category">
+		Categories: <a href="../../../../../category/programming/index.html" rel="category tag">Programming</a>	</div>
+
+		<div class="amp-wp-meta amp-wp-comments-link">
+		<a href="../trackback/index.html#comments">
+			Leave a Comment		</a>
+	</div>
+	</footer>
+
+</article>
+
+<footer class="amp-wp-footer">
+	<div>
+		<h2>  Bartosz Milewski&#039;s Programming Cafe</h2>
+		<p>
+			<a href="https://wordpress.com/?ref=footer_website">Create a free website or blog at WordPress.com.</a>
+		</p>
+		<a href="index.html#top" class="back-to-top">Back to top</a>
+	</div>
+</footer>
+
+	<amp-pixel src="https://pixel.wp.com/b.gif?rand=RANDOM&#038;host=bartoszmilewski.com&#038;ref=DOCUMENT_REFERRER&#038;amp=1&#038;blog=3549518&#038;v=wpcom&#038;tz=-7&#038;user_id=0&#038;post=9086&#038;subd=bartoszmilewski"></amp-pixel>
+	<amp-pixel src="https://pixel.wp.com/b.gif?rand=RANDOM&#038;v=wpcom-no-pv&#038;crypt=UE5XaGUuOTlwaD85flAmcm1mcmZsaDhkV11YdWtpP0NsWnVkPS9sL0ViLndld3BkTUV5ST9WY3J1RTlUZyw1R3ZSbnIsdHFTX0lCY0ZyS2M4cGlJUXppTGJkNjdSMj0mY2lfVS1NTlpEbGxNVi1YL35jW3M2MyU1ekZddy92OGNSY1FWPVYxTX5yVy5JcnJsRlRPPURnJm8wbz1zRHVrenwsRVBHM0Y2U250bDVJS095VitXdEZbMXMsbm1YN3BranBvcmY2dnxyY2dxTC1aRX5ubU1vM1ZXVzk%3D"></amp-pixel>
+	
+</body>
+</html>

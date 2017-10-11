@@ -1,0 +1,588 @@
+<!doctype html>
+<html amp lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
+	
+<!-- Jetpack Open Graph Tags -->
+<meta property="og:type" content="article" />
+<meta property="og:title" content="Category: The Essence of Composition" />
+<meta property="og:url" content="https://bartoszmilewski.com/2014/11/04/category-the-essence-of-composition/" />
+<meta property="og:description" content="I was overwhelmed by the positive response to my previous post, the Preface to Category Theory for Programmers. At the same time, it scared the heck out of me because I realized what high expectati…" />
+<meta property="article:published_time" content="2014-11-04T16:25:05+00:00" />
+<meta property="article:modified_time" content="2015-10-13T23:51:54+00:00" />
+<meta property="og:site_name" content="  Bartosz Milewski&#039;s Programming Cafe" />
+<meta property="og:image" content="https://bartoszmilewski.files.wordpress.com/2014/10/img_1330.jpg" />
+<meta property="og:image:width" content="1845" />
+<meta property="og:image:height" content="792" />
+<meta property="og:locale" content="en_US" />
+<meta name="twitter:site" content="@BartoszMilewski" />
+<meta name="twitter:text:title" content="Category: The Essence of Composition" />
+<meta name="twitter:image" content="https://bartoszmilewski.files.wordpress.com/2014/10/img_1330.jpg?w=240" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:creator" content="@BartoszMilewski" />
+<meta property="article:publisher" content="https://www.facebook.com/WordPresscom" />
+	<title>Category: The Essence of Composition &#8211;   Bartosz Milewski&#039;s Programming Cafe</title>
+		<link rel="canonical" href="../trackback/index.html" />
+			<script custom-element="amp-ad" src="https://cdn.ampproject.org/v0/amp-ad-0.1.js" async></script>
+		<script src="https://cdn.ampproject.org/v0.js" async></script>
+			<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Merriweather:400,400italic,700,700italic">
+		<style amp-boilerplate>body{-webkit-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-moz-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-ms-animation:-amp-start 8s steps(1,end) 0s 1 normal both;animation:-amp-start 8s steps(1,end) 0s 1 normal both}@-webkit-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-moz-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-ms-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-o-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}</style><noscript><style amp-boilerplate>body{-webkit-animation:none;-moz-animation:none;-ms-animation:none;animation:none}</style></noscript>
+		<script type="application/ld+json">{"@context":"http:\/\/schema.org","@type":"BlogPosting","mainEntityOfPage":"https:\/\/bartoszmilewski.com\/2014\/11\/04\/category-the-essence-of-composition\/","publisher":{"@type":"Organization","name":"\u00a0\u00a0Bartosz Milewski&#039;s Programming Cafe","logo":{"@type":"ImageObject","url":"https:\/\/s2.wp.com\/i\/favicons\/apple-touch-icon-60x60.png","width":60,"height":60}},"headline":"Category: The Essence of Composition","datePublished":"2014-11-04T09:25:05+00:00","dateModified":"2015-10-14T01:51:54+00:00","author":{"@type":"Person","name":"Bartosz Milewski"},"image":{"@type":"ImageObject","url":"https:\/\/bartoszmilewski.files.wordpress.com\/2014\/10\/img_1330.jpg","width":510,"height":219}}</script>
+		<style amp-custom>
+		/* Generic WP styling */
+
+.alignright {
+	float: right;
+}
+
+.alignleft {
+	float: left;
+}
+
+.aligncenter {
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.amp-wp-enforced-sizes {
+	/** Our sizes fallback is 100vw, and we have a padding on the container; the max-width here prevents the element from overflowing. **/
+	max-width: 100%;
+	margin: 0 auto;
+}
+
+.amp-wp-unknown-size img {
+	/** Worst case scenario when we can't figure out dimensions for an image. **/
+	/** Force the image into a box of fixed dimensions and use object-fit to scale. **/
+	object-fit: contain;
+}
+
+/* Template Styles */
+
+.amp-wp-content,
+.amp-wp-title-bar div {
+		margin: 0 auto;
+	max-width: 510px;
+	}
+
+html {
+	background: #0a89c0;
+}
+
+body {
+	background: #fff;
+	color: #353535;
+	font-family: 'Merriweather', 'Times New Roman', Times, Serif;
+	font-weight: 300;
+	line-height: 1.75em;
+}
+
+p,
+ol,
+ul,
+figure {
+	margin: 0 0 1em;
+	padding: 0;
+}
+
+a,
+a:visited {
+	color: #0a89c0;
+}
+
+a:hover,
+a:active,
+a:focus {
+	color: #353535;
+}
+
+/* Quotes */
+
+blockquote {
+	color: #353535;
+	background: rgba(127,127,127,.125);
+	border-left: 2px solid #0a89c0;
+	margin: 8px 0 24px 0;
+	padding: 16px;
+}
+
+blockquote p:last-child {
+	margin-bottom: 0;
+}
+
+/* UI Fonts */
+
+.amp-wp-meta,
+.amp-wp-header div,
+.amp-wp-title,
+.wp-caption-text,
+.amp-wp-tax-category,
+.amp-wp-tax-tag,
+.amp-wp-comments-link,
+.amp-wp-footer p,
+.back-to-top {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen-Sans", "Ubuntu", "Cantarell", "Helvetica Neue", sans-serif;
+}
+
+/* Header */
+
+.amp-wp-header {
+	background-color: #0a89c0;
+}
+
+.amp-wp-header div {
+	color: #fff;
+	font-size: 1em;
+	font-weight: 400;
+	margin: 0 auto;
+	max-width: calc(840px - 32px);
+	padding: .875em 16px;
+	position: relative;
+}
+
+.amp-wp-header a {
+	color: #fff;
+	text-decoration: none;
+}
+
+/* Site Icon */
+
+.amp-wp-header .amp-wp-site-icon {
+	/** site icon is 32px **/
+	background-color: #fff;
+	border: 1px solid #fff;
+	border-radius: 50%;
+	position: absolute;
+	right: 18px;
+	top: 10px;
+}
+
+/* Article */
+
+.amp-wp-article {
+	color: #353535;
+	font-weight: 400;
+	margin: 1.5em auto;
+	max-width: 840px;
+	overflow-wrap: break-word;
+	word-wrap: break-word;
+}
+
+/* Article Header */
+
+.amp-wp-article-header {
+	align-items: center;
+	align-content: stretch;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	margin: 1.5em 16px 1.5em;
+}
+
+.amp-wp-title {
+	color: #353535;
+	display: block;
+	flex: 1 0 100%;
+	font-weight: 900;
+	margin: 0 0 .625em;
+	width: 100%;
+}
+
+/* Article Meta */
+
+.amp-wp-meta {
+	color: #696969;
+	display: inline-block;
+	flex: 2 1 50%;
+	font-size: .875em;
+	line-height: 1.5em;
+	margin: 0;
+	padding: 0;
+}
+
+.amp-wp-article-header .amp-wp-meta:last-of-type {
+	text-align: right;
+}
+
+.amp-wp-article-header .amp-wp-meta:first-of-type {
+	text-align: left;
+}
+
+.amp-wp-byline amp-img,
+.amp-wp-byline .amp-wp-author {
+	display: inline-block;
+	vertical-align: middle;
+}
+
+.amp-wp-byline amp-img {
+	border: 1px solid #0a89c0;
+	border-radius: 50%;
+	position: relative;
+	margin-right: 6px;
+}
+
+.amp-wp-posted-on {
+	text-align: right;
+}
+
+/* Featured image */
+
+.amp-wp-article-featured-image {
+	margin: 0 0 1em;
+}
+.amp-wp-article-featured-image amp-img {
+	margin: 0 auto;
+}
+.amp-wp-article-featured-image.wp-caption .wp-caption-text {
+	margin: 0 18px;
+}
+
+/* Article Content */
+
+.amp-wp-article-content {
+	margin: 0 16px;
+}
+
+.amp-wp-article-content ul,
+.amp-wp-article-content ol {
+	margin-left: 1em;
+}
+
+.amp-wp-article-content amp-img {
+	margin: 0 auto;
+}
+
+.amp-wp-article-content amp-img.alignright {
+	margin: 0 0 1em 16px;
+}
+
+.amp-wp-article-content amp-img.alignleft {
+	margin: 0 16px 1em 0;
+}
+
+/* Captions */
+
+.wp-caption {
+	padding: 0;
+}
+
+.wp-caption.alignleft {
+	margin-right: 16px;
+}
+
+.wp-caption.alignright {
+	margin-left: 16px;
+}
+
+.wp-caption .wp-caption-text {
+	border-bottom: 1px solid #c2c2c2;
+	color: #696969;
+	font-size: .875em;
+	line-height: 1.5em;
+	margin: 0;
+	padding: .66em 10px .75em;
+}
+
+/* AMP Media */
+
+amp-carousel {
+	background: #c2c2c2;
+	margin: 0 -16px 1.5em;
+}
+amp-iframe,
+amp-youtube,
+amp-instagram,
+amp-vine {
+	background: #c2c2c2;
+	margin: 0 -16px 1.5em;
+}
+
+.amp-wp-article-content amp-carousel amp-img {
+	border: none;
+}
+
+amp-carousel > amp-img > img {
+	object-fit: contain;
+}
+
+.amp-wp-iframe-placeholder {
+	background: #c2c2c2 url( https://s2.wp.com/wp-content/plugins/amp/assets/images/placeholder-icon.png ) no-repeat center 40%;
+	background-size: 48px 48px;
+	min-height: 48px;
+}
+
+/* Article Footer Meta */
+
+.amp-wp-article-footer .amp-wp-meta {
+	display: block;
+}
+
+.amp-wp-tax-category,
+.amp-wp-tax-tag {
+	color: #696969;
+	font-size: .875em;
+	line-height: 1.5em;
+	margin: 1.5em 16px;
+}
+
+.amp-wp-comments-link {
+	color: #696969;
+	font-size: .875em;
+	line-height: 1.5em;
+	text-align: center;
+	margin: 2.25em 0 1.5em;
+}
+
+.amp-wp-comments-link a {
+	border-style: solid;
+	border-color: #c2c2c2;
+	border-width: 1px 1px 2px;
+	border-radius: 4px;
+	background-color: transparent;
+	color: #0a89c0;
+	cursor: pointer;
+	display: block;
+	font-size: 14px;
+	font-weight: 600;
+	line-height: 18px;
+	margin: 0 auto;
+	max-width: 200px;
+	padding: 11px 16px;
+	text-decoration: none;
+	width: 50%;
+	-webkit-transition: background-color 0.2s ease;
+			transition: background-color 0.2s ease;
+}
+
+/* AMP Footer */
+
+.amp-wp-footer {
+	border-top: 1px solid #c2c2c2;
+	margin: calc(1.5em - 1px) 0 0;
+}
+
+.amp-wp-footer div {
+	margin: 0 auto;
+	max-width: calc(840px - 32px);
+	padding: 1.25em 16px 1.25em;
+	position: relative;
+}
+
+.amp-wp-footer h2 {
+	font-size: 1em;
+	line-height: 1.375em;
+	margin: 0 0 .5em;
+}
+
+.amp-wp-footer p {
+	color: #696969;
+	font-size: .8em;
+	line-height: 1.5em;
+	margin: 0 85px 0 0;
+}
+
+.amp-wp-footer a {
+	text-decoration: none;
+}
+
+.back-to-top {
+	bottom: 1.275em;
+	font-size: .8em;
+	font-weight: 600;
+	line-height: 2em;
+	position: absolute;
+	right: 16px;
+}
+				/* WordAds */
+		.wpcnt {
+			text-align: center;
+			line-height: 0;
+			display: block;
+			clear: both;
+			margin: 1em 0;
+		}
+
+		.rtl .wpcnt {
+			direction: ltr;
+		}
+
+		.wpa {
+			position: relative;
+			display: inline-block;
+			max-width: 100%;
+			text-align: left;
+			padding: 10px 0 0;
+			min-width: 300px;
+			-webkit-transform: translate3d(0, 0, 0);
+			transform: translate3d(0, 0, 0);
+		}
+
+		.wpa-about {
+			position: absolute;
+			top: 5px;
+			left: 0;
+			right: 0;
+			display: block;
+			min-width: 160px;
+			border-bottom: none;
+			font: 10px/1 "Open Sans", Arial, sans-serif;
+			text-align: left;
+			text-decoration: none;
+			opacity: 0.85;
+		}
+
+		.wpa .u>div, .wpadvert>div>* {
+			display: block;
+			margin-top: 5px;
+			margin-bottom: 1em;
+		}
+
+		div.wpa>div {
+			margin-top: 10px;
+		}/* Inline styles */
+.amp-wp-inline-fc5426e27cec08f5fc06a1a6def2c1cf{max-width:520px;}.amp-wp-inline-e19c5d6ad1cff92ce94d60e4da9faec6{border:1px solid #000000;}	</style>
+</head>
+
+<body class="">
+
+<header id="#top" class="amp-wp-header">
+	<div>
+		<a href="https://bartoszmilewski.com">
+						  Bartosz Milewski&#039;s Programming Cafe		</a>
+	</div>
+</header>
+
+<article class="amp-wp-article">
+
+	<header class="amp-wp-article-header">
+		<h1 class="amp-wp-title">Category: The Essence of Composition</h1>
+				<div class="amp-wp-meta amp-wp-byline">
+					<amp-img src="https://secure.gravatar.com/avatar/c018f213204496b4bbf481e7c8e6c15c?s=24&#038;d=mm&#038;r=g" width="24" height="24" layout="fixed"></amp-img>
+				<span class="amp-wp-author author vcard">Bartosz Milewski</span>
+	</div>
+<div class="amp-wp-meta amp-wp-posted-on">
+	<time datetime="2014-11-04T09:25:05+00:00">
+		3 years ago	</time>
+</div>
+	</header>
+
+	
+	<div class="amp-wp-article-content">
+				<div class="wpcnt">
+			<div class="wpa wpmrec">
+				<span class="wpa-about">Advertisements</span>
+				<div class="u">
+					<amp-ad width="300" height="250" type="pubmine" data-adsafe="1" data-section="2" data-siteid="2694" data-wordads="0"><div placeholder="" class="amp-wp-iframe-placeholder"></div>
+					</amp-ad></div>
+			</div>
+		</div><blockquote><p>I was overwhelmed by the positive response to my previous post, the <a href="../../../../10/28/category-theory-for-programmers-the-preface/trackback/index.html" target="_blank">Preface to Category Theory for Programmers</a>. At the same time, it scared the heck out of me because I realized what high expectations people were placing in me. I’m afraid that no matter what I’ll write, a lot of readers will be disappointed. Some readers would like the book to be more practical, others more abstract. Some hate C++ and would like all examples in Haskell, others hate Haskell and demand examples in Java. And I know that the pace of exposition will be too slow for some and too fast for others. This will not be the perfect book. It will be a compromise. All I can hope is that I’ll be able to share some of my aha! moments with my readers. Let’s start with the basics.</p></blockquote>
+<p>A category is an embarrassingly simple concept. A category consists of objects and arrows that go between them. That’s why categories are so easy to represent pictorially. An object can be drawn as a circle or a point, and an arrow… is an arrow. (Just for variety, I will occasionally draw objects as piggies and arrows as fireworks.) But the essence of a category is composition. Or, if you prefer, the essence of composition is a category. Arrows compose, so if you have an arrow from object A to object B, and another arrow from object B to object C, then there must be an arrow — their composition — that goes from A to C.</p>
+<div data-shortcode="caption" id="attachment_3483" class="wp-caption aligncenter amp-wp-inline-fc5426e27cec08f5fc06a1a6def2c1cf"><a href="https://bartoszmilewski.files.wordpress.com/2014/10/img_1330.jpg"><amp-img class="wp-image-3483 size-large amp-wp-inline-e19c5d6ad1cff92ce94d60e4da9faec6 amp-wp-enforced-sizes" src="https://bartoszmilewski.files.wordpress.com/2014/10/img_1330.jpg?w=510&amp;h=218" alt="IMG_1330" width="510" height="218" srcset="https://bartoszmilewski.files.wordpress.com/2014/10/img_1330.jpg?w=508&amp;h=218 508w, https://bartoszmilewski.files.wordpress.com/2014/10/img_1330.jpg?w=1016&amp;h=436 1016w, https://bartoszmilewski.files.wordpress.com/2014/10/img_1330.jpg?w=150&amp;h=64 150w, https://bartoszmilewski.files.wordpress.com/2014/10/img_1330.jpg?w=300&amp;h=129 300w, https://bartoszmilewski.files.wordpress.com/2014/10/img_1330.jpg?w=768&amp;h=330 768w" sizes="(min-width: 510px) 510px, 100vw"></amp-img></a><p class="wp-caption-text">In a category, if there is an arrow going from A to B and an arrow going from B to C then there must also be a direct arrow from A to C that is their composition. This diagram is not a full category because it’s missing identity morphisms (see later).</p></div>
+<p> </p>
+<h2>Arrows as Functions</h2>
+<p>Is this already too much abstract nonsense? Do not despair. Let’s talk concretes. Think of arrows, which are also called <em>morphisms</em>, as functions. You have a function f that takes an argument of type A and returns a B. You have another function g that takes a B and returns a C. You can compose them by passing the result of f to g. You have just defined a new function that takes an A and returns a C.</p>
+<p>In math, such composition is denoted by a small circle between functions: g∘f. Notice the right to left order of composition. For some people this is confusing. You may be familiar with the pipe notation in Unix, as in:</p>
+<pre>lsof | grep Chrome</pre>
+<p>or the chevron <code>&gt;&gt;</code> in F#, which both go from left to right. But in mathematics and in Haskell functions compose right to left. It helps if you read g∘f as “g <em>after</em> f.”</p>
+<p>Let’s make this even more explicit by writing some C code. We have one function <code>f</code> that takes an argument of type <code>A</code> and returns a value of type <code>B</code>:</p>
+<pre>B f(A a);</pre>
+<p>and another:</p>
+<pre>C g(B b);</pre>
+<p>Their composition is:</p>
+<pre>C g_after_f(A a)&#13;
+{&#13;
+    return g(f(a));&#13;
+}</pre>
+<p>Here, again, you see right-to-left composition: <code>g(f(a))</code>; this time in C.</p>
+<p>I wish I could tell you that there is a template in the C++ Standard Library that takes two functions and returns their composition, but there isn’t one. So let’s try some Haskell for a change. Here’s the declaration of a function from A to B:</p>
+<pre>f :: A -&gt; B</pre>
+<p>Similarly:</p>
+<pre>g :: B -&gt; C</pre>
+<p>Their composition is:</p>
+<pre>g . f</pre>
+<p>Once you see how simple things are in Haskell, the inability to express straightforward functional concepts in C++ is a little embarrassing. In fact, Haskell will let you use Unicode characters so you can write composition as:</p>
+<pre>g ∘ f</pre>
+<p>You can even use Unicode double colons and arrows:</p>
+<pre>f ∷ A → B</pre>
+<p>So here’s the first Haskell lesson: Double colon means “has the type of…” A function type is created by inserting an arrow between two types. You compose two functions by inserting a period between them (or a Unicode circle).</p>
+<h2>Properties of Composition</h2>
+<p>There are two extremely important properties that the composition in any category must satisfy.</p>
+<p>1. Composition is associative. If you have three morphisms, f, g, and h, that can be composed (that is, their objects match end-to-end), you don’t need parentheses to compose them. In math notation this is expressed as:</p>
+<pre>h∘(g∘f) = (h∘g)∘f = h∘g∘f</pre>
+<p>In (pseudo) Haskell:</p>
+<pre>f :: A -&gt; B&#13;
+g :: B -&gt; C&#13;
+h :: C -&gt; D&#13;
+h . (g . f) == (h . g) . f == h . g . f</pre>
+<p>(I said “pseudo,” because equality is not defined for functions.)</p>
+<p>Associativity is pretty obvious when dealing with functions, but it may be not as obvious in other categories.</p>
+<p>2. For every object A there is an arrow which is a unit of composition. This arrow loops from the object to itself. Being a unit of composition means that, when composed with any arrow that either starts at A or ends at A, respectively, it gives back the same arrow. The unit arrow for object A is called id<sub>A</sub> (identity on A). In math notation, if f goes from A to B then</p>
+<pre>f∘id<sub>A</sub> = f</pre>
+<p>and</p>
+<pre>id<sub>B</sub>∘f = f</pre>
+<p>When dealing with functions, the identity arrow is implemented as the identity function that just returns back its argument. The implementation is the same for every type, which means this function is universally polymorphic. In C++ we could define it as a template:</p>
+<pre>template&lt;class T&gt; T id(T x) { return x; }</pre>
+<p>Of course, in C++ nothing is that simple, because you have to take into account not only what you’re passing but also how (that is, by value, by reference, by const reference, by move, and so on).</p>
+<p>In Haskell, the identity function is part of the standard library (called Prelude). Here’s its declaration and definition:</p>
+<pre>id :: a -&gt; a&#13;
+id x = x</pre>
+<p>As you can see, polymorphic functions in Haskell are a piece of cake. In the declaration, you just replace the type with a type variable. Here’s the trick: names of concrete types always start with a capital letter, names of type variables start with a lowercase letter. So here <code>a</code> stands for all types.</p>
+<p>Haskell function definitions consist of the name of the function followed by formal parameters — here just one, <code>x</code>. The body of the function follows the equal sign. This terseness is often shocking to newcomers but you will quickly see that it makes perfect sense. Function definition and function call are the bread and butter of functional programming so their syntax is reduced to the bare minimum. Not only are there no parentheses around the argument list but there are no commas between arguments (you’ll see that later, when we define functions of multiple arguments).</p>
+<p>The body of a function is always an expression — there are no statements in functions. The result of a function is this expression — here, just <code>x</code>.</p>
+<p>This concludes our second Haskell lesson.</p>
+<p>The identity conditions can be written (again, in pseudo-Haskell) as:</p>
+<pre>f . id == f&#13;
+id . f == f</pre>
+<p>You might be asking yourself the question: Why would anyone bother with the identity function — a function that does nothing? Then again, why do we bother with the number zero? Zero is a symbol for nothing. Ancient Romans had a number system without a zero and they were able to build excellent roads and aqueducts, some of which survive to this day.</p>
+<p>Neutral values like zero or <code>id</code> are extremely useful when working with symbolic variables. That’s why Romans were not very good at algebra, whereas the Arabs and the Persians, who were familiar with the concept of zero, were. So the identity function becomes very handy as an argument to, or a return from, a higher-order function. Higher order functions are what make symbolic manipulation of functions possible. They are the algebra of functions.</p>
+<p>To summarize: A category consists of objects and arrows (morphisms). Arrows can be composed, and the composition is associative. Every object has an identity arrow that serves as a unit under composition.</p>
+<h2>Composition is the Essence of Programming</h2>
+<p>Functional programmers have a peculiar way of approaching problems. They start by asking very Zen-like questions. For instance, when designing an interactive program, they would ask: What is interaction? When implementing Conway’s Game of Life, they would probably ponder about the meaning of life. In this spirit, I’m going to ask: What is programming? At the most basic level, programming is about telling the computer what to do. “Take the contents of memory address x and add it to the contents of the register EAX.” But even when we program in assembly, the instructions we give the computer are an expression of something more meaningful. We are solving a non-trivial problem (if it were trivial, we wouldn’t need the help of the computer). And how do we solve problems? We decompose bigger problems into smaller problems. If the smaller problems are still too big, we decompose them further, and so on. Finally, we write code that solves all the small problems. And then comes the essence of programming: we compose those pieces of code to create solutions to larger problems. Decomposition wouldn’t make sense if we weren’t able to put the pieces back together.</p>
+<p>This process of hierarchical decomposition and recomposition is not imposed on us by computers. It reflects the limitations of the human mind. Our brains can only deal with a small number of concepts at a time. One of the most cited papers in psychology, <a href="http://en.wikipedia.org/wiki/The_Magical_Number_Seven,_Plus_or_Minus_Two" target="_blank">The Magical Number Seven, Plus or Minus Two</a>, postulated that we can only keep 7 ± 2 “chunks” of information in our minds. The details of our understanding of the human short-term memory might be changing, but we know for sure that it’s limited. The bottom line is that we are unable to deal with the soup of objects or the spaghetti of code. We need structure not because well-structured programs are pleasant to look at, but because otherwise our brains can’t process them efficiently. We often describe some piece of code as elegant or beautiful, but what we really mean is that it’s easy to process by our limited human minds. Elegant code creates chunks that are just the right size and come in just the right number for our mental digestive system to assimilate them.</p>
+<p>So what are the right chunks for the composition of programs? Their surface area has to increase slower than their volume. (I like this analogy because of the intuition that the surface area of a geometric object grows with the square of its size — slower than the volume, which grows with the cube of its size.) The surface area is the information we need in order to compose chunks. The volume is the information we need in order to implement them. The idea is that, once a chunk is implemented, we can forget about the details of its implementation and concentrate on how it interacts with other chunks. In object-oriented programming, the surface is the class declaration of the object, or its abstract interface. In functional programming, it’s the declaration of a function. (I’m simplifying things a bit, but that’s the gist of it.)</p>
+<p>Category theory is extreme in the sense that it actively discourages us from looking inside the objects. An object in category theory is an abstract nebulous entity. All you can ever know about it is how it relates to other object — how it connects with them using arrows. This is how internet search engines rank web sites by analyzing incoming and outgoing links (except when they cheat). In object-oriented programming, an idealized object is only visible through its abstract interface (pure surface, no volume), with methods playing the role of arrows. The moment you have to dig into the implementation of the object in order to understand how to compose it with other objects, you’ve lost the advantages of your programming paradigm.</p>
+<h2>Challenges</h2>
+<ol><li>Implement, as best as you can, the identity function in your favorite language (or the second favorite, if your favorite language happens to be Haskell).</li>
+<li>Implement the composition function in your favorite language. It takes two functions as arguments and returns a function that is their composition.</li>
+<li>Write a program that tries to test that your composition function respects identity.</li>
+<li>Is the world-wide web a category in any sense? Are links morphisms?</li>
+<li>Is Facebook a category, with people as objects and friendships as morphisms?</li>
+<li>When is a directed graph a category?</li>
+</ol><p>Next: <a href="../../../24/types-and-functions/trackback/index.html">Types and Functions</a>.<br/><a href="https://twitter.com/BartoszMilewski" class="twitter-follow-button" data-show-count="false" data-text-color="#29303b" data-link-color="#909d73">Follow @BartoszMilewski</a></p>
+		<div class="wpcnt">
+			<div class="wpa wpmrec">
+				<span class="wpa-about">Advertisements</span>
+				<div class="u">
+					<amp-ad width="300" height="250" type="pubmine" data-adsafe="1" data-section="0" data-siteid="11416" data-wordads="0"><div placeholder="" class="amp-wp-iframe-placeholder"></div>
+					</amp-ad></div>
+			</div>
+		</div>	</div>
+
+	<footer class="amp-wp-article-footer">
+			<div class="amp-wp-meta amp-wp-tax-category">
+		Categories: <a href="../../../../../category/category-theory/index.html" rel="category tag">Category Theory</a>	</div>
+
+		<div class="amp-wp-meta amp-wp-comments-link">
+		<a href="../trackback/index.html#comments">
+			Leave a Comment		</a>
+	</div>
+	</footer>
+
+</article>
+
+<footer class="amp-wp-footer">
+	<div>
+		<h2>  Bartosz Milewski&#039;s Programming Cafe</h2>
+		<p>
+			<a href="https://wordpress.com/?ref=footer_blog">Blog at WordPress.com.</a>
+		</p>
+		<a href="index.html#top" class="back-to-top">Back to top</a>
+	</div>
+</footer>
+
+	<amp-pixel src="https://pixel.wp.com/b.gif?rand=RANDOM&#038;host=bartoszmilewski.com&#038;ref=DOCUMENT_REFERRER&#038;amp=1&#038;blog=3549518&#038;v=wpcom&#038;tz=-7&#038;user_id=0&#038;post=3477&#038;subd=bartoszmilewski"></amp-pixel>
+	<amp-pixel src="https://pixel.wp.com/b.gif?rand=RANDOM&#038;v=wpcom-no-pv&#038;crypt=UE5XaGUuOTlwaD85flAmcm1mcmZsaDhkV11YdWtpP0NsWnVkPS9sL0ViLndld3BkTUV5ST9WY3J1RTlUZyw1R3ZSbnIsdHFTX0lCY0ZyS2M4cGlJUXppTGJkNjdSMj0mY2lfVS1NTlpEbGxNVi1YL35jW3M2MzF4Z0Zddy92OGNSY1FWPVYxTX5yVy5JcnJsRlRPPURnJm8wbz1zRHVrenwsRVBHM0Y2U250bDVJS095VitXdEZbMXMsbm1YN3BranBvcmY2dnxyY2dxTC1aRX5uR2c3Umg1UWM%3D"></amp-pixel>
+	
+</body>
+</html>

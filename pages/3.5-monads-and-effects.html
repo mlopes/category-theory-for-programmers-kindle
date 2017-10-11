@@ -1,0 +1,691 @@
+<!doctype html>
+<html amp lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
+	
+<!-- Jetpack Open Graph Tags -->
+<meta property="og:type" content="article" />
+<meta property="og:title" content="Monads and Effects" />
+<meta property="og:url" content="https://bartoszmilewski.com/2016/11/30/monads-and-effects/" />
+<meta property="og:description" content="This is part 21 of Categories for Programmers. Previously: Monads: Programmer&#8217;s Definition. See the Table of Contents. Now that we know what the monad is for &#8212; it lets us compose embell…" />
+<meta property="article:published_time" content="2016-11-30T21:21:23+00:00" />
+<meta property="article:modified_time" content="2017-04-21T13:47:30+00:00" />
+<meta property="og:site_name" content="  Bartosz Milewski&#039;s Programming Cafe" />
+<meta property="og:image" content="https://s0.wp.com/i/blank.jpg" />
+<meta property="og:locale" content="en_US" />
+<meta name="twitter:site" content="@BartoszMilewski" />
+<meta name="twitter:text:title" content="Monads and Effects" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:creator" content="@BartoszMilewski" />
+<meta property="article:publisher" content="https://www.facebook.com/WordPresscom" />
+	<title>Monads and Effects &#8211;   Bartosz Milewski&#039;s Programming Cafe</title>
+		<link rel="canonical" href="../trackback/index.html" />
+			<script custom-element="amp-ad" src="https://cdn.ampproject.org/v0/amp-ad-0.1.js" async></script>
+		<script src="https://cdn.ampproject.org/v0.js" async></script>
+			<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Merriweather:400,400italic,700,700italic">
+		<style amp-boilerplate>body{-webkit-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-moz-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-ms-animation:-amp-start 8s steps(1,end) 0s 1 normal both;animation:-amp-start 8s steps(1,end) 0s 1 normal both}@-webkit-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-moz-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-ms-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-o-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}</style><noscript><style amp-boilerplate>body{-webkit-animation:none;-moz-animation:none;-ms-animation:none;animation:none}</style></noscript>
+		<script type="application/ld+json">{"@context":"http:\/\/schema.org","@type":"BlogPosting","mainEntityOfPage":"https:\/\/bartoszmilewski.com\/2016\/11\/30\/monads-and-effects\/","publisher":{"@type":"Organization","name":"\u00a0\u00a0Bartosz Milewski&#039;s Programming Cafe","logo":{"@type":"ImageObject","url":"https:\/\/s2.wp.com\/i\/favicons\/apple-touch-icon-60x60.png","width":60,"height":60}},"headline":"Monads and Effects","datePublished":"2016-11-30T13:21:23+00:00","dateModified":"2017-04-21T06:47:30+00:00","author":{"@type":"Person","name":"Bartosz Milewski"},"image":{"@type":"ImageObject","url":"https:\/\/0.gravatar.com\/avatar\/c018f213204496b4bbf481e7c8e6c15c?s=200&amp;d=https%3A%2F%2F0.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D200&amp;r=G","width":200,"height":200}}</script>
+		<style amp-custom>
+		/* Generic WP styling */
+
+.alignright {
+	float: right;
+}
+
+.alignleft {
+	float: left;
+}
+
+.aligncenter {
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.amp-wp-enforced-sizes {
+	/** Our sizes fallback is 100vw, and we have a padding on the container; the max-width here prevents the element from overflowing. **/
+	max-width: 100%;
+	margin: 0 auto;
+}
+
+.amp-wp-unknown-size img {
+	/** Worst case scenario when we can't figure out dimensions for an image. **/
+	/** Force the image into a box of fixed dimensions and use object-fit to scale. **/
+	object-fit: contain;
+}
+
+/* Template Styles */
+
+.amp-wp-content,
+.amp-wp-title-bar div {
+		margin: 0 auto;
+	max-width: 510px;
+	}
+
+html {
+	background: #0a89c0;
+}
+
+body {
+	background: #fff;
+	color: #353535;
+	font-family: 'Merriweather', 'Times New Roman', Times, Serif;
+	font-weight: 300;
+	line-height: 1.75em;
+}
+
+p,
+ol,
+ul,
+figure {
+	margin: 0 0 1em;
+	padding: 0;
+}
+
+a,
+a:visited {
+	color: #0a89c0;
+}
+
+a:hover,
+a:active,
+a:focus {
+	color: #353535;
+}
+
+/* Quotes */
+
+blockquote {
+	color: #353535;
+	background: rgba(127,127,127,.125);
+	border-left: 2px solid #0a89c0;
+	margin: 8px 0 24px 0;
+	padding: 16px;
+}
+
+blockquote p:last-child {
+	margin-bottom: 0;
+}
+
+/* UI Fonts */
+
+.amp-wp-meta,
+.amp-wp-header div,
+.amp-wp-title,
+.wp-caption-text,
+.amp-wp-tax-category,
+.amp-wp-tax-tag,
+.amp-wp-comments-link,
+.amp-wp-footer p,
+.back-to-top {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen-Sans", "Ubuntu", "Cantarell", "Helvetica Neue", sans-serif;
+}
+
+/* Header */
+
+.amp-wp-header {
+	background-color: #0a89c0;
+}
+
+.amp-wp-header div {
+	color: #fff;
+	font-size: 1em;
+	font-weight: 400;
+	margin: 0 auto;
+	max-width: calc(840px - 32px);
+	padding: .875em 16px;
+	position: relative;
+}
+
+.amp-wp-header a {
+	color: #fff;
+	text-decoration: none;
+}
+
+/* Site Icon */
+
+.amp-wp-header .amp-wp-site-icon {
+	/** site icon is 32px **/
+	background-color: #fff;
+	border: 1px solid #fff;
+	border-radius: 50%;
+	position: absolute;
+	right: 18px;
+	top: 10px;
+}
+
+/* Article */
+
+.amp-wp-article {
+	color: #353535;
+	font-weight: 400;
+	margin: 1.5em auto;
+	max-width: 840px;
+	overflow-wrap: break-word;
+	word-wrap: break-word;
+}
+
+/* Article Header */
+
+.amp-wp-article-header {
+	align-items: center;
+	align-content: stretch;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	margin: 1.5em 16px 1.5em;
+}
+
+.amp-wp-title {
+	color: #353535;
+	display: block;
+	flex: 1 0 100%;
+	font-weight: 900;
+	margin: 0 0 .625em;
+	width: 100%;
+}
+
+/* Article Meta */
+
+.amp-wp-meta {
+	color: #696969;
+	display: inline-block;
+	flex: 2 1 50%;
+	font-size: .875em;
+	line-height: 1.5em;
+	margin: 0;
+	padding: 0;
+}
+
+.amp-wp-article-header .amp-wp-meta:last-of-type {
+	text-align: right;
+}
+
+.amp-wp-article-header .amp-wp-meta:first-of-type {
+	text-align: left;
+}
+
+.amp-wp-byline amp-img,
+.amp-wp-byline .amp-wp-author {
+	display: inline-block;
+	vertical-align: middle;
+}
+
+.amp-wp-byline amp-img {
+	border: 1px solid #0a89c0;
+	border-radius: 50%;
+	position: relative;
+	margin-right: 6px;
+}
+
+.amp-wp-posted-on {
+	text-align: right;
+}
+
+/* Featured image */
+
+.amp-wp-article-featured-image {
+	margin: 0 0 1em;
+}
+.amp-wp-article-featured-image amp-img {
+	margin: 0 auto;
+}
+.amp-wp-article-featured-image.wp-caption .wp-caption-text {
+	margin: 0 18px;
+}
+
+/* Article Content */
+
+.amp-wp-article-content {
+	margin: 0 16px;
+}
+
+.amp-wp-article-content ul,
+.amp-wp-article-content ol {
+	margin-left: 1em;
+}
+
+.amp-wp-article-content amp-img {
+	margin: 0 auto;
+}
+
+.amp-wp-article-content amp-img.alignright {
+	margin: 0 0 1em 16px;
+}
+
+.amp-wp-article-content amp-img.alignleft {
+	margin: 0 16px 1em 0;
+}
+
+/* Captions */
+
+.wp-caption {
+	padding: 0;
+}
+
+.wp-caption.alignleft {
+	margin-right: 16px;
+}
+
+.wp-caption.alignright {
+	margin-left: 16px;
+}
+
+.wp-caption .wp-caption-text {
+	border-bottom: 1px solid #c2c2c2;
+	color: #696969;
+	font-size: .875em;
+	line-height: 1.5em;
+	margin: 0;
+	padding: .66em 10px .75em;
+}
+
+/* AMP Media */
+
+amp-carousel {
+	background: #c2c2c2;
+	margin: 0 -16px 1.5em;
+}
+amp-iframe,
+amp-youtube,
+amp-instagram,
+amp-vine {
+	background: #c2c2c2;
+	margin: 0 -16px 1.5em;
+}
+
+.amp-wp-article-content amp-carousel amp-img {
+	border: none;
+}
+
+amp-carousel > amp-img > img {
+	object-fit: contain;
+}
+
+.amp-wp-iframe-placeholder {
+	background: #c2c2c2 url( https://s2.wp.com/wp-content/plugins/amp/assets/images/placeholder-icon.png ) no-repeat center 40%;
+	background-size: 48px 48px;
+	min-height: 48px;
+}
+
+/* Article Footer Meta */
+
+.amp-wp-article-footer .amp-wp-meta {
+	display: block;
+}
+
+.amp-wp-tax-category,
+.amp-wp-tax-tag {
+	color: #696969;
+	font-size: .875em;
+	line-height: 1.5em;
+	margin: 1.5em 16px;
+}
+
+.amp-wp-comments-link {
+	color: #696969;
+	font-size: .875em;
+	line-height: 1.5em;
+	text-align: center;
+	margin: 2.25em 0 1.5em;
+}
+
+.amp-wp-comments-link a {
+	border-style: solid;
+	border-color: #c2c2c2;
+	border-width: 1px 1px 2px;
+	border-radius: 4px;
+	background-color: transparent;
+	color: #0a89c0;
+	cursor: pointer;
+	display: block;
+	font-size: 14px;
+	font-weight: 600;
+	line-height: 18px;
+	margin: 0 auto;
+	max-width: 200px;
+	padding: 11px 16px;
+	text-decoration: none;
+	width: 50%;
+	-webkit-transition: background-color 0.2s ease;
+			transition: background-color 0.2s ease;
+}
+
+/* AMP Footer */
+
+.amp-wp-footer {
+	border-top: 1px solid #c2c2c2;
+	margin: calc(1.5em - 1px) 0 0;
+}
+
+.amp-wp-footer div {
+	margin: 0 auto;
+	max-width: calc(840px - 32px);
+	padding: 1.25em 16px 1.25em;
+	position: relative;
+}
+
+.amp-wp-footer h2 {
+	font-size: 1em;
+	line-height: 1.375em;
+	margin: 0 0 .5em;
+}
+
+.amp-wp-footer p {
+	color: #696969;
+	font-size: .8em;
+	line-height: 1.5em;
+	margin: 0 85px 0 0;
+}
+
+.amp-wp-footer a {
+	text-decoration: none;
+}
+
+.back-to-top {
+	bottom: 1.275em;
+	font-size: .8em;
+	font-weight: 600;
+	line-height: 2em;
+	position: absolute;
+	right: 16px;
+}
+				/* WordAds */
+		.wpcnt {
+			text-align: center;
+			line-height: 0;
+			display: block;
+			clear: both;
+			margin: 1em 0;
+		}
+
+		.rtl .wpcnt {
+			direction: ltr;
+		}
+
+		.wpa {
+			position: relative;
+			display: inline-block;
+			max-width: 100%;
+			text-align: left;
+			padding: 10px 0 0;
+			min-width: 300px;
+			-webkit-transform: translate3d(0, 0, 0);
+			transform: translate3d(0, 0, 0);
+		}
+
+		.wpa-about {
+			position: absolute;
+			top: 5px;
+			left: 0;
+			right: 0;
+			display: block;
+			min-width: 160px;
+			border-bottom: none;
+			font: 10px/1 "Open Sans", Arial, sans-serif;
+			text-align: left;
+			text-decoration: none;
+			opacity: 0.85;
+		}
+
+		.wpa .u>div, .wpadvert>div>* {
+			display: block;
+			margin-top: 5px;
+			margin-bottom: 1em;
+		}
+
+		div.wpa>div {
+			margin-top: 10px;
+		}	</style>
+</head>
+
+<body class="">
+
+<header id="#top" class="amp-wp-header">
+	<div>
+		<a href="https://bartoszmilewski.com">
+						  Bartosz Milewski&#039;s Programming Cafe		</a>
+	</div>
+</header>
+
+<article class="amp-wp-article">
+
+	<header class="amp-wp-article-header">
+		<h1 class="amp-wp-title">Monads and Effects</h1>
+				<div class="amp-wp-meta amp-wp-byline">
+					<amp-img src="https://secure.gravatar.com/avatar/c018f213204496b4bbf481e7c8e6c15c?s=24&#038;d=mm&#038;r=g" width="24" height="24" layout="fixed"></amp-img>
+				<span class="amp-wp-author author vcard">Bartosz Milewski</span>
+	</div>
+<div class="amp-wp-meta amp-wp-posted-on">
+	<time datetime="2016-11-30T13:21:23+00:00">
+		10 months ago	</time>
+</div>
+	</header>
+
+	
+	<div class="amp-wp-article-content">
+				<div class="wpcnt">
+			<div class="wpa wpmrec">
+				<span class="wpa-about">Advertisements</span>
+				<div class="u">
+					<amp-ad width="300" height="250" type="pubmine" data-adsafe="1" data-section="2" data-siteid="2694" data-wordads="0"><div placeholder="" class="amp-wp-iframe-placeholder"></div>
+					</amp-ad></div>
+			</div>
+		</div><blockquote><p>This is part 21 of Categories for Programmers. Previously: <a href="../../../21/monads-programmers-definition/trackback/index.html" target="_blank">Monads: Programmer’s Definition</a>. See the <a title="Table of Contents" href="../../../../../2014/10/28/category-theory-for-programmers-the-preface/trackback/index.html" target="_blank">Table of Contents</a>.</p></blockquote>
+<p>Now that we know what the monad is for — it lets us compose embellished functions — the really interesting question is why embellished functions are so important in functional programming. We’ve already seen one example, the <code>Writer</code> monad, where embellishment let us create and accumulate a log across multiple function calls. A problem that would otherwise be solved using impure functions (e.g., by accessing and modifying some global state) was solved with pure functions.</p>
+<h2>The Problem</h2>
+<p>Here is a short list of similar problems, copied from <a href="https://core.ac.uk/download/pdf/21173011.pdf" target="_blank">Eugenio Moggi’s seminal paper</a>, all of which are traditionally solved by abandoning the purity of functions.</p>
+<ul><li>Partiality: Computations that may not terminate</li>
+<li>Nondeterminism: Computations that may return many results</li>
+<li>Side effects: Computations that access/modify state
+<ul><li>Read-only state, or the environment</li>
+<li>Write-only state, or a log</li>
+<li>Read/write state</li>
+</ul></li>
+<li>Exceptions: Partial functions that may fail</li>
+<li>Continuations: Ability to save state of the program and then restore it on demand</li>
+<li>Interactive Input</li>
+<li>Interactive Output</li>
+</ul><p>What really is mind blowing is that all these problems may be solved using the same clever trick: turning to embellished functions. Of course, the embellishment will be totally different in each case.</p>
+<p>You have to realize that, at this stage, there is no requirement that the embellishment be monadic. It’s only when we insist on composition — being able to decompose a single embellished function into smaller embellished functions — that we need a monad. Again, since each of the embellishments is different, monadic composition will be implemented differently, but the overall pattern is the same. It’s a very simple pattern: composition that is associative and equipped with identity.</p>
+<p>The next section is heavy on Haskell examples. Feel free to skim or even skip it if you’re eager to get back to category theory or if you’re already familiar with Haskell’s implementation of monads.</p>
+<h2>The Solution</h2>
+<p>First, let’s analyze the way we used the <code>Writer</code> monad. We started with a pure function that performed a certain task — given arguments, it produced a certain output. We replaced this function with another function that embellished the original output by pairing it with a string. That was our solution to the logging problem.</p>
+<p>We couldn’t stop there because, in general, we don’t want to deal with monolithic solutions. We needed to be able to decompose one log-producing function into smaller log-producing functions. It’s the composition of those smaller functions that led us to the concept of a monad.</p>
+<p>What’s really amazing is that the same pattern of embellishing the function return types works for a large variety of problems that normally would require abandoning purity. Let’s go through our list and identify the embellishment that applies to each problem in turn.</p>
+<h3>Partiality</h3>
+<p>We modify the return type of every function that may not terminate by turning it into a “lifted” type — a type that contains all values of the original type plus the special “bottom” value <code>⊥</code>. For instance, the <code>Bool</code> type, as a set, would contain two elements: <code>True</code> and <code>False</code>. The lifted <code>Bool</code> contains three elements. Functions that return the lifted <code>Bool</code> may produce <code>True</code> or <code>False</code>, or execute forever.</p>
+<p>The funny thing is that, in a lazy language like Haskell, a never-ending function may actually return a value, and this value may be passed to the next function. We call this special value the bottom. As long as this value is not explicitly needed (for instance, to be pattern matched, or produced as output), it may be passed around without stalling the execution of the program. Because every Haskell function may be potentially non-terminating, all types in Haskell are assumed to be lifted. This is why we often talk about the category <b>Hask</b> of Haskell (lifted) types and functions rather than the simpler <b>Set</b>. It is not clear, though, that <b>Hask</b> is a real category (see this <a href="http://math.andrej.com/2016/08/06/hask-is-not-a-category/" target="_blank">Andrej Bauer post</a>).</p>
+<h3>Nondeterminism</h3>
+<p>If a function can return many different results, it may as well return them all at once. Semantically, a non-deterministic function is equivalent to a function that returns a list of results. This makes a lot of sense in a lazy garbage-collected language. For instance, if all you need is one value, you can just take the head of the list, and the tail will never be evaluated. If you need a random value, use a random number generator to pick the n-th element of the list. Laziness even allows you to return an infinite list of results.</p>
+<p>In the list monad — Haskell’s implementation of nondeterministic computations — <code>join</code> is implemented as <code>concat</code>. Remember that <code>join</code> is supposed to flatten a container of containers — <code>concat</code> concatenates a list of lists into a single list. <code>return</code> creates a singleton list:</p>
+<pre>instance Monad [] where&#13;
+    join = concat&#13;
+    return x = [x]</pre>
+<p>The bind operator for the list monad is given by the general formula: <code>fmap</code> followed by <code>join</code> which, in this case gives:</p>
+<pre>as &gt;&gt;= k = concat (fmap k as)</pre>
+<p>Here, the function <code>k</code>, which itself produces a list, is applied to every element of the list <code>as</code>. The result is a list of lists, which is flattened using <code>concat</code>.</p>
+<p>From the programmer’s point of view, working with a list is easier than, for instance, calling a non-deterministic function in a loop, or implementing a function that returns an iterator (although, <a href="http://ericniebler.com/2014/04/27/range-comprehensions/" target="_blank">in modern C++</a>, returning a lazy range would be almost equivalent to returning a list in Haskell).</p>
+<p>A good example of using non-determinism creatively is in game programming. For instance, when a computer plays chess against a human, it can’t predict the opponent’s next move. It can, however, generate a list of all possible moves and analyze them one by one. Similarly, a non-deterministic parser may generate a list of all possible parses for a given expression.</p>
+<p>Even though we may interpret functions returning lists as non-deterministic, the applications of the list monad are much wider. That’s because stitching together computations that produce lists is a perfect functional substitute for iterative constructs — loops — that are used in imperative programming. A single loop can be often rewritten using <code>fmap</code> that applies the body of the loop to each element of the list. The <code>do</code> notation in the list monad can be used to replace complex nested loops.</p>
+<p>My favorite example is the program that generates Pythagorean triples — triples of positive integers that can form sides of right triangles.</p>
+<pre>triples = do&#13;
+    z &lt;- [1..]&#13;
+    x &lt;- [1..z]&#13;
+    y &lt;- [x..z]&#13;
+    guard (x^2 + y^2 == z^2)&#13;
+    return (x, y, z)</pre>
+<p>The first line tells us that <code>z</code> gets an element from an infinite list of positive numbers <code>[1..]</code>. Then <code>x</code> gets an element from the (finite) list <code>[1..z]</code> of numbers between 1 and <code>z</code>. Finally <code>y</code> gets an element from the list of numbers between <code>x</code> and <code>z</code>. We have three numbers <code>1 &lt;= x &lt;= y &lt;= z</code> at our disposal. The function <code>guard</code> takes a <code>Bool</code> expression and returns a list of units:</p>
+<pre>guard :: Bool -&gt; [()]&#13;
+guard True  = [()]&#13;
+guard False = []</pre>
+<p>This function (which is a member of a larger class called <code>MonadPlus</code>) is used here to filter out non-Pythagorean triples. Indeed, if you look at the implementation of bind (or the related operator <code>&gt;&gt;</code>), you’ll notice that, when given an empty list, it produces an empty list. On the other hand, when given a non-empty list (here, the singleton list containing unit <code>[()]</code>), bind will call the continuation, here <code>return (x, y, z)</code>, which produces a singleton list with a verified Pythagorean triple. All those singleton lists will be concatenated by the enclosing binds to produce the final (infinite) result. Of course, the caller of <code>triples</code> will never be able to consume the whole list, but that doesn’t matter, because Haskell is lazy.</p>
+<p>The problem that normally would require a set of three nested loops has been dramatically simplified with the help of the list monad and the <code>do</code> notation. As if that weren’t enough, Haskell let’s you simplify this code even further using list comprehension:</p>
+<pre>triples = [(x, y, z) | z &lt;- [1..]&#13;
+                     , x &lt;- [1..z]&#13;
+                     , y &lt;- [x..z]&#13;
+                     , x^2 + y^2 == z^2]</pre>
+<p>This is just further syntactic sugar for the list monad (strictly speaking, <code>MonadPlus</code>).</p>
+<p>You might see similar constructs in other functional or imperative languages under the guise of generators and coroutines.</p>
+<h3>Read-Only State</h3>
+<p>A function that has read-only access to some external state, or environment, can be always replaced by a function that takes that environment as an additional argument. A pure function <code>(a, e) -&gt; b</code> (where <code>e</code> is the type of the environment) doesn’t look, at first sight, like a Kleisli arrow. But as soon as we curry it to <code>a -&gt; (e -&gt; b)</code> we recognize the embellishment as our old friend the reader functor:</p>
+<pre>newtype Reader e a = Reader (e -&gt; a)</pre>
+<p>You may interpret a function returning a <code>Reader</code> as producing a mini-executable: an action that given an environment produces the desired result. There is a helper function <code>runReader</code> to execute such an action:</p>
+<pre>runReader :: Reader e a -&gt; e -&gt; a&#13;
+runReader (Reader f) e = f e</pre>
+<p>It may produce different results for different values of the environment.</p>
+<p>Notice that both the function returning a <code>Reader</code>, and the <code>Reader</code> action itself are pure.</p>
+<p>To implement bind for the <code>Reader</code> monad, first notice that you have to produce a function that takes the environment <code>e</code> and produces a <code>b</code>:</p>
+<pre>ra &gt;&gt;= k = Reader (\e -&gt; ...)</pre>
+<p>Inside the lambda, we can execute the action <code>ra</code> to produce an <code>a</code>:</p>
+<pre>ra &gt;&gt;= k = Reader (\e -&gt; let a = runReader ra e&#13;
+                         in ...)</pre>
+<p>We can then pass the <code>a</code> to the continuation <code>k</code> to get a new action <code>rb</code>:</p>
+<pre>ra &gt;&gt;= k = Reader (\e -&gt; let a  = runReader ra e&#13;
+                             rb = k a&#13;
+                         in ...)</pre>
+<p>Finally, we can run the action <code>rb</code> with the environment <code>e</code>:</p>
+<pre>ra &gt;&gt;= k = Reader (\e -&gt; let a  = runReader ra e&#13;
+                             rb = k a&#13;
+                         in runReader rb e)</pre>
+<p>To implement <code>return</code> we create an action that ignores the environment and returns the unchanged value.</p>
+<p>Putting it all together, after a few simplifications, we get the following definition:</p>
+<pre>instance Monad (Reader e) where&#13;
+    ra &gt;&gt;= k = Reader (\e -&gt; runReader (k (runReader ra e)) e)&#13;
+    return x = Reader (\e -&gt; x)</pre>
+<h3>Write-Only State</h3>
+<p>This is just our initial logging example. The embellishment is given by the <code>Writer</code> functor:</p>
+<pre>newtype Writer w a = Writer (a, w)</pre>
+<p>For completeness, there’s also a trivial helper <code>runWriter</code> that unpacks the data constructor:</p>
+<pre>runWriter :: Writer w a -&gt; (a, w)&#13;
+runWriter (Writer (a, w)) = (a, w)</pre>
+<p>As we’ve seen before, in order to make <code>Writer</code> composable, <code>w</code> has to be a monoid. Here’s the monad instance for <code>Writer</code> written in terms of the bind operator:</p>
+<pre>instance (Monoid w) =&gt; Monad (Writer w) where &#13;
+    (Writer (a, w)) &gt;&gt;= k = let (a', w') = runWriter (k a)&#13;
+                            in Writer (a', w `mappend` w')&#13;
+    return a = Writer (a, mempty)</pre>
+<h3>State</h3>
+<p>Functions that have read/write access to state combine the embellishments of the <code>Reader</code> and the <code>Writer</code>. You may think of them as pure functions that take the state as an extra argument and produce a pair value/state as a result: <code>(a, s) -&gt; (b, s)</code>. After currying, we get them into the form of Kleisli arrows <code>a -&gt; (s -&gt; (b, s))</code>, with the embellishment abstracted in the <code>State</code> functor:</p>
+<pre>newtype State s a = State (s -&gt; (a, s))</pre>
+<p>Again, we can look at a Kleisli arrow as returning an action, which can be executed using the helper function:</p>
+<pre>runState :: State s a -&gt; s -&gt; (a, s)&#13;
+runState (State f) s = f s</pre>
+<p>Different initial states may not only produce different results, but also different final states.</p>
+<p>The implementation of bind for the <code>State</code> monad is very similar to that of the <code>Reader</code> monad, except that care has to be taken to pass the correct state at each step:</p>
+<pre>sa &gt;&gt;= k = State (\s -&gt; let (a, s') = runState sa s&#13;
+                            sb = k a&#13;
+                        in runState sb s')</pre>
+<p>Here’s the full instance:</p>
+<pre>instance Monad (State s) where&#13;
+    sa &gt;&gt;= k = State (\s -&gt; let (a, s') = runState sa s &#13;
+                            in runState (k a) s')&#13;
+    return a = State (\s -&gt; (a, s))</pre>
+<p>There are also two helper Kleisli arrows that may be used to manipulate the state. One of them retrieves the state for inspection:</p>
+<pre>get :: State s s&#13;
+get = State (\s -&gt; (s, s))</pre>
+<p>and the other replaces it with a completely new state:</p>
+<pre>put :: s -&gt; State s ()&#13;
+put s' = State (\s -&gt; ((), s'))</pre>
+<h3>Exceptions</h3>
+<p>An imperative function that throws an exception is really a partial function — it’s a function that’s not defined for some values of its arguments. The simplest implementation of exceptions in terms of pure total functions uses the <code>Maybe</code> functor. A partial function is extended to a total function that returns <code>Just a</code> whenever it makes sense, and <code>Nothing</code> when it doesn’t. If we want to also return some information about the cause of the failure, we can use the <code>Either</code> functor instead (with the first type fixed, for instance, to <code>String</code>).</p>
+<p>Here’s the <code>Monad</code> instance for <code>Maybe</code>:</p>
+<pre>instance Monad Maybe where&#13;
+    Nothing &gt;&gt;= k = Nothing&#13;
+    Just a  &gt;&gt;= k = k a&#13;
+    return a = Just a</pre>
+<p>Notice that monadic composition for <code>Maybe</code> correctly short-circuits the computation (the continuation <code>k</code> is never called) when an error is detected. That’s the behavior we expect from exceptions.</p>
+<h3>Continuations</h3>
+<p>It’s the “Don’t call us, we’ll call you!” situation you may experience after a job interview. Instead of getting a direct answer, you are supposed to provide a handler, a function to be called with the result. This style of programming is especially useful when the result is not known at the time of the call because, for instance, it’s being evaluated by another thread or delivered from a remote web site. A Kleisli arrow in this case returns a function that accepts a handler, which represents “the rest of the computation”:</p>
+<pre>data Cont r a = Cont ((a -&gt; r) -&gt; r)</pre>
+<p>The handler <code>a -&gt; r</code>, when it’s eventually called, produces the result of type <code>r</code>, and this result is returned at the end. A continuation is parameterized by the result type. (In practice, this is often some kind of status indicator.)</p>
+<p>There is also a helper function for executing the action returned by the Kleisli arrow. It takes the handler and passes it to the continuation:</p>
+<pre>runCont :: Cont r a -&gt; (a -&gt; r) -&gt; r&#13;
+runCont (Cont k) h = k h</pre>
+<p>The composition of continuations is notoriously difficult, so its handling through a monad and, in particular, the <code>do</code> notation, is of extreme advantage.</p>
+<p>Let’s figure out the implementation of bind. First let’s look at the stripped down signature:</p>
+<pre>(&gt;&gt;=) :: ((a -&gt; r) -&gt; r) -&gt; &#13;
+         (a -&gt; (b -&gt; r) -&gt; r) -&gt; &#13;
+         (<span class="red">(b -&gt; r) -&gt; r</span>)</pre>
+<p>Our goal is to create a function that takes the handler <code>(b -&gt; r)</code> and produces the result <code>r</code>. So that’s our starting point:</p>
+<pre>ka &gt;&gt;= kab = Cont (\hb -&gt; ...)</pre>
+<p>Inside the lambda, we want to call the function <code>ka</code> with the appropriate handler that represents the rest of the computation. We’ll implement this handler as a lambda:</p>
+<pre>runCont ka (\a -&gt; ...)</pre>
+<p>In this case, the rest of the computation involves first calling <code>kab</code> with <code>a</code>, and then passing <code>hb</code> to the resulting action <code>kb</code>:</p>
+<pre>runCont ka (\a -&gt; let kb = <span class="red">kab</span> a&#13;
+                  in runCont kb <span class="red">hb</span>)</pre>
+<p>As you can see, continuations are composed inside out. The final handler <code>hb</code> is called from the innermost layer of the computation. Here’s the full instance:</p>
+<pre>instance Monad (Cont r) where&#13;
+    ka &gt;&gt;= kab = Cont (\hb -&gt; runCont ka (\a -&gt; runCont (kab a) hb))&#13;
+    return a = Cont (\ha -&gt; ha a)</pre>
+<h3>Interactive Input</h3>
+<p>This is the trickiest problem and a source of a lot of confusion. Clearly, a function like <code>getChar</code>, if it were to return a character typed at the keyboard, couldn’t be pure. But what if it returned the character inside a container? As long as there was no way of extracting the character from this container, we could claim that the function is pure. Every time you call <code>getChar</code> it would return exactly the same container. Conceptually, this container would contain the superposition of all possible characters.</p>
+<p>If you’re familiar with quantum mechanics, you should have no problem understanding this analogy. It’s just like the box with the Schrödinger’s cat inside — except that there is no way to open or peek inside the box. The box is defined using the special built-in <code>IO</code> functor. In our example, <code>getChar</code> could be declared as a Kleisli arrow:</p>
+<pre>getChar :: () -&gt; IO Char</pre>
+<p>(Actually, since a function from the unit type is equivalent to picking a value of the return type, the declaration of <code>getChar</code> is simplified to <code>getChar :: IO Char</code>.)</p>
+<p>Being a functor, <code>IO</code> lets you manipulate its contents using <code>fmap</code>. And, as a functor, it can store the contents of any type, not just a character. The real utility of this approach comes to light when you consider that, in Haskell, <code>IO</code> is a monad. It means that you are able to compose Kleisli arrows that produce <code>IO</code> objects.</p>
+<p>You might think that Kleisli composition would allow you to peek at the contents of the <code>IO</code> object (thus “collapsing the wave function,” if we were to continue the quantum analogy). Indeed, you could compose <code>getChar</code> with another Kleisli arrow that takes a character and, say, converts it to an integer. The catch is that this second Kleisli arrow could only return this integer as an <code>(IO Int)</code>. Again, you’ll end up with a superposition of all possible integers. And so on. The Schrödinger’s cat is never out of the bag. Once you are inside the <code>IO</code> monad, there is no way out of it. There is no equivalent of <code>runState</code> or <code>runReader</code> for the <code>IO</code> monad. There is no <code>runIO</code>!</p>
+<p>So what can you do with the result of a Kleisli arrow, the <code>IO</code> object, other than compose it with another Kleisli arrow? Well, you can return it from <code>main</code>. In Haskell, <code>main</code> has the signature:</p>
+<pre>main :: IO ()</pre>
+<p>and you are free to think of it as a Kleisli arrow:</p>
+<pre>main :: () -&gt; IO ()</pre>
+<p>From that perspective, a Haskell program is just one big Kleisli arrow in the <code>IO</code> monad. You can compose it from smaller Kleisli arrows using monadic composition. It’s up to the runtime system to do something with the resulting <code>IO</code> object (also called <code>IO</code> action).</p>
+<p>Notice that the arrow itself is a pure function — it’s pure functions all the way down. The dirty work is relegated to the system. When it finally executes the <code>IO</code> action returned from <code>main</code>, it does all kinds of nasty things like reading user input, modifying files, printing obnoxious messages, formatting a disk, and so on. The Haskell program never dirties its hands (well, except when it calls <code>unsafePerformIO</code>, but that’s a different story).</p>
+<p>Of course, because Haskell is lazy, <code>main</code> returns almost immediately, and the dirty work begins right away. It’s during the execution of the <code>IO</code> action that the results of pure computations are requested and evaluated on demand. So, in reality, the execution of a program is an interleaving of pure (Haskell) and dirty (system) code.</p>
+<p>There is an alternative interpretation of the <code>IO</code> monad that is even more bizarre but makes perfect sense as a mathematical model. It treats the whole Universe as an object in a program. Notice that, conceptually, the imperative model treats the Universe as an external global object, so procedures that perform I/O have side effects by virtue of interacting with that object. They can both read and modify the state of the Universe.</p>
+<p>We already know how to deal with state in functional programming — we use the state monad. Unlike simple state, however, the state of the Universe cannot be easily described using standard data structures. But we don’t have to, as long as we never directly interact with it. It’s enough that we assume that there exists a type <code>RealWorld</code> and, by some miracle of cosmic engineering, the runtime is able to provide an object of this type. An <code>IO</code> action is just a function:</p>
+<pre>type IO a  =  RealWorld -&gt; (a, RealWorld)</pre>
+<p>Or, in terms of the <code>State</code> monad:</p>
+<pre>type IO = State RealWorld</pre>
+<p>However, <code>&gt;=&gt;</code> and <code>return</code> for the <code>IO</code> monad have to be built into the language.</p>
+<h3>Interactive Output</h3>
+<p>The same <code>IO</code> monad is used to encapsulate interactive output. <code>RealWorld</code> is supposed to contain all output devices. You might wonder why we can’t just call output functions from Haskell and pretend that they do nothing. For instance, why do we have:</p>
+<pre>putStr :: String -&gt; IO ()</pre>
+<p>rather than the simpler:</p>
+<pre>putStr :: String -&gt; ()</pre>
+<p>Two reasons: Haskell is lazy, so it would never call a function whose output — here, the unit object — is not used for anything. And, even if it weren’t lazy, it could still freely change the order of such calls and thus garble the output. The only way to force sequential execution of two functions in Haskell is through data dependency. The input of one function must depend on the output of another. Having <code>RealWorld</code> passed between <code>IO</code> actions enforces sequencing.</p>
+<p>Conceptually, in this program:</p>
+<pre>main :: IO ()&#13;
+main = do&#13;
+    putStr "Hello "&#13;
+    putStr "World!"</pre>
+<p>the action that prints “World!” receives, as input, the Universe in which “Hello ” is already on the screen. It outputs a new Universe, with “Hello World!” on the screen.</p>
+<h2>Conclusion</h2>
+<p>Of course I have just scratched the surface of monadic programming. Monads not only accomplish, with pure functions, what normally is done with side effects in imperative programming, but they also do it with a high degree of control and type safety. They are not without drawbacks, though. The major complaint about monads is that they don’t easily compose with each other. Granted, you can combine most of the basic monads using the monad transformer library. It’s relatively easy to create a monad stack that combines, say, state with exceptions, but there is no formula for stacking arbitrary monads together.</p>
+<p>Next: <a href="../../../../12/27/monads-categorically/trackback/index.html">Monads Categorically</a>.</p>
+		<div class="wpcnt">
+			<div class="wpa wpmrec">
+				<span class="wpa-about">Advertisements</span>
+				<div class="u">
+					<amp-ad width="300" height="250" type="pubmine" data-adsafe="1" data-section="0" data-siteid="11416" data-wordads="0"><div placeholder="" class="amp-wp-iframe-placeholder"></div>
+					</amp-ad></div>
+			</div>
+		</div>	</div>
+
+	<footer class="amp-wp-article-footer">
+			<div class="amp-wp-meta amp-wp-tax-category">
+		Categories: <a href="../../../../../category/category-theory/index.html" rel="category tag">Category Theory</a>, <a href="../../../../../category/haskell/index.html" rel="category tag">Haskell</a>, <a href="../../../../../category/monads/index.html" rel="category tag">Monads</a>	</div>
+
+		<div class="amp-wp-meta amp-wp-comments-link">
+		<a href="../trackback/index.html#comments">
+			Leave a Comment		</a>
+	</div>
+	</footer>
+
+</article>
+
+<footer class="amp-wp-footer">
+	<div>
+		<h2>  Bartosz Milewski&#039;s Programming Cafe</h2>
+		<p>
+			<a href="https://wordpress.com/?ref=footer_website">Create a free website or blog at WordPress.com.</a>
+		</p>
+		<a href="index.html#top" class="back-to-top">Back to top</a>
+	</div>
+</footer>
+
+	<amp-pixel src="https://pixel.wp.com/b.gif?rand=RANDOM&#038;host=bartoszmilewski.com&#038;ref=DOCUMENT_REFERRER&#038;amp=1&#038;blog=3549518&#038;v=wpcom&#038;tz=-7&#038;user_id=0&#038;post=7853&#038;subd=bartoszmilewski"></amp-pixel>
+	<amp-pixel src="https://pixel.wp.com/b.gif?rand=RANDOM&#038;v=wpcom-no-pv&#038;crypt=UE5XaGUuOTlwaD85flAmcm1mcmZsaDhkV11YdWtpP0NsWnVkPS9sL0ViLndld3BkTUV5ST9WY3J1RTlUZyw1R3ZSbnIsdHFTX0lCY0ZyS2M4cGlJUXppTGJkNjdSMj0mY2lfVS1NTlpEbGxNVi1YL35jW3M2MzFaUGJNcjkrPWFkcGk3JV1OVnh%2BRXAmaFtfZStQZlQuWEI9bTNTLUhobFg0Z2V8TGclQkhhR0ZfZHRfL11PUDU4VVpbUEQ%2FL240V2dpaDYyVlU2cHBVNm9dT3hhL29pRlc3LyY%3D"></amp-pixel>
+	
+</body>
+</html>

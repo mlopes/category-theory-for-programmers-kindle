@@ -1,0 +1,569 @@
+<!doctype html>
+<html amp lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
+	
+<!-- Jetpack Open Graph Tags -->
+<meta property="og:type" content="article" />
+<meta property="og:title" content="Category Theory for Programmers: The Preface" />
+<meta property="og:url" content="https://bartoszmilewski.com/2014/10/28/category-theory-for-programmers-the-preface/" />
+<meta property="og:description" content="Table of Contents Part One Category: The Essence of Composition Types and Functions Categories Great and Small Kleisli Categories Products and Coproducts Simple Algebraic Data Types Functors Functo…" />
+<meta property="article:published_time" content="2014-10-28T14:57:50+00:00" />
+<meta property="article:modified_time" content="2017-09-30T17:09:50+00:00" />
+<meta property="og:site_name" content="  Bartosz Milewski&#039;s Programming Cafe" />
+<meta property="og:image" content="https://bartoszmilewski.files.wordpress.com/2014/10/img_1299.jpg" />
+<meta property="og:image:width" content="758" />
+<meta property="og:image:height" content="539" />
+<meta property="og:locale" content="en_US" />
+<meta name="twitter:site" content="@BartoszMilewski" />
+<meta name="twitter:text:title" content="Category Theory for Programmers: The Preface" />
+<meta name="twitter:image" content="https://bartoszmilewski.files.wordpress.com/2014/10/img_1299.jpg?w=240" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:creator" content="@BartoszMilewski" />
+<meta property="article:publisher" content="https://www.facebook.com/WordPresscom" />
+	<title>Category Theory for Programmers: The Preface &#8211;   Bartosz Milewski&#039;s Programming Cafe</title>
+		<link rel="canonical" href="../trackback/index.html" />
+			<script custom-element="amp-ad" src="https://cdn.ampproject.org/v0/amp-ad-0.1.js" async></script>
+		<script src="https://cdn.ampproject.org/v0.js" async></script>
+			<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Merriweather:400,400italic,700,700italic">
+		<style amp-boilerplate>body{-webkit-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-moz-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-ms-animation:-amp-start 8s steps(1,end) 0s 1 normal both;animation:-amp-start 8s steps(1,end) 0s 1 normal both}@-webkit-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-moz-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-ms-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-o-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}</style><noscript><style amp-boilerplate>body{-webkit-animation:none;-moz-animation:none;-ms-animation:none;animation:none}</style></noscript>
+		<script type="application/ld+json">{"@context":"http:\/\/schema.org","@type":"BlogPosting","mainEntityOfPage":"https:\/\/bartoszmilewski.com\/2014\/10\/28\/category-theory-for-programmers-the-preface\/","publisher":{"@type":"Organization","name":"\u00a0\u00a0Bartosz Milewski&#039;s Programming Cafe","logo":{"@type":"ImageObject","url":"https:\/\/s2.wp.com\/i\/favicons\/apple-touch-icon-60x60.png","width":60,"height":60}},"headline":"Category Theory for Programmers: The Preface","datePublished":"2014-10-28T07:57:50+00:00","dateModified":"2017-09-30T10:09:50+00:00","author":{"@type":"Person","name":"Bartosz Milewski"},"image":{"@type":"ImageObject","url":"https:\/\/bartoszmilewski.files.wordpress.com\/2014\/10\/beauvais_interior_supports.jpg","width":360,"height":480}}</script>
+		<style amp-custom>
+		/* Generic WP styling */
+
+.alignright {
+	float: right;
+}
+
+.alignleft {
+	float: left;
+}
+
+.aligncenter {
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.amp-wp-enforced-sizes {
+	/** Our sizes fallback is 100vw, and we have a padding on the container; the max-width here prevents the element from overflowing. **/
+	max-width: 100%;
+	margin: 0 auto;
+}
+
+.amp-wp-unknown-size img {
+	/** Worst case scenario when we can't figure out dimensions for an image. **/
+	/** Force the image into a box of fixed dimensions and use object-fit to scale. **/
+	object-fit: contain;
+}
+
+/* Template Styles */
+
+.amp-wp-content,
+.amp-wp-title-bar div {
+		margin: 0 auto;
+	max-width: 510px;
+	}
+
+html {
+	background: #0a89c0;
+}
+
+body {
+	background: #fff;
+	color: #353535;
+	font-family: 'Merriweather', 'Times New Roman', Times, Serif;
+	font-weight: 300;
+	line-height: 1.75em;
+}
+
+p,
+ol,
+ul,
+figure {
+	margin: 0 0 1em;
+	padding: 0;
+}
+
+a,
+a:visited {
+	color: #0a89c0;
+}
+
+a:hover,
+a:active,
+a:focus {
+	color: #353535;
+}
+
+/* Quotes */
+
+blockquote {
+	color: #353535;
+	background: rgba(127,127,127,.125);
+	border-left: 2px solid #0a89c0;
+	margin: 8px 0 24px 0;
+	padding: 16px;
+}
+
+blockquote p:last-child {
+	margin-bottom: 0;
+}
+
+/* UI Fonts */
+
+.amp-wp-meta,
+.amp-wp-header div,
+.amp-wp-title,
+.wp-caption-text,
+.amp-wp-tax-category,
+.amp-wp-tax-tag,
+.amp-wp-comments-link,
+.amp-wp-footer p,
+.back-to-top {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen-Sans", "Ubuntu", "Cantarell", "Helvetica Neue", sans-serif;
+}
+
+/* Header */
+
+.amp-wp-header {
+	background-color: #0a89c0;
+}
+
+.amp-wp-header div {
+	color: #fff;
+	font-size: 1em;
+	font-weight: 400;
+	margin: 0 auto;
+	max-width: calc(840px - 32px);
+	padding: .875em 16px;
+	position: relative;
+}
+
+.amp-wp-header a {
+	color: #fff;
+	text-decoration: none;
+}
+
+/* Site Icon */
+
+.amp-wp-header .amp-wp-site-icon {
+	/** site icon is 32px **/
+	background-color: #fff;
+	border: 1px solid #fff;
+	border-radius: 50%;
+	position: absolute;
+	right: 18px;
+	top: 10px;
+}
+
+/* Article */
+
+.amp-wp-article {
+	color: #353535;
+	font-weight: 400;
+	margin: 1.5em auto;
+	max-width: 840px;
+	overflow-wrap: break-word;
+	word-wrap: break-word;
+}
+
+/* Article Header */
+
+.amp-wp-article-header {
+	align-items: center;
+	align-content: stretch;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	margin: 1.5em 16px 1.5em;
+}
+
+.amp-wp-title {
+	color: #353535;
+	display: block;
+	flex: 1 0 100%;
+	font-weight: 900;
+	margin: 0 0 .625em;
+	width: 100%;
+}
+
+/* Article Meta */
+
+.amp-wp-meta {
+	color: #696969;
+	display: inline-block;
+	flex: 2 1 50%;
+	font-size: .875em;
+	line-height: 1.5em;
+	margin: 0;
+	padding: 0;
+}
+
+.amp-wp-article-header .amp-wp-meta:last-of-type {
+	text-align: right;
+}
+
+.amp-wp-article-header .amp-wp-meta:first-of-type {
+	text-align: left;
+}
+
+.amp-wp-byline amp-img,
+.amp-wp-byline .amp-wp-author {
+	display: inline-block;
+	vertical-align: middle;
+}
+
+.amp-wp-byline amp-img {
+	border: 1px solid #0a89c0;
+	border-radius: 50%;
+	position: relative;
+	margin-right: 6px;
+}
+
+.amp-wp-posted-on {
+	text-align: right;
+}
+
+/* Featured image */
+
+.amp-wp-article-featured-image {
+	margin: 0 0 1em;
+}
+.amp-wp-article-featured-image amp-img {
+	margin: 0 auto;
+}
+.amp-wp-article-featured-image.wp-caption .wp-caption-text {
+	margin: 0 18px;
+}
+
+/* Article Content */
+
+.amp-wp-article-content {
+	margin: 0 16px;
+}
+
+.amp-wp-article-content ul,
+.amp-wp-article-content ol {
+	margin-left: 1em;
+}
+
+.amp-wp-article-content amp-img {
+	margin: 0 auto;
+}
+
+.amp-wp-article-content amp-img.alignright {
+	margin: 0 0 1em 16px;
+}
+
+.amp-wp-article-content amp-img.alignleft {
+	margin: 0 16px 1em 0;
+}
+
+/* Captions */
+
+.wp-caption {
+	padding: 0;
+}
+
+.wp-caption.alignleft {
+	margin-right: 16px;
+}
+
+.wp-caption.alignright {
+	margin-left: 16px;
+}
+
+.wp-caption .wp-caption-text {
+	border-bottom: 1px solid #c2c2c2;
+	color: #696969;
+	font-size: .875em;
+	line-height: 1.5em;
+	margin: 0;
+	padding: .66em 10px .75em;
+}
+
+/* AMP Media */
+
+amp-carousel {
+	background: #c2c2c2;
+	margin: 0 -16px 1.5em;
+}
+amp-iframe,
+amp-youtube,
+amp-instagram,
+amp-vine {
+	background: #c2c2c2;
+	margin: 0 -16px 1.5em;
+}
+
+.amp-wp-article-content amp-carousel amp-img {
+	border: none;
+}
+
+amp-carousel > amp-img > img {
+	object-fit: contain;
+}
+
+.amp-wp-iframe-placeholder {
+	background: #c2c2c2 url( https://s2.wp.com/wp-content/plugins/amp/assets/images/placeholder-icon.png ) no-repeat center 40%;
+	background-size: 48px 48px;
+	min-height: 48px;
+}
+
+/* Article Footer Meta */
+
+.amp-wp-article-footer .amp-wp-meta {
+	display: block;
+}
+
+.amp-wp-tax-category,
+.amp-wp-tax-tag {
+	color: #696969;
+	font-size: .875em;
+	line-height: 1.5em;
+	margin: 1.5em 16px;
+}
+
+.amp-wp-comments-link {
+	color: #696969;
+	font-size: .875em;
+	line-height: 1.5em;
+	text-align: center;
+	margin: 2.25em 0 1.5em;
+}
+
+.amp-wp-comments-link a {
+	border-style: solid;
+	border-color: #c2c2c2;
+	border-width: 1px 1px 2px;
+	border-radius: 4px;
+	background-color: transparent;
+	color: #0a89c0;
+	cursor: pointer;
+	display: block;
+	font-size: 14px;
+	font-weight: 600;
+	line-height: 18px;
+	margin: 0 auto;
+	max-width: 200px;
+	padding: 11px 16px;
+	text-decoration: none;
+	width: 50%;
+	-webkit-transition: background-color 0.2s ease;
+			transition: background-color 0.2s ease;
+}
+
+/* AMP Footer */
+
+.amp-wp-footer {
+	border-top: 1px solid #c2c2c2;
+	margin: calc(1.5em - 1px) 0 0;
+}
+
+.amp-wp-footer div {
+	margin: 0 auto;
+	max-width: calc(840px - 32px);
+	padding: 1.25em 16px 1.25em;
+	position: relative;
+}
+
+.amp-wp-footer h2 {
+	font-size: 1em;
+	line-height: 1.375em;
+	margin: 0 0 .5em;
+}
+
+.amp-wp-footer p {
+	color: #696969;
+	font-size: .8em;
+	line-height: 1.5em;
+	margin: 0 85px 0 0;
+}
+
+.amp-wp-footer a {
+	text-decoration: none;
+}
+
+.back-to-top {
+	bottom: 1.275em;
+	font-size: .8em;
+	font-weight: 600;
+	line-height: 2em;
+	position: absolute;
+	right: 16px;
+}
+				/* WordAds */
+		.wpcnt {
+			text-align: center;
+			line-height: 0;
+			display: block;
+			clear: both;
+			margin: 1em 0;
+		}
+
+		.rtl .wpcnt {
+			direction: ltr;
+		}
+
+		.wpa {
+			position: relative;
+			display: inline-block;
+			max-width: 100%;
+			text-align: left;
+			padding: 10px 0 0;
+			min-width: 300px;
+			-webkit-transform: translate3d(0, 0, 0);
+			transform: translate3d(0, 0, 0);
+		}
+
+		.wpa-about {
+			position: absolute;
+			top: 5px;
+			left: 0;
+			right: 0;
+			display: block;
+			min-width: 160px;
+			border-bottom: none;
+			font: 10px/1 "Open Sans", Arial, sans-serif;
+			text-align: left;
+			text-decoration: none;
+			opacity: 0.85;
+		}
+
+		.wpa .u>div, .wpadvert>div>* {
+			display: block;
+			margin-top: 5px;
+			margin-bottom: 1em;
+		}
+
+		div.wpa>div {
+			margin-top: 10px;
+		}/* Inline styles */
+.amp-wp-inline-111b3377dcc95fe9e69d534e000ef765{max-width:235px;}.amp-wp-inline-e19c5d6ad1cff92ce94d60e4da9faec6{border:1px solid #000000;}	</style>
+</head>
+
+<body class="">
+
+<header id="#top" class="amp-wp-header">
+	<div>
+		<a href="https://bartoszmilewski.com">
+						  Bartosz Milewski&#039;s Programming Cafe		</a>
+	</div>
+</header>
+
+<article class="amp-wp-article">
+
+	<header class="amp-wp-article-header">
+		<h1 class="amp-wp-title">Category Theory for Programmers: The Preface</h1>
+				<div class="amp-wp-meta amp-wp-byline">
+					<amp-img src="https://secure.gravatar.com/avatar/c018f213204496b4bbf481e7c8e6c15c?s=24&#038;d=mm&#038;r=g" width="24" height="24" layout="fixed"></amp-img>
+				<span class="amp-wp-author author vcard">Bartosz Milewski</span>
+	</div>
+<div class="amp-wp-meta amp-wp-posted-on">
+	<time datetime="2014-10-28T07:57:50+00:00">
+		3 years ago	</time>
+</div>
+	</header>
+
+	
+	<div class="amp-wp-article-content">
+				<div class="wpcnt">
+			<div class="wpa wpmrec">
+				<span class="wpa-about">Advertisements</span>
+				<div class="u">
+					<amp-ad width="300" height="250" type="pubmine" data-adsafe="1" data-section="2" data-siteid="2694" data-wordads="0"><div placeholder="" class="amp-wp-iframe-placeholder"></div>
+					</amp-ad></div>
+			</div>
+		</div><h2>Table of Contents</h2>
+<h3>Part One</h3>
+<ol><li><a title="Category: The Essence of Composition" href="../../../../11/04/category-the-essence-of-composition/trackback/index.html" target="_blank">Category: The Essence of Composition</a></li>
+<li><a title="Types and Functions" href="../../../../11/24/types-and-functions/trackback/index.html" target="_blank">Types and Functions</a></li>
+<li><a title="Categories Great and Small" href="../../../../12/05/categories-great-and-small/trackback/index.html" target="_blank">Categories Great and Small</a></li>
+<li><a title="Kleisli Categories" href="../../../../12/23/kleisli-categories/trackback/index.html" target="_blank">Kleisli Categories</a></li>
+<li><a title="Products and Coproducts" href="../../../../../2015/01/07/products-and-coproducts/trackback/index.html" target="_blank">Products and Coproducts</a></li>
+<li><a title="Simple Algebraic Data Types" href="../../../../../2015/01/13/simple-algebraic-data-types/trackback/index.html" target="_blank">Simple Algebraic Data Types</a></li>
+<li><a title="Functors" href="../../../../../2015/01/20/functors/trackback/index.html" target="_blank">Functors</a></li>
+<li><a title="Functoriality" href="../../../../../2015/02/03/functoriality/trackback/index.html" target="_blank">Functoriality</a></li>
+<li><a title="Function Types" href="../../../../../2015/03/13/function-types/trackback/index.html" target="_blank">Function Types</a></li>
+<li><a title="Natural Transformations" href="../../../../../2015/04/07/natural-transformations/trackback/index.html" target="_blank">Natural Transformations</a></li>
+</ol><h3>Part Two</h3>
+<ol><li><a title="Category Theory and Declarative Programming" href="../../../../../2015/04/15/category-theory-and-declarative-programming/trackback/index.html" target="_blank">Declarative Programming</a></li>
+<li><a href="../../../../../2015/04/15/limits-and-colimits/trackback/index.html" target="_blank">Limits and Colimits</a></li>
+<li><a href="../../../../../2015/07/21/free-monoids/trackback/index.html" target="_blank">Free Monoids</a></li>
+<li><a href="../../../../../2015/07/29/representable-functors/trackback/index.html" target="_blank">Representable Functors</a></li>
+<li><a href="../../../../../2015/09/01/the-yoneda-lemma/trackback/index.html" target="_blank">The Yoneda Lemma</a></li>
+<li><a href="../../../../../2015/10/28/yoneda-embedding/trackback/index.html" target="_blank">Yoneda Embedding</a></li>
+</ol><h3>Part Three</h3>
+<ol><li><a href="../../../../../2015/11/17/its-all-about-morphisms/trackback/index.html" target="_blank">It’s All About Morphisms</a></li>
+<li><a href="../../../../../2016/04/18/adjunctions/trackback/index.html" target="_blank">Adjunctions</a></li>
+<li><a href="../../../../../2016/06/15/freeforgetful-adjunctions/trackback/index.html" target="_blank">Free/Forgetful Adjunctions</a></li>
+<li><a href="../../../../../2016/11/21/monads-programmers-definition/trackback/index.html" target="_blank">Monads: Programmer’s Definition</a></li>
+<li><a href="../../../../../2016/11/30/monads-and-effects/trackback/index.html" target="_blank">Monads and Effects</a></li>
+<li><a href="../../../../../2016/12/27/monads-categorically/trackback/index.html" target="_blank">Monads Categorically</a></li>
+<li><a href="../../../../../2017/01/02/comonads/trackback/index.html" target="_blank">Comonads</a></li>
+<li><a href="../../../../../2017/02/28/f-algebras/trackback/index.html" target="_blank">F-Algebras</a></li>
+<li><a href="../../../../../2017/03/14/algebras-for-monads/trackback/index.html" target="_blank">Algebras for Monads</a></li>
+<li><a href="../../../../../2017/03/29/ends-and-coends/trackback/index.html" target="_blank">Ends and Coends</a></li>
+<li><a href="../../../../../2017/04/17/kan-extensions/trackback/index.html" target="_blank">Kan Extensions</a></li>
+<li><a href="../../../../../2017/05/13/enriched-categories/trackback/index.html" target="_blank">Enriched Categories</a></li>
+<li><a href="../../../../../2017/07/22/topoi/trackback/index.html" target="_blank">Topoi</a></li>
+<li><a href="../../../../../2017/08/26/lawvere-theories/trackback/index.html" target="_blank">Lawvere Theories</a></li>
+<li><a href="../../../../../2017/09/06/monads-monoids-and-categories/trackback/index.html" target="_blank">Monads, Monoids, and Categories</a>
+</li></ol><p>There is a <a href="https://github.com/hmemcpy/milewski-ctfp-pdf" rel="noopener" target="_blank">pdf version</a> of this book with nicer typesetting available for download.</p>
+<p>You may also watch me <a href="https://www.youtube.com/playlist?list=PLbgaMIhjbmEnaH_LTkxLI7FMa2HsnawM_" target="_blank">teaching this material</a> to a live audience.</p>
+<h1>Preface</h1>
+<blockquote><p>For some time now I’ve been floating the idea of writing a book about category theory that would be targeted at programmers. Mind you, not computer scientists but programmers — engineers rather than scientists. I know this sounds crazy and I am properly scared. I can’t deny that there is a huge gap between science and engineering because I have worked on both sides of the divide. But I’ve always felt a very strong compulsion to explain things. I have tremendous admiration for Richard Feynman who was the master of simple explanations. I know I’m no Feynman, but I will try my best. I’m starting by publishing this preface — which is supposed to motivate the reader to learn category theory — in hopes of starting a discussion and soliciting feedback.</p></blockquote>
+<p>I will attempt, in the space of a few paragraphs, to convince you that this book is written for you, and whatever objections you might have to learning one of the most abstract branches of mathematics in your “copious spare time” are totally unfounded.</p>
+<p>My optimism is based on several observations. First, category theory is a treasure trove of extremely useful programming ideas. Haskell programmers have been tapping this resource for a long time, and the ideas are slowly percolating into other languages, but this process is too slow. We need to speed it up.</p>
+<p>Second, there are many different kinds of math, and they appeal to different audiences. You might be allergic to calculus or algebra, but it doesn’t mean you won’t enjoy category theory. I would go as far as to argue that category theory is the kind of math that is particularly well suited for the minds of programmers. That’s because category theory — rather than dealing with particulars — deals with structure. It deals with the kind of structure that makes programs composable.</p>
+<p>Composition is at the very root of category theory — it’s part of the definition of the category itself. And I will argue strongly that composition is the essence of programming. We’ve been composing things forever, long before some great engineer came up with the idea of a subroutine. Some time ago the principles of structural programming revolutionized programming because they made blocks of code composable. Then came object oriented programming, which is all about composing objects. Functional programming is not only about composing functions and algebraic data structures — it makes concurrency composable — something that’s virtually impossible with other programming paradigms.</p>
+<p>Third, I have a secret weapon, a butcher’s knife, with which I will butcher math to make it more palatable to programmers. When you’re a professional mathematician, you have to be very careful to get all your assumptions straight, qualify every statement properly, and construct all your proofs rigorously. This makes mathematical papers and books extremely hard to read for an outsider. I’m a physicist by training, and in physics we made amazing advances using informal reasoning. Mathematicians laughed at the Dirac delta function, which was made up on the spot by the great physicist P. A. M. Dirac to solve some differential equations. They stopped laughing when they discovered a completely new branch of calculus called distribution theory that formalized Dirac’s insights.</p>
+<p>Of course when using hand-waving arguments you run the risk of saying something blatantly wrong, so I will try to make sure that there is solid mathematical theory behind informal arguments in this book. I do have a worn-out copy of Saunders Mac Lane’s <em>Category Theory for the Working Mathematician</em> on my nightstand.</p>
+<p>Since this is category theory <i>for programmers</i> I will illustrate all major concepts using computer code. You are probably aware that functional languages are closer to math than the more popular imperative languages. They also offer more abstracting power. So a natural temptation would be to say: You must learn Haskell before the bounty of category theory becomes available to you. But that would imply that category theory has no application outside of functional programming and that’s simply not true. So I will provide a lot of C++ examples. Granted, you’ll have to overcome some ugly syntax, the patterns might not stand out from the background of verbosity, and you might be forced to do some copy and paste in lieu of higher abstraction, but that’s just the lot of a C++ programmer.</p>
+<p>But you’re not off the hook as far as Haskell is concerned. You don’t have to become a Haskell programmer, but you need it as a language for sketching and documenting ideas to be implemented in C++. That’s exactly how I got started with Haskell. I found its terse syntax and powerful type system a great help in understanding and implementing C++ templates, data structures, and algorithms. But since I can’t expect the readers to already know Haskell, I will introduce it slowly and explain everything as I go.</p>
+<p>If you’re an experienced programmer, you might be asking yourself: I’ve been coding for so long without worrying about category theory or functional methods, so what’s changed? Surely you can’t help but notice that there’s been a steady stream of new functional features invading imperative languages. Even Java, the bastion of object-oriented programming, let the lambdas in C++ has recently been evolving at a frantic pace — a new standard every few years — trying to catch up with the changing world. All this activity is in preparation for a disruptive change or, as we physicist call it, a phase transition. If you keep heating water, it will eventually start boiling. We are now in the position of a frog that must decide if it should continue swimming in increasingly hot water, or start looking for some alternatives.</p>
+<p><a href="https://bartoszmilewski.files.wordpress.com/2014/10/img_1299.jpg"><amp-img class="aligncenter wp-image-3468 size-medium amp-wp-inline-e19c5d6ad1cff92ce94d60e4da9faec6 amp-wp-enforced-sizes" src="https://bartoszmilewski.files.wordpress.com/2014/10/img_1299.jpg?w=300&amp;h=213" alt="IMG_1299" width="300" height="213" srcset="https://bartoszmilewski.files.wordpress.com/2014/10/img_1299.jpg?w=300&amp;h=213 300w, https://bartoszmilewski.files.wordpress.com/2014/10/img_1299.jpg?w=600&amp;h=426 600w, https://bartoszmilewski.files.wordpress.com/2014/10/img_1299.jpg?w=150&amp;h=107 150w" sizes="(min-width: 300px) 300px, 100vw"></amp-img></a></p>
+<p>One of the forces that are driving the big change is the multicore revolution. The prevailing programming paradigm, object oriented programming, doesn’t buy you anything in the realm of concurrency and parallelism, and instead encourages dangerous and buggy design. Data hiding, the basic premise of object orientation, when combined with sharing and mutation, becomes a recipe for data races. The idea of combining a mutex with the data it protects is nice but, unfortunately, locks don’t compose, and lock hiding makes deadlocks more likely and harder to debug.</p>
+<p>But even in the absence of concurrency, the growing complexity of software systems is testing the limits of scalability of the imperative paradigm. To put it simply, side effects are getting out of hand. Granted, functions that have side effects are often convenient and easy to write. Their effects can in principle be encoded in their names and in the comments. A function called SetPassword or WriteFile is obviously mutating some state and generating side effects, and we are used to dealing with that. It’s only when we start composing functions that have side effects on top of other functions that have side effects, and so on, that things start getting hairy. It’s not that side effects are inherently bad — it’s the fact that they are hidden from view that makes them impossible to manage at larger scales. Side effects don’t scale, and imperative programming is all about side effects.</p>
+<p>Changes in hardware and the growing complexity of software are forcing us to rethink the foundations of programming. Just like the builders of Europe’s great gothic cathedrals we’ve been honing our craft to the limits of material and structure. There is an unfinished gothic <a href="http://en.wikipedia.org/wiki/Beauvais_Cathedral" target="_blank">cathedral in Beauvais</a>, France, that stands witness to this deeply human struggle with limitations. It was intended to beat all previous records of height and lightness, but it suffered a series of collapses. Ad hoc measures like iron rods and wooden supports keep it from disintegrating, but obviously a lot of things went wrong. From a modern perspective, it’s a miracle that so many gothic structures had been successfully completed without the help of modern material science, computer modelling, finite element analysis, and general math and physics. I hope future generations will be as admiring of the programming skills we’ve been displaying in building complex operating systems, web servers, and the internet infrastructure. And, frankly, they should, because we’ve done all this based on very flimsy theoretical foundations. We have to fix those foundations if we want to move forward.</p>
+<div data-shortcode="caption" id="attachment_3472" class="wp-caption aligncenter amp-wp-inline-111b3377dcc95fe9e69d534e000ef765"><a href="https://bartoszmilewski.files.wordpress.com/2014/10/beauvais_interior_supports.jpg"><amp-img class="size-medium wp-image-3472 amp-wp-enforced-sizes" src="https://bartoszmilewski.files.wordpress.com/2014/10/beauvais_interior_supports.jpg?w=225&amp;h=300" alt="Ad hoc measures preventing the Beauvais cathedral from collapsing" width="225" height="300" srcset="https://bartoszmilewski.files.wordpress.com/2014/10/beauvais_interior_supports.jpg?w=225&amp;h=300 225w, https://bartoszmilewski.files.wordpress.com/2014/10/beauvais_interior_supports.jpg?w=113&amp;h=150 113w, https://bartoszmilewski.files.wordpress.com/2014/10/beauvais_interior_supports.jpg 360w" sizes="(min-width: 225px) 225px, 100vw"></amp-img></a><p class="wp-caption-text">Ad hoc measures preventing the Beauvais cathedral from collapsing</p></div>
+<p>Next: <a href="../../../../11/04/category-the-essence-of-composition/trackback/index.html">Category: The Essence of Composition</a>.</p>
+<a href="https://twitter.com/BartoszMilewski" class="twitter-follow-button" data-show-count="false" data-text-color="#29303b" data-link-color="#909d73">Follow @BartoszMilewski</a>
+		<div class="wpcnt">
+			<div class="wpa wpmrec">
+				<span class="wpa-about">Advertisements</span>
+				<div class="u">
+					<amp-ad width="300" height="250" type="pubmine" data-adsafe="1" data-section="0" data-siteid="11416" data-wordads="0"><div placeholder="" class="amp-wp-iframe-placeholder"></div>
+					</amp-ad></div>
+			</div>
+		</div>	</div>
+
+	<footer class="amp-wp-article-footer">
+			<div class="amp-wp-meta amp-wp-tax-category">
+		Categories: <a href="../../../../../category/c/index.html" rel="category tag">C++</a>, <a href="../../../../../category/category-theory/index.html" rel="category tag">Category Theory</a>, <a href="../../../../../category/functional-programming/index.html" rel="category tag">Functional Programming</a>, <a href="../../../../../category/haskell/index.html" rel="category tag">Haskell</a>, <a href="../../../../../category/programming/index.html" rel="category tag">Programming</a>	</div>
+
+		<div class="amp-wp-meta amp-wp-comments-link">
+		<a href="../trackback/index.html#comments">
+			Leave a Comment		</a>
+	</div>
+	</footer>
+
+</article>
+
+<footer class="amp-wp-footer">
+	<div>
+		<h2>  Bartosz Milewski&#039;s Programming Cafe</h2>
+		<p>
+			<a href="https://wordpress.com/?ref=footer_website">Create a free website or blog at WordPress.com.</a>
+		</p>
+		<a href="index.html#top" class="back-to-top">Back to top</a>
+	</div>
+</footer>
+
+	<amp-pixel src="https://pixel.wp.com/b.gif?rand=RANDOM&#038;host=bartoszmilewski.com&#038;ref=DOCUMENT_REFERRER&#038;amp=1&#038;blog=3549518&#038;v=wpcom&#038;tz=-7&#038;user_id=0&#038;post=3392&#038;subd=bartoszmilewski"></amp-pixel>
+	<amp-pixel src="https://pixel.wp.com/b.gif?rand=RANDOM&#038;v=wpcom-no-pv&#038;crypt=UE5XaGUuOTlwaD85flAmcm1mcmZsaDhkV11YdWtpP0NsWnVkPS9sL0ViLndld3BkTUV5ST9WY3J1RTlUZyw1R3ZSbnIsdHFTX0lCY0ZyS2M4cGlJUXppTGJkNjdSMj0mY2lfVS1NTlpEbGxNVi1YL35jW3M2M1RUUn54a0RdMEpDdEJELC0mK2h4bmN5ZiVDbkRlQW1hS3ZbWnctOXR%2BTiZ3YTVVMGMyWnA1WFBYUllkdlRGWXUsUjc0ajliLS5yRkpRZkxyRE5rdDVLJVMrV2hjTiUzWG41YUM%3D"></amp-pixel>
+	
+</body>
+</html>

@@ -1,0 +1,700 @@
+<!doctype html>
+<html amp lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
+	
+<!-- Jetpack Open Graph Tags -->
+<meta property="og:type" content="article" />
+<meta property="og:title" content="Adjunctions" />
+<meta property="og:url" content="https://bartoszmilewski.com/2016/04/18/adjunctions/" />
+<meta property="og:description" content="This is part 18 of Categories for Programmers. Previously: It&#8217;s All About Morphisms. See the Table of Contents. In mathematics we have various ways of saying that one thing is like another. T…" />
+<meta property="article:published_time" content="2016-04-18T19:51:16+00:00" />
+<meta property="article:modified_time" content="2017-08-30T03:58:30+00:00" />
+<meta property="og:site_name" content="  Bartosz Milewski&#039;s Programming Cafe" />
+<meta property="og:image" content="https://bartoszmilewski.files.wordpress.com/2016/04/adj-productcat.jpg" />
+<meta property="og:image:width" content="1120" />
+<meta property="og:image:height" content="832" />
+<meta property="og:locale" content="en_US" />
+<meta name="twitter:site" content="@BartoszMilewski" />
+<meta name="twitter:text:title" content="Adjunctions" />
+<meta name="twitter:image" content="https://bartoszmilewski.files.wordpress.com/2016/04/adj-1.jpg?w=240" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:creator" content="@BartoszMilewski" />
+<meta property="article:publisher" content="https://www.facebook.com/WordPresscom" />
+	<title>Adjunctions &#8211;   Bartosz Milewski&#039;s Programming Cafe</title>
+		<link rel="canonical" href="../trackback/index.html" />
+			<script custom-element="amp-ad" src="https://cdn.ampproject.org/v0/amp-ad-0.1.js" async></script>
+		<script src="https://cdn.ampproject.org/v0.js" async></script>
+			<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Merriweather:400,400italic,700,700italic">
+		<style amp-boilerplate>body{-webkit-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-moz-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-ms-animation:-amp-start 8s steps(1,end) 0s 1 normal both;animation:-amp-start 8s steps(1,end) 0s 1 normal both}@-webkit-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-moz-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-ms-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-o-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}</style><noscript><style amp-boilerplate>body{-webkit-animation:none;-moz-animation:none;-ms-animation:none;animation:none}</style></noscript>
+		<script type="application/ld+json">{"@context":"http:\/\/schema.org","@type":"BlogPosting","mainEntityOfPage":"https:\/\/bartoszmilewski.com\/2016\/04\/18\/adjunctions\/","publisher":{"@type":"Organization","name":"\u00a0\u00a0Bartosz Milewski&#039;s Programming Cafe","logo":{"@type":"ImageObject","url":"https:\/\/s2.wp.com\/i\/favicons\/apple-touch-icon-60x60.png","width":60,"height":60}},"headline":"Adjunctions","datePublished":"2016-04-18T12:51:16+00:00","dateModified":"2017-08-29T20:58:30+00:00","author":{"@type":"Person","name":"Bartosz Milewski"},"image":{"@type":"ImageObject","url":"https:\/\/bartoszmilewski.files.wordpress.com\/2016\/04\/adj-1.jpg","width":510,"height":272}}</script>
+		<style amp-custom>
+		/* Generic WP styling */
+
+.alignright {
+	float: right;
+}
+
+.alignleft {
+	float: left;
+}
+
+.aligncenter {
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.amp-wp-enforced-sizes {
+	/** Our sizes fallback is 100vw, and we have a padding on the container; the max-width here prevents the element from overflowing. **/
+	max-width: 100%;
+	margin: 0 auto;
+}
+
+.amp-wp-unknown-size img {
+	/** Worst case scenario when we can't figure out dimensions for an image. **/
+	/** Force the image into a box of fixed dimensions and use object-fit to scale. **/
+	object-fit: contain;
+}
+
+/* Template Styles */
+
+.amp-wp-content,
+.amp-wp-title-bar div {
+		margin: 0 auto;
+	max-width: 510px;
+	}
+
+html {
+	background: #0a89c0;
+}
+
+body {
+	background: #fff;
+	color: #353535;
+	font-family: 'Merriweather', 'Times New Roman', Times, Serif;
+	font-weight: 300;
+	line-height: 1.75em;
+}
+
+p,
+ol,
+ul,
+figure {
+	margin: 0 0 1em;
+	padding: 0;
+}
+
+a,
+a:visited {
+	color: #0a89c0;
+}
+
+a:hover,
+a:active,
+a:focus {
+	color: #353535;
+}
+
+/* Quotes */
+
+blockquote {
+	color: #353535;
+	background: rgba(127,127,127,.125);
+	border-left: 2px solid #0a89c0;
+	margin: 8px 0 24px 0;
+	padding: 16px;
+}
+
+blockquote p:last-child {
+	margin-bottom: 0;
+}
+
+/* UI Fonts */
+
+.amp-wp-meta,
+.amp-wp-header div,
+.amp-wp-title,
+.wp-caption-text,
+.amp-wp-tax-category,
+.amp-wp-tax-tag,
+.amp-wp-comments-link,
+.amp-wp-footer p,
+.back-to-top {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen-Sans", "Ubuntu", "Cantarell", "Helvetica Neue", sans-serif;
+}
+
+/* Header */
+
+.amp-wp-header {
+	background-color: #0a89c0;
+}
+
+.amp-wp-header div {
+	color: #fff;
+	font-size: 1em;
+	font-weight: 400;
+	margin: 0 auto;
+	max-width: calc(840px - 32px);
+	padding: .875em 16px;
+	position: relative;
+}
+
+.amp-wp-header a {
+	color: #fff;
+	text-decoration: none;
+}
+
+/* Site Icon */
+
+.amp-wp-header .amp-wp-site-icon {
+	/** site icon is 32px **/
+	background-color: #fff;
+	border: 1px solid #fff;
+	border-radius: 50%;
+	position: absolute;
+	right: 18px;
+	top: 10px;
+}
+
+/* Article */
+
+.amp-wp-article {
+	color: #353535;
+	font-weight: 400;
+	margin: 1.5em auto;
+	max-width: 840px;
+	overflow-wrap: break-word;
+	word-wrap: break-word;
+}
+
+/* Article Header */
+
+.amp-wp-article-header {
+	align-items: center;
+	align-content: stretch;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	margin: 1.5em 16px 1.5em;
+}
+
+.amp-wp-title {
+	color: #353535;
+	display: block;
+	flex: 1 0 100%;
+	font-weight: 900;
+	margin: 0 0 .625em;
+	width: 100%;
+}
+
+/* Article Meta */
+
+.amp-wp-meta {
+	color: #696969;
+	display: inline-block;
+	flex: 2 1 50%;
+	font-size: .875em;
+	line-height: 1.5em;
+	margin: 0;
+	padding: 0;
+}
+
+.amp-wp-article-header .amp-wp-meta:last-of-type {
+	text-align: right;
+}
+
+.amp-wp-article-header .amp-wp-meta:first-of-type {
+	text-align: left;
+}
+
+.amp-wp-byline amp-img,
+.amp-wp-byline .amp-wp-author {
+	display: inline-block;
+	vertical-align: middle;
+}
+
+.amp-wp-byline amp-img {
+	border: 1px solid #0a89c0;
+	border-radius: 50%;
+	position: relative;
+	margin-right: 6px;
+}
+
+.amp-wp-posted-on {
+	text-align: right;
+}
+
+/* Featured image */
+
+.amp-wp-article-featured-image {
+	margin: 0 0 1em;
+}
+.amp-wp-article-featured-image amp-img {
+	margin: 0 auto;
+}
+.amp-wp-article-featured-image.wp-caption .wp-caption-text {
+	margin: 0 18px;
+}
+
+/* Article Content */
+
+.amp-wp-article-content {
+	margin: 0 16px;
+}
+
+.amp-wp-article-content ul,
+.amp-wp-article-content ol {
+	margin-left: 1em;
+}
+
+.amp-wp-article-content amp-img {
+	margin: 0 auto;
+}
+
+.amp-wp-article-content amp-img.alignright {
+	margin: 0 0 1em 16px;
+}
+
+.amp-wp-article-content amp-img.alignleft {
+	margin: 0 16px 1em 0;
+}
+
+/* Captions */
+
+.wp-caption {
+	padding: 0;
+}
+
+.wp-caption.alignleft {
+	margin-right: 16px;
+}
+
+.wp-caption.alignright {
+	margin-left: 16px;
+}
+
+.wp-caption .wp-caption-text {
+	border-bottom: 1px solid #c2c2c2;
+	color: #696969;
+	font-size: .875em;
+	line-height: 1.5em;
+	margin: 0;
+	padding: .66em 10px .75em;
+}
+
+/* AMP Media */
+
+amp-carousel {
+	background: #c2c2c2;
+	margin: 0 -16px 1.5em;
+}
+amp-iframe,
+amp-youtube,
+amp-instagram,
+amp-vine {
+	background: #c2c2c2;
+	margin: 0 -16px 1.5em;
+}
+
+.amp-wp-article-content amp-carousel amp-img {
+	border: none;
+}
+
+amp-carousel > amp-img > img {
+	object-fit: contain;
+}
+
+.amp-wp-iframe-placeholder {
+	background: #c2c2c2 url( https://s2.wp.com/wp-content/plugins/amp/assets/images/placeholder-icon.png ) no-repeat center 40%;
+	background-size: 48px 48px;
+	min-height: 48px;
+}
+
+/* Article Footer Meta */
+
+.amp-wp-article-footer .amp-wp-meta {
+	display: block;
+}
+
+.amp-wp-tax-category,
+.amp-wp-tax-tag {
+	color: #696969;
+	font-size: .875em;
+	line-height: 1.5em;
+	margin: 1.5em 16px;
+}
+
+.amp-wp-comments-link {
+	color: #696969;
+	font-size: .875em;
+	line-height: 1.5em;
+	text-align: center;
+	margin: 2.25em 0 1.5em;
+}
+
+.amp-wp-comments-link a {
+	border-style: solid;
+	border-color: #c2c2c2;
+	border-width: 1px 1px 2px;
+	border-radius: 4px;
+	background-color: transparent;
+	color: #0a89c0;
+	cursor: pointer;
+	display: block;
+	font-size: 14px;
+	font-weight: 600;
+	line-height: 18px;
+	margin: 0 auto;
+	max-width: 200px;
+	padding: 11px 16px;
+	text-decoration: none;
+	width: 50%;
+	-webkit-transition: background-color 0.2s ease;
+			transition: background-color 0.2s ease;
+}
+
+/* AMP Footer */
+
+.amp-wp-footer {
+	border-top: 1px solid #c2c2c2;
+	margin: calc(1.5em - 1px) 0 0;
+}
+
+.amp-wp-footer div {
+	margin: 0 auto;
+	max-width: calc(840px - 32px);
+	padding: 1.25em 16px 1.25em;
+	position: relative;
+}
+
+.amp-wp-footer h2 {
+	font-size: 1em;
+	line-height: 1.375em;
+	margin: 0 0 .5em;
+}
+
+.amp-wp-footer p {
+	color: #696969;
+	font-size: .8em;
+	line-height: 1.5em;
+	margin: 0 85px 0 0;
+}
+
+.amp-wp-footer a {
+	text-decoration: none;
+}
+
+.back-to-top {
+	bottom: 1.275em;
+	font-size: .8em;
+	font-weight: 600;
+	line-height: 2em;
+	position: absolute;
+	right: 16px;
+}
+				/* WordAds */
+		.wpcnt {
+			text-align: center;
+			line-height: 0;
+			display: block;
+			clear: both;
+			margin: 1em 0;
+		}
+
+		.rtl .wpcnt {
+			direction: ltr;
+		}
+
+		.wpa {
+			position: relative;
+			display: inline-block;
+			max-width: 100%;
+			text-align: left;
+			padding: 10px 0 0;
+			min-width: 300px;
+			-webkit-transform: translate3d(0, 0, 0);
+			transform: translate3d(0, 0, 0);
+		}
+
+		.wpa-about {
+			position: absolute;
+			top: 5px;
+			left: 0;
+			right: 0;
+			display: block;
+			min-width: 160px;
+			border-bottom: none;
+			font: 10px/1 "Open Sans", Arial, sans-serif;
+			text-align: left;
+			text-decoration: none;
+			opacity: 0.85;
+		}
+
+		.wpa .u>div, .wpadvert>div>* {
+			display: block;
+			margin-top: 5px;
+			margin-bottom: 1em;
+		}
+
+		div.wpa>div {
+			margin-top: 10px;
+		}	</style>
+</head>
+
+<body class="">
+
+<header id="#top" class="amp-wp-header">
+	<div>
+		<a href="https://bartoszmilewski.com">
+						  Bartosz Milewski&#039;s Programming Cafe		</a>
+	</div>
+</header>
+
+<article class="amp-wp-article">
+
+	<header class="amp-wp-article-header">
+		<h1 class="amp-wp-title">Adjunctions</h1>
+				<div class="amp-wp-meta amp-wp-byline">
+					<amp-img src="https://secure.gravatar.com/avatar/c018f213204496b4bbf481e7c8e6c15c?s=24&#038;d=mm&#038;r=g" width="24" height="24" layout="fixed"></amp-img>
+				<span class="amp-wp-author author vcard">Bartosz Milewski</span>
+	</div>
+<div class="amp-wp-meta amp-wp-posted-on">
+	<time datetime="2016-04-18T12:51:16+00:00">
+		1 year ago	</time>
+</div>
+	</header>
+
+	
+	<div class="amp-wp-article-content">
+				<div class="wpcnt">
+			<div class="wpa wpmrec">
+				<span class="wpa-about">Advertisements</span>
+				<div class="u">
+					<amp-ad width="300" height="250" type="pubmine" data-adsafe="1" data-section="2" data-siteid="2694" data-wordads="0"><div placeholder="" class="amp-wp-iframe-placeholder"></div>
+					</amp-ad></div>
+			</div>
+		</div><blockquote><p>This is part 18 of Categories for Programmers. Previously: <a href="../../../../../2015/11/17/its-all-about-morphisms/trackback/index.html" target="_blank">It’s All About Morphisms</a>. See the <a title="Table of Contents" href="../../../../../2014/10/28/category-theory-for-programmers-the-preface/trackback/index.html" target="_blank">Table of Contents</a>.</p></blockquote>
+<p>In mathematics we have various ways of saying that one thing is like another. The strictest is equality. Two things are equal if there is no way to distinguish one from another. One can be substituted for the other in every imaginable context. For instance, did you notice that we used <em>equality</em> of morphisms every time we talked about commuting diagrams? That’s because morphisms form a set (hom-set) and set elements can be compared for equality.</p>
+<p>But equality is often too strong. There are many examples of things being the same for all intents and purposes, without actually being equal. For instance, the pair type <code>(Bool, Char)</code> is not strictly equal to <code>(Char, Bool)</code>, but we understand that they contain the same information. This concept is best captured by an <em>isomorphism</em> between two types — a morphism that’s invertible. Since it’s a morphism, it preserves the structure; and being “iso” means that it’s part of a round trip that lands you in the same spot, no matter on which side you start. In the case of pairs, this isomorphism is called <code>swap</code>:</p>
+<pre>swap       :: (a,b) -&gt; (b,a)&#13;
+swap (a,b) = (b,a)</pre>
+<p><code>swap</code> happens to be its own inverse.</p>
+<h2>Adjunction and Unit/Counit Pair</h2>
+<p>When we talk about categories being isomorphic, we express this in terms of mappings between categories, a.k.a. functors. We would like to be able to say that two categories <i>C</i> and <i>D</i> are isomorphic if there exists a functor <code>R</code> (“right”) from <i>C</i> to <i>D</i>, which is invertible. In other words, there exists another functor <code>L</code> (“left”) from <i>D</i> back to <i>C</i> which, when composed with <code>R</code>, is equal to the identity functor <code>I</code>. There are two possible compositions, <code>R ∘ L</code> and <code>L ∘ R</code>; and two possible identity functors: one in <i>C</i> and another in <i>D</i>.</p>
+<p><a href="https://bartoszmilewski.files.wordpress.com/2016/04/adj-1.jpg" rel="attachment"><amp-img class="alignnone size-medium wp-image-5487 amp-wp-enforced-sizes" src="https://bartoszmilewski.files.wordpress.com/2016/04/adj-1.jpg?w=300&amp;h=160" alt="Adj - 1" width="300" height="160" srcset="https://bartoszmilewski.files.wordpress.com/2016/04/adj-1.jpg?w=300&amp;h=160 300w, https://bartoszmilewski.files.wordpress.com/2016/04/adj-1.jpg?w=600&amp;h=320 600w, https://bartoszmilewski.files.wordpress.com/2016/04/adj-1.jpg?w=150&amp;h=80 150w" sizes="(min-width: 300px) 300px, 100vw"></amp-img></a></p>
+<p>But here’s the tricky part: What does it mean for two functors to be <em>equal</em>? What do we mean by this equality:</p>
+<pre>R ∘ L = I<sub>D</sub></pre>
+<p>or this one:</p>
+<pre>L ∘ R = I<sub>C</sub></pre>
+<p>It would be reasonable to define functor equality in terms of equality of objects. Two functors, when acting on equal objects, should produce equal objects. But we don’t, in general, have the notion of object equality in an arbitrary category. It’s just not part of the definition. (Going deeper into this rabbit hole of “what equality really is,” we would end up in Homotopy Type Theory.)</p>
+<p>You might argue that functors <em>are</em> morphisms in the category of categories, so they should be equality-comparable. And indeed, as long as we are talking about small categories, where objects form a set, we can indeed use the equality of elements of a set to equality-compare objects.</p>
+<p>But, remember, <b>Cat</b> is really a 2-category. Hom-sets in a 2-category have additional structure — there are 2-morphisms acting between 1-morphisms. In <b>Cat</b>, 1-morphisms are functors, and 2-morphisms are natural transformations. So it’s more natural (can’t avoid this pun!) to consider natural isomorphisms as substitutes for equality when talking about functors.</p>
+<p>So, instead of isomorphism of categories, it makes sense to consider a more general notion of <em>equivalence</em>. Two categories <i>C</i> and <i>D</i> are <em>equivalent</em> if we can find two functors going back and forth between them, whose composition (either way) is <em>naturally isomorphic</em> to the identity functor. In other words, there is a two-way natural transformation between the composition <code>R ∘ L</code> and the identity functor <code>I<sub>D</sub></code>, and another between <code>L ∘ R</code> and the identity functor <code>I<sub>C</sub></code>.</p>
+<p>Adjunction is even weaker than equivalence, because it doesn’t require that the composition of the two functors be <em>isomorphic</em> to the identity functor. Instead it stipulates the existence of a <em>one way</em> natural transformation from <code>I<sub>D</sub></code> to <code>R∘L</code>, and another from <code>L∘R</code> to <code>I<sub>C</sub></code>. Here are the signatures of these two natural transformations:</p>
+<pre>η :: I<sub>D</sub> -&gt; R ∘ L&#13;
+ε :: L ∘ R -&gt; I<sub>C</sub></pre>
+<p>η is called the unit, and ε the counit of the adjunction.</p>
+<p>Notice the asymmetry between these two definitions. In general, we don’t have the two remaining mappings:</p>
+<pre>R ∘ L -&gt; I<sub>D</sub> -- not necessarily&#13;
+I<sub>C</sub> -&gt; L ∘ R -- not necessarily</pre>
+<p>Because of this asymmetry, the functor <code>L</code> is called the <em>left adjoint</em> to the functor <code>R</code>, while the functor <code>R</code> is the right adjoint to <code>L</code>. (Of course, left and right make sense only if you draw your diagrams one particular way.)</p>
+<p>The compact notation for the adjunction is:</p>
+<pre>L ⊣ R</pre>
+<p>To better understand the adjunction, let’s analyze the unit and the counit in more detail.</p>
+<p><a href="https://bartoszmilewski.files.wordpress.com/2016/04/adj-unit.jpg" rel="attachment"><amp-img class="alignnone size-medium wp-image-5489 amp-wp-enforced-sizes" src="https://bartoszmilewski.files.wordpress.com/2016/04/adj-unit.jpg?w=300&amp;h=183" alt="Adj-Unit" width="300" height="183" srcset="https://bartoszmilewski.files.wordpress.com/2016/04/adj-unit.jpg?w=300&amp;h=183 300w, https://bartoszmilewski.files.wordpress.com/2016/04/adj-unit.jpg?w=600&amp;h=366 600w, https://bartoszmilewski.files.wordpress.com/2016/04/adj-unit.jpg?w=150&amp;h=92 150w" sizes="(min-width: 300px) 300px, 100vw"></amp-img></a></p>
+<p>Let’s start with the unit. It’s a natural transformation, so it’s a family of morphisms. Given an object <code>d</code> in <i>D</i>, the component of η is a morphism between <code>I d</code>, which is equal to <code>d</code>, and <code>(R ∘ L) d</code>; which, in the picture, is called <code>d'</code>:</p>
+<pre>η<sub>d</sub> :: d -&gt; (R ∘ L) d</pre>
+<p>Notice that the composition <code>R∘L</code> is an endofunctor in <i>D</i>.</p>
+<p>This equation tells us that we can pick any object <code>d</code> in <i>D</i> as our starting point, and use the round trip functor <code>R ∘ L</code> to pick our target object <code>d'</code>. Then we shoot an arrow — the morphism <code>η<sub>d</sub></code> — to our target.</p>
+<p><a href="https://bartoszmilewski.files.wordpress.com/2016/04/adj-counit.jpg" rel="attachment"><amp-img class="alignnone size-medium wp-image-5490 amp-wp-enforced-sizes" src="https://bartoszmilewski.files.wordpress.com/2016/04/adj-counit.jpg?w=300&amp;h=181" alt="Adj-Counit" width="300" height="181" srcset="https://bartoszmilewski.files.wordpress.com/2016/04/adj-counit.jpg?w=300&amp;h=181 300w, https://bartoszmilewski.files.wordpress.com/2016/04/adj-counit.jpg?w=600&amp;h=362 600w, https://bartoszmilewski.files.wordpress.com/2016/04/adj-counit.jpg?w=150&amp;h=90 150w" sizes="(min-width: 300px) 300px, 100vw"></amp-img></a></p>
+<p>By the same token, the component of of the counit ε can be described as:</p>
+<pre>ε<sub>c'</sub> :: (L ∘ R) c -&gt; c</pre>
+<p>where <code>c'</code> is <code>(L ∘ R) c</code>. It tells us that we can pick any object <code>c</code> in <i>C</i> as our target, and use the round trip functor <code>L ∘ R</code> to pick the source <code>c'</code>. Then we shoot the arrow — the morphism <code>ε<sub>c'</sub></code> — from the source to the target.</p>
+<p>Another way of looking at unit and counit is that unit lets us <i>introduce</i> the composition <code>R ∘ L</code> anywhere we could insert an identity functor on <i>D</i>; and counit lets us <i>eliminate</i> the composition <code>L ∘ R</code>, replacing it with the identity on <i>C</i>. That leads to some “obvious” consistency conditions, which make sure that introduction followed by elimination doesn’t change anything:</p>
+<pre>L = L ∘ I<sub>D</sub> -&gt; L ∘ R ∘ L -&gt; I<sub>C</sub> ∘ L  = L</pre>
+<pre>R = I<sub>D</sub> ∘ R -&gt; R ∘ L ∘ R -&gt; R ∘ I<sub>C</sub> = R</pre>
+<p>These are called triangular identities because they make the following diagrams commute: </p>
+<p><a href="https://bartoszmilewski.files.wordpress.com/2017/02/triangles.png"><amp-img class="alignnone wp-image-8382 amp-wp-enforced-sizes" src="https://bartoszmilewski.files.wordpress.com/2017/02/triangles.png?w=209&amp;h=151" alt="triangles" width="209" height="151" srcset="https://bartoszmilewski.files.wordpress.com/2017/02/triangles.png?w=209&amp;h=151 209w, https://bartoszmilewski.files.wordpress.com/2017/02/triangles.png?w=418&amp;h=302 418w, https://bartoszmilewski.files.wordpress.com/2017/02/triangles.png?w=150&amp;h=109 150w, https://bartoszmilewski.files.wordpress.com/2017/02/triangles.png?w=300&amp;h=217 300w" sizes="(min-width: 209px) 209px, 100vw"></amp-img></a></p>
+<p><a href="https://bartoszmilewski.files.wordpress.com/2017/02/triangles-2.png"><amp-img class=" alignnone wp-image-8381 amp-wp-enforced-sizes" src="https://bartoszmilewski.files.wordpress.com/2017/02/triangles-2.png?w=211&amp;h=138" alt="triangles-2" width="211" height="138" srcset="https://bartoszmilewski.files.wordpress.com/2017/02/triangles-2.png?w=211&amp;h=138 211w, https://bartoszmilewski.files.wordpress.com/2017/02/triangles-2.png?w=422&amp;h=276 422w, https://bartoszmilewski.files.wordpress.com/2017/02/triangles-2.png?w=150&amp;h=98 150w, https://bartoszmilewski.files.wordpress.com/2017/02/triangles-2.png?w=300&amp;h=196 300w" sizes="(min-width: 211px) 211px, 100vw"></amp-img></a><br/>
+These are diagrams in the functor category: the arrows are natural transformations, and their composition is the horizontal composition of natural transformations. In components, these identities become:</p>
+<pre>ε<sub> L d</sub> ∘ L η<sub> d</sub> = id<sub> L d</sub>&#13;
+R ε<sub> c</sub> ∘ η<sub> R c</sub> = id<sub> R c</sub></pre>
+<p>We often see unit and counit in Haskell under different names. Unit is known as <code>return</code> (or <code>pure</code>, in the definition of <code>Applicative</code>):</p>
+<pre>return :: d -&gt; m d</pre>
+<p>and counint as <code>extract</code>:</p>
+<pre>extract :: w c -&gt; c</pre>
+<p>Here, <code>m</code> is the (endo-) functor corresponding to <code>R∘L</code>, and <code>w</code> is the (endo-) functor corresponding to <code>L∘R</code>. As we’ll see later, they are part of the definition of a monad and a comonad, respectively.</p>
+<p>If you think of an endofunctor as a container, the unit (or <code>return</code>) is a polymorphic function that creates a default box around a value of arbitrary type. The counit (or <code>extract</code>) does the reverse: it retrieves or produces a single value from a container.</p>
+<p>We’ll see later that every pair of adjoint functors defines a monad and a comonad. Conversely, every monad or comonad may be factorized into a pair of adjoint functors — this factorization is not unique, though.</p>
+<p>In Haskell, we use monads a lot, but only rarely factorize them into pairs of adjoint functors, primarily because those functors would normally take us out of <b>Hask</b>.</p>
+<p>We can however define adjunctions of <em>endofunctors</em> in Haskell. Here’s part of the definition taken from <code>Data.Functor.Adjunction</code>:</p>
+<pre>class (Functor f, Representable u) =&gt;&#13;
+      Adjunction f u | f -&gt; u, u -&gt; f where&#13;
+  unit         :: a -&gt; u (f a)&#13;
+  counit       :: f (u a) -&gt; a&#13;
+</pre>
+<p>This definition requires some explanation. First of all, it describes a multi-parameter type class — the two parameters being <code>f</code> and <code>u</code>. It establishes a relation called <code>Adjunction</code> between these two type constructors.</p>
+<p>Additional conditions, after the vertical bar, specify functional dependencies. For instance, <code>f -&gt; u</code> means that <code>u</code> is determined by <code>f</code> (the relation between <code>f</code> and <code>u</code> is a function, here on type constructors). Conversely, <code>u -&gt; f</code> means that, if we know <code>u</code>, then <code>f</code> is uniquely determined.</p>
+<p>I’ll explain in a moment why, in Haskell, we can impose the condition that the right adjoint <code>u</code> be a <em>representable</em> functor.</p>
+<h2>Adjunctions and Hom-Sets</h2>
+<p>There is an equivalent definition of the adjunction in terms of natural isomorphisms of hom-sets. This definition ties nicely with universal constructions we’ve been studying so far. Every time you hear the statement that there is some unique morphism, which factorizes some construction, you should think of it as a mapping of some set to a hom-set. That’s the meaning of “picking a unique morphism.”</p>
+<p>Furthermore, factorization can be often described in terms of natural transformations. Factorization involves commuting diagrams — some morphism being equal to a composition of two morphisms (factors). A natural transformation maps morphisms to commuting diagrams. So, in a universal construction, we go from a morphism to a commuting diagram, and then to a unique morphism. We end up with a mapping from morphism to morphism, or from one hom-set to another (usually in different categories). If this mapping is invertible, and if it can be naturally extended across all hom-sets, we have an adjunction.</p>
+<p>The main difference between universal constructions and adjunctions is that the latter are defined globally — for all hom-sets. For instance, using a universal construction you can define a product of two select objects, even if it doesn’t exist for any other pair of objects in that category. As we’ll see soon, if the product of <em>any pair</em> of objects exists in a category, it can be also defined through an adjunction.</p>
+<p><a href="https://bartoszmilewski.files.wordpress.com/2016/04/adj-homsets.jpg" rel="attachment"><amp-img class="alignnone size-medium wp-image-5491 amp-wp-enforced-sizes" src="https://bartoszmilewski.files.wordpress.com/2016/04/adj-homsets.jpg?w=300&amp;h=206" alt="Adj-HomSets" width="300" height="206" srcset="https://bartoszmilewski.files.wordpress.com/2016/04/adj-homsets.jpg?w=300&amp;h=206 300w, https://bartoszmilewski.files.wordpress.com/2016/04/adj-homsets.jpg?w=600&amp;h=412 600w, https://bartoszmilewski.files.wordpress.com/2016/04/adj-homsets.jpg?w=150&amp;h=103 150w" sizes="(min-width: 300px) 300px, 100vw"></amp-img></a></p>
+<p>Here’s the alternative definition of the adjunction using hom-sets. As before, we have two functors <code>L :: D-&gt;C</code> and <code>R :: C-&gt;D</code>. We pick two arbitrary objects: the source object <code>d</code> in <i>D</i>, and the target object <code>c</code> in <i>C</i>. We can map the source object <code>d</code> to <i>C</i> using <code>L</code>. Now we have two objects in <i>C</i>, <code>L d</code> and <code>c</code>. They define a hom-set:</p>
+<pre>C(L d, c)</pre>
+<p>Similarly, we can map the target object <code>c</code> using <code>R</code>. Now we have two objects in <i>D</i>, <code>d</code> and <code>R c</code>. They, too, define a hom set:</p>
+<pre>D(d, R c)</pre>
+<p>We say that <code>L</code> is left adjoint to <code>R</code> iff there is an isomorphism of hom sets:</p>
+<pre>C(L d, c) ≅ D(d, R c)</pre>
+<p>that is natural both in <code>d</code> and <code>c</code>.</p>
+<p>Naturality means that the source <code>d</code> can be varied smoothly across <i>D</i>; and the target <code>c</code>, across <i>C</i>. More precisely, we have a natural transformation <code>φ</code> between the following two (covariant) functors from <i>C</i> to <b>Set</b>. Here’s the action of these functors on objects:</p>
+<pre>c -&gt; C(L d, c)&#13;
+c -&gt; D(d, R c)</pre>
+<p>The other natural transformation, <code>ψ</code>, acts between the following (contravariant) functors:</p>
+<pre>d -&gt; C(L d, c)&#13;
+d -&gt; D(d, R c)</pre>
+<p>Both natural transformations must be invertible.</p>
+<p>It’s easy to show that the two definitions of the adjunction are equivalent. For instance, let’s derive the unit transformation starting from the isomorphism of hom-sets:</p>
+<pre>C(L d, c) ≅ D(d, R c)</pre>
+<p>Since this isomorphism works for any object <code>c</code>, it must also work for <code>c = L d</code>:</p>
+<pre>C(L d, L d) ≅ D(d, (R ∘ L) d)</pre>
+<p>We know that the left hand side must contain at least one morphism, the identity. The natural transformation will map this morphism to an element of <code>D(d, (R ∘ L) d)</code> or, inserting the identity functor <code>I</code>, a morphism in:</p>
+<pre>D(I d, (R ∘ L) d)</pre>
+<p>We get a family of morphisms parameterized by <code>d</code>. They form a natural transformation between the functor <code>I</code> and the functor <code>R ∘ L</code> (the naturality condition is easy to verify). This is exactly our unit, <code>η</code>.</p>
+<p>Conversely, starting from the existence of the unit and co-unit, we can define the transformations between hom-sets. For instance, let’s pick an arbitrary morphism <code>f</code> in the hom-set <code>C(L d, c)</code>. We want to define a <code>φ</code> that, acting on <code>f</code>, produces a morphism in <code>D(d, R c)</code>.</p>
+<p>There isn’t really much choice. One thing we can try is to lift <code>f</code> using <code>R</code>. That will produce a morphism <code>R f</code> from <code>R (L d)</code> to <code>R c</code> — a morphism that’s an element of <code>D((R ∘ L) d, R c)</code>.</p>
+<p>What we need for a component of <code>φ</code>, is a morphism from <code>d</code> to <code>R c</code>. That’s not a problem, since we can use a component of <code>η<sub>d</sub></code> to get from <code>d</code> to <code>(R ∘ L) d</code>. We get:</p>
+<pre>φ<sub>f</sub> = R f ∘ η<sub>d</sub></pre>
+<p>The other direction is analogous, and so is the derivation of <code>ψ</code>.</p>
+<p>Going back to the Haskell definition of <code>Adjunction</code>, the natural transformations <code>φ</code> and <code>ψ</code> are replaced by polymorphic (in <code>a</code> and <code>b</code>) functions <code>leftAdjunct</code> and <code>rightAdjunct</code>, respectively. The functors <code>L</code> and <code>R</code> are called <code>f</code> and <code>u</code>:</p>
+<pre>class (Functor f, Representable u) =&gt;&#13;
+      Adjunction f u | f -&gt; u, u -&gt; f where&#13;
+  leftAdjunct  :: (f a -&gt; b) -&gt; (a -&gt; u b)&#13;
+  rightAdjunct :: (a -&gt; u b) -&gt; (f a -&gt; b)&#13;
+</pre>
+<p>The equivalence between the <code>unit</code>/<code>counit</code> formulation and the <code>leftAdjunct</code>/<code>rightAdjunct</code> formulation is witnessed by these mappings:</p>
+<pre>  unit           = leftAdjunct id&#13;
+  counit         = rightAdjunct id&#13;
+  leftAdjunct f  = fmap f . unit&#13;
+  rightAdjunct f = counit . fmap f&#13;
+</pre>
+<p>It’s very instructive to follow the translation from the categorical description of the adjunction to Haskell code. I highly encourage this as an exercise.</p>
+<p>We are now ready to explain why, in Haskell, the right adjoint is automatically a <a href="../../../../../2015/07/29/representable-functors/trackback/index.html" target="_blank">representable functor</a>. The reason for this is that, to the first approximation, we can treat the category of Haskell types as the category of sets.</p>
+<p>When the right category <i>D</i> is <b>Set</b>, the right adjoint <code>R</code> is a functor from <i>C</i> to <b>Set</b>. Such a functor is representable if we can find an object <code>rep</code> in <i>C</i> such that the hom-functor <code>C(rep, _)</code> is naturally isomorphic to <code>R</code>. It turns out that, if <code>R</code> is the right adjoint of some functor <code>L</code> from <b>Set</b> to <i>C</i>, such an object always exists — it’s the image of the singleton set <code>()</code> under <code>L</code>:</p>
+<pre>rep = L ()</pre>
+<p>Indeed, the adjunction tells us that the following two hom-sets are naturally isomorphic:</p>
+<pre>C(L (), c) ≅ Set((), R c)</pre>
+<p>For a given <code>c</code>, the right hand side is the set of functions from the singleton set <code>()</code> to <code>R c</code>. We’ve seen earlier that each such function picks one element from the set <code>R c</code>. The set of such functions is isomorphic to the set <code>R c</code>. So we have:</p>
+<pre>C(L (), -) ≅ R</pre>
+<p>which shows that <code>R</code> is indeed representable.</p>
+<h2>Product from Adjunction</h2>
+<p>We have previously introduced several concepts using universal constructions. Many of those concepts, when defined globally, are easier to express using adjunctions. The simplest non-trivial example is that of the product. The gist of the <a href="../../../../../2015/01/07/products-and-coproducts/trackback/index.html" target="_blank">universal construction of the product</a> is the ability to factorize any product-like candidate through the universal product.</p>
+<p>More precisely, the product of two objects <code>a</code> and <code>b</code> is the object <code>(a × b)</code> (or <code>(a, b)</code> in the Haskell notation) equipped with two morphisms <code>fst</code> and <code>snd</code> such that, for any other candidate <code>c</code> equipped with two morphisms <code>p::c-&gt;a</code> and <code>q::c-&gt;b</code>, there exists a unique morphism <code>m::c-&gt;(a, b)</code> that factorizes <code>p</code> and <code>q</code> through <code>fst</code> and <code>snd</code>.</p>
+<p>As we’ve seen <a href="../../../../../2015/01/07/products-and-coproducts/trackback/index.html" target="_blank">earlier</a>, in Haskell, we can implement a <code>factorizer</code> that generates this morphism from the two projections:</p>
+<pre>factorizer :: (c -&gt; a) -&gt; (c -&gt; b) -&gt; (c -&gt; (a, b))&#13;
+factorizer p q = \x -&gt; (p x, q x)</pre>
+<p>It’s easy to verify that the factorization conditions hold:</p>
+<pre>fst . factorizer p q = p&#13;
+snd . factorizer p q = q</pre>
+<p>We have a mapping that takes a pair of morphisms <code>p</code> and <code>q</code> and produces another morphism <code>m = factorizer p q</code>.</p>
+<p>How can we translate this into a mapping between two hom-sets that we need to define an adjunction? The trick is to go outside of <b>Hask</b> and treat the pair of morphisms as a single morphism in the product category.</p>
+<p>Let me remind you what a product category is. Take two arbitrary categories <i>C</i> and <i>D</i>. The objects in the product category <i>C×D</i> are pairs of objects, one from <i>C</i> and one from <i>D</i>. The morphisms are pairs of morphisms, one from <i>C</i> and one from <i>D</i>.</p>
+<p>To define a product in some category <i>C</i>, we should start with the product category <i>C×C</i>. Pairs of morphism from <i>C</i> are single morphisms in the product category <i>C×C</i>.</p>
+<p><a href="https://bartoszmilewski.files.wordpress.com/2016/04/adj-productcat.jpg" rel="attachment"><amp-img class="alignnone size-medium wp-image-5492 amp-wp-enforced-sizes" src="https://bartoszmilewski.files.wordpress.com/2016/04/adj-productcat.jpg?w=300&amp;h=223" alt="Adj-ProductCat" width="300" height="223" srcset="https://bartoszmilewski.files.wordpress.com/2016/04/adj-productcat.jpg?w=300&amp;h=223 300w, https://bartoszmilewski.files.wordpress.com/2016/04/adj-productcat.jpg?w=600&amp;h=446 600w, https://bartoszmilewski.files.wordpress.com/2016/04/adj-productcat.jpg?w=150&amp;h=111 150w" sizes="(min-width: 300px) 300px, 100vw"></amp-img></a></p>
+<p>It might be a little confusing at first that we are using a product category to define a product. These are, however, very different products. We don’t need a universal construction to define a product category. All we need is the notion of a pair of objects and a pair of morphisms.</p>
+<p>However, a pair of objects from <i>C</i> is <em>not</em> an object in <i>C</i>. It’s an object in a different category, <i>C×C</i>. We can write the pair formally as <code>&lt;a, b&gt;</code>, where <code>a</code> and <code>b</code> are objects of <i>C</i>. The universal construction, on the other hand, is necessary in order to define the object <code>a×b</code> (or <code>(a, b)</code> in Haskell), which is an object in <em>the same</em> category <i>C</i>. This object is supposed to represent the pair <code>&lt;a, b&gt;</code> in a way specified by the universal construction. It doesn’t always exist and, even if it exists for some, might not exist for other pairs of objects in <i>C</i>.</p>
+<p>Let’s now look at the <code>factorizer</code> as a mapping of hom-sets. The first hom-set is in the product category <i>C×C</i>, and the second is in <i>C</i>. A general morphism in <i>C×C</i> would be a pair of morphisms <code>&lt;f, g&gt;</code>:</p>
+<pre>f :: c' -&gt; a&#13;
+g :: c'' -&gt; b</pre>
+<p>with <code>c''</code> potentially different from <code>c'</code>. But to define a product, we are interested in a special morphism in <i>C×C</i>, the pair <code>p</code> and <code>q</code> that share the same source object <code>c</code>. That’s okay: In the definition of an adjuncion, the source of the left hom-set is not an arbitrary object — it’s the result of the left functor <code>L</code> acting on some object from the right category. The functor that fits the bill is easy to guess — it’s the diagonal functor from <i>C</i> to <i>C×C</i>, whose action on objects is:</p>
+<pre>Δ c = &lt;c, c&gt;</pre>
+<p>The left-hand side hom-set in our adjunction should thus be:</p>
+<pre>(C×C)(Δ c, &lt;a, b&gt;)</pre>
+<p>It’s a hom-set in the product category. Its elements are pairs of morphisms that we recognize as the arguments to our <code>factorizer</code>:</p>
+<pre>(c -&gt; a) -&gt; (c -&gt; b) ...</pre>
+<p>The right-hand side hom-set lives in <i>C</i>, and it goes between the source object <code>c</code> and the result of some functor <code>R</code> acting on the target object in <i>C×C</i>. That’s the functor that maps the pair <code>&lt;a, b&gt;</code> to our product object, <code>a×b</code>. We recognize this element of the hom-set as the <em>result</em> of the <code>factorizer</code>:</p>
+<pre>... -&gt; (c -&gt; (a, b))</pre>
+<p><a href="https://bartoszmilewski.files.wordpress.com/2016/04/adj-product.jpg" rel="attachment"><amp-img class="alignnone size-medium wp-image-5493 amp-wp-enforced-sizes" src="https://bartoszmilewski.files.wordpress.com/2016/04/adj-product.jpg?w=300&amp;h=194" alt="Adj-Product" width="300" height="194" srcset="https://bartoszmilewski.files.wordpress.com/2016/04/adj-product.jpg?w=300&amp;h=194 300w, https://bartoszmilewski.files.wordpress.com/2016/04/adj-product.jpg?w=600&amp;h=388 600w, https://bartoszmilewski.files.wordpress.com/2016/04/adj-product.jpg?w=150&amp;h=97 150w" sizes="(min-width: 300px) 300px, 100vw"></amp-img></a></p>
+<p>We still don’t have a full adjunction. For that we first need our <code>factorizer</code> to be invertible — we are building an <em>isomorphism</em> between hom-sets. The inverse of the <code>factorizer</code> should start from a morphism <code>m</code> — a morphism from some object <code>c</code> to the product object <code>a×b</code>. In other words, <code>m</code> should be an element of:</p>
+<pre>C(c, a×b)</pre>
+<p>The inverse factorizer should map <code>m</code> to a morphism <code>&lt;p, q&gt;</code> in <i>C×C</i> that goes from <code>&lt;c, c&gt;</code> to <code>&lt;a, b&gt;</code>; in other words, a morphism that’s an element of:</p>
+<pre>(C×C)(Δ c, &lt;a, b&gt;)</pre>
+<p>If that mapping exists, we conclude that there exists the right adjoint to the diagonal functor. That functor defines a product.</p>
+<p>In Haskell, we can always construct the inverse of the <code>factorizer</code> by composing <code>m</code> with, respectively, <code>fst</code> and <code>snd</code>.</p>
+<pre>p = fst ∘ m&#13;
+q = snd ∘ m</pre>
+<p>To complete the proof of the equivalence of the two ways of defining a product we also need to show that the mapping between hom-sets is natural in <code>a</code>, <code>b</code>, and <code>c</code>. I will leave this as an exercise for the dedicated reader.</p>
+<p>To summarize what we have done: A categorical product may be defined globally as the <em>right adjoint</em> of the diagonal functor:</p>
+<pre>(C × C)(Δ c, &lt;a, b&gt;) ≅ C(c, a×b)</pre>
+<p>Here, <code>a×b</code> is the result of the action of our right adjoint functor <code>Product</code> on the pair <code>&lt;a, b&gt;</code>. Notice that any functor from <i>C×C</i> is a bifunctor, so <code>Product</code> is a bifunctor. In Haskell, the <code>Product</code> bifunctor is written simply as <code>(,)</code>. You can apply it to two types and get their product type, for instance:</p>
+<pre>(,) Int Bool ~ (Int, Bool)</pre>
+<h2>Exponential from Adjunction</h2>
+<p>The exponential <code>b<sup>a</sup></code>, or the function object <code>a⇒b</code>, can be defined using a <a href="../../../../../2015/03/13/function-types/trackback/index.html" target="_blank">universal construction</a>. This construction, if it exists for all pairs of objects, can be seen as an adjunction. Again, the trick is to concentrate on the statement:</p>
+<blockquote><p>For any other object <code>z</code> with a morphism</p>
+<pre>g :: z × a -&gt; b</pre>
+<p>there is a unique morphism</p>
+<pre>h :: z -&gt; (a⇒b)</pre>
+</blockquote>
+<p>This statement establishes a mapping between hom-sets.</p>
+<p>In this case, we are dealing with objects in the same category, so the two adjoint functors are endofunctors. The left (endo-)functor <code>L</code>, when acting on object <code>z</code>, produces <code>z × a</code>. It’s a functor that corresponds to taking a product with some fixed <code>a</code>.</p>
+<p>The right (endo-)functor <code>R</code>, when acting on <code>b</code> produces the function object <code>a⇒b</code> (or <code>b<sup>a</sup></code>). Again, <code>a</code> is fixed. The adjunction between these two functors is often written as:</p>
+<pre>- × a ⊣ (-)<sup>a</sup></pre>
+<p>The mapping of hom-sets that underlies this adjunction is best seen by redrawing the diagram that we used in the universal construction.</p>
+<p><a href="https://bartoszmilewski.files.wordpress.com/2016/04/adj-expo.jpg" rel="attachment"><amp-img class="alignnone size-medium wp-image-5494 amp-wp-enforced-sizes" src="https://bartoszmilewski.files.wordpress.com/2016/04/adj-expo.jpg?w=300&amp;h=180" alt="Adj-Expo" width="300" height="180" srcset="https://bartoszmilewski.files.wordpress.com/2016/04/adj-expo.jpg?w=300&amp;h=180 300w, https://bartoszmilewski.files.wordpress.com/2016/04/adj-expo.jpg?w=600&amp;h=360 600w, https://bartoszmilewski.files.wordpress.com/2016/04/adj-expo.jpg?w=150&amp;h=90 150w" sizes="(min-width: 300px) 300px, 100vw"></amp-img></a></p>
+<p>Notice that the <code>eval</code> morphism is nothing else but the counit of this adjunction:</p>
+<pre>(a⇒b) × a -&gt; b</pre>
+<p>where:</p>
+<pre>(a⇒b) × a = (L ∘ R) b</pre>
+<p>I have previously mentioned that a universal construction defines a unique object, up to isomorphism. That’s why we have “the” product and “the” exponential. This property translates to adjunctions as well: if a functor has an adjoint, this adjoint is unique up to isomorphism.</p>
+<h2>Challenges</h2>
+<ol><li>Derive the naturality square for <code>ψ</code>, the transformation between the two (contravariant) functors:
+<pre>a -&gt; C(L a, b)&#13;
+a -&gt; D(a, R b)</pre>
+</li>
+<li>Derive the counit <code>ε</code> starting from the hom-sets isomorphism in the second definition of the adjunction.</li>
+<li>Complete the proof of equivalence of the two definitions of the adjunction.</li>
+<li>Show that the coproduct can be defined by an adjunction. Start with the definition of the factorizer for a coproduct.</li>
+<li>Show that the coproduct is the left adjoint of the diagonal functor.</li>
+<li>Define the adjunction between a product and a function object in Haskell.</li>
+</ol><p>Next: <a href="../../../../06/15/freeforgetful-adjunctions/trackback/index.html">Free/Forgetful Adjunctions</a>.</p>
+<h2>Acknowledgments</h2>
+<p>I’d like to thank Edward Kmett and Gershom Bazerman for checking my math and logic, and André van Meulebrouck, who has been volunteering his editing help throughout this series of posts.<br/><a href="https://twitter.com/BartoszMilewski" class="twitter-follow-button" data-show-count="false" data-text-color="#29303b" data-link-color="#909d73">Follow @BartoszMilewski</a></p>
+		<div class="wpcnt">
+			<div class="wpa wpmrec">
+				<span class="wpa-about">Advertisements</span>
+				<div class="u">
+					<amp-ad width="300" height="250" type="pubmine" data-adsafe="1" data-section="0" data-siteid="11416" data-wordads="0"><div placeholder="" class="amp-wp-iframe-placeholder"></div>
+					</amp-ad></div>
+			</div>
+		</div>	</div>
+
+	<footer class="amp-wp-article-footer">
+			<div class="amp-wp-meta amp-wp-tax-category">
+		Categories: <a href="../../../../../category/category-theory/index.html" rel="category tag">Category Theory</a>, <a href="../../../../../category/functional-programming/index.html" rel="category tag">Functional Programming</a>, <a href="../../../../../category/haskell/index.html" rel="category tag">Haskell</a>, <a href="../../../../../category/programming/index.html" rel="category tag">Programming</a>	</div>
+
+		<div class="amp-wp-meta amp-wp-comments-link">
+		<a href="../trackback/index.html#comments">
+			Leave a Comment		</a>
+	</div>
+	</footer>
+
+</article>
+
+<footer class="amp-wp-footer">
+	<div>
+		<h2>  Bartosz Milewski&#039;s Programming Cafe</h2>
+		<p>
+			<a href="https://wordpress.com/?ref=footer_blog">Blog at WordPress.com.</a>
+		</p>
+		<a href="index.html#top" class="back-to-top">Back to top</a>
+	</div>
+</footer>
+
+	<amp-pixel src="https://pixel.wp.com/b.gif?rand=RANDOM&#038;host=bartoszmilewski.com&#038;ref=DOCUMENT_REFERRER&#038;amp=1&#038;blog=3549518&#038;v=wpcom&#038;tz=-7&#038;user_id=0&#038;post=5213&#038;subd=bartoszmilewski"></amp-pixel>
+	<amp-pixel src="https://pixel.wp.com/b.gif?rand=RANDOM&#038;v=wpcom-no-pv&#038;crypt=UE5XaGUuOTlwaD85flAmcm1mcmZsaDhkV11YdWtpP0NsWnVkPS9sL0ViLndld3BkTUV5ST9WY3J1RTlUZyw1R3ZSbnIsdHFTX0lCY0ZyS2M4cGlJUXppTGJkNjdSMj0mY2lfVS1NTlpEbGxNVi1YL35jW3M2M1R4VXZmTEJvW2dibnZaME1HWjZMdHRSOGY%2FRXZ0TGk1cTlBTWZaUy4wMUs4bi5LMmo4XWpGeS5xQzVHK3M1cG4zfE1MNW9fOTVBSGVCOCU0XUlBblkxd2lURjZKaVlbZC5oUnE%3D"></amp-pixel>
+	
+</body>
+</html>

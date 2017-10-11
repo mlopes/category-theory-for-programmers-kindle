@@ -1,0 +1,707 @@
+<!doctype html>
+<html amp lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
+	
+<!-- Jetpack Open Graph Tags -->
+<meta property="og:type" content="article" />
+<meta property="og:title" content="Products and Coproducts" />
+<meta property="og:url" content="https://bartoszmilewski.com/2015/01/07/products-and-coproducts/" />
+<meta property="og:description" content="Categories for Programmers. In the previous installment we discussed how to add logging to pure functions. See the Table of Contents. Follow the Arrows The Ancient Greek playwright Euripides once s…" />
+<meta property="article:published_time" content="2015-01-07T15:21:03+00:00" />
+<meta property="article:modified_time" content="2017-02-23T18:00:11+00:00" />
+<meta property="og:site_name" content="  Bartosz Milewski&#039;s Programming Cafe" />
+<meta property="og:image" content="https://bartoszmilewski.files.wordpress.com/2014/12/productranking.jpg" />
+<meta property="og:image:width" content="541" />
+<meta property="og:image:height" content="440" />
+<meta property="og:locale" content="en_US" />
+<meta name="twitter:site" content="@BartoszMilewski" />
+<meta name="twitter:text:title" content="Products and Coproducts" />
+<meta name="twitter:image" content="https://bartoszmilewski.files.wordpress.com/2014/12/initial.jpg?w=240" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:creator" content="@BartoszMilewski" />
+<meta property="article:publisher" content="https://www.facebook.com/WordPresscom" />
+	<title>Products and Coproducts &#8211;   Bartosz Milewski&#039;s Programming Cafe</title>
+		<link rel="canonical" href="../trackback/index.html" />
+			<script custom-element="amp-ad" src="https://cdn.ampproject.org/v0/amp-ad-0.1.js" async></script>
+		<script src="https://cdn.ampproject.org/v0.js" async></script>
+			<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Merriweather:400,400italic,700,700italic">
+		<style amp-boilerplate>body{-webkit-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-moz-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-ms-animation:-amp-start 8s steps(1,end) 0s 1 normal both;animation:-amp-start 8s steps(1,end) 0s 1 normal both}@-webkit-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-moz-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-ms-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-o-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}</style><noscript><style amp-boilerplate>body{-webkit-animation:none;-moz-animation:none;-ms-animation:none;animation:none}</style></noscript>
+		<script type="application/ld+json">{"@context":"http:\/\/schema.org","@type":"BlogPosting","mainEntityOfPage":"https:\/\/bartoszmilewski.com\/2015\/01\/07\/products-and-coproducts\/","publisher":{"@type":"Organization","name":"\u00a0\u00a0Bartosz Milewski&#039;s Programming Cafe","logo":{"@type":"ImageObject","url":"https:\/\/s2.wp.com\/i\/favicons\/apple-touch-icon-60x60.png","width":60,"height":60}},"headline":"Products and Coproducts","datePublished":"2015-01-07T16:21:03+00:00","dateModified":"2017-02-23T10:00:11+00:00","author":{"@type":"Person","name":"Bartosz Milewski"},"image":{"@type":"ImageObject","url":"https:\/\/bartoszmilewski.files.wordpress.com\/2014\/12\/initial.jpg","width":510,"height":537}}</script>
+		<style amp-custom>
+		/* Generic WP styling */
+
+.alignright {
+	float: right;
+}
+
+.alignleft {
+	float: left;
+}
+
+.aligncenter {
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.amp-wp-enforced-sizes {
+	/** Our sizes fallback is 100vw, and we have a padding on the container; the max-width here prevents the element from overflowing. **/
+	max-width: 100%;
+	margin: 0 auto;
+}
+
+.amp-wp-unknown-size img {
+	/** Worst case scenario when we can't figure out dimensions for an image. **/
+	/** Force the image into a box of fixed dimensions and use object-fit to scale. **/
+	object-fit: contain;
+}
+
+/* Template Styles */
+
+.amp-wp-content,
+.amp-wp-title-bar div {
+		margin: 0 auto;
+	max-width: 510px;
+	}
+
+html {
+	background: #0a89c0;
+}
+
+body {
+	background: #fff;
+	color: #353535;
+	font-family: 'Merriweather', 'Times New Roman', Times, Serif;
+	font-weight: 300;
+	line-height: 1.75em;
+}
+
+p,
+ol,
+ul,
+figure {
+	margin: 0 0 1em;
+	padding: 0;
+}
+
+a,
+a:visited {
+	color: #0a89c0;
+}
+
+a:hover,
+a:active,
+a:focus {
+	color: #353535;
+}
+
+/* Quotes */
+
+blockquote {
+	color: #353535;
+	background: rgba(127,127,127,.125);
+	border-left: 2px solid #0a89c0;
+	margin: 8px 0 24px 0;
+	padding: 16px;
+}
+
+blockquote p:last-child {
+	margin-bottom: 0;
+}
+
+/* UI Fonts */
+
+.amp-wp-meta,
+.amp-wp-header div,
+.amp-wp-title,
+.wp-caption-text,
+.amp-wp-tax-category,
+.amp-wp-tax-tag,
+.amp-wp-comments-link,
+.amp-wp-footer p,
+.back-to-top {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen-Sans", "Ubuntu", "Cantarell", "Helvetica Neue", sans-serif;
+}
+
+/* Header */
+
+.amp-wp-header {
+	background-color: #0a89c0;
+}
+
+.amp-wp-header div {
+	color: #fff;
+	font-size: 1em;
+	font-weight: 400;
+	margin: 0 auto;
+	max-width: calc(840px - 32px);
+	padding: .875em 16px;
+	position: relative;
+}
+
+.amp-wp-header a {
+	color: #fff;
+	text-decoration: none;
+}
+
+/* Site Icon */
+
+.amp-wp-header .amp-wp-site-icon {
+	/** site icon is 32px **/
+	background-color: #fff;
+	border: 1px solid #fff;
+	border-radius: 50%;
+	position: absolute;
+	right: 18px;
+	top: 10px;
+}
+
+/* Article */
+
+.amp-wp-article {
+	color: #353535;
+	font-weight: 400;
+	margin: 1.5em auto;
+	max-width: 840px;
+	overflow-wrap: break-word;
+	word-wrap: break-word;
+}
+
+/* Article Header */
+
+.amp-wp-article-header {
+	align-items: center;
+	align-content: stretch;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	margin: 1.5em 16px 1.5em;
+}
+
+.amp-wp-title {
+	color: #353535;
+	display: block;
+	flex: 1 0 100%;
+	font-weight: 900;
+	margin: 0 0 .625em;
+	width: 100%;
+}
+
+/* Article Meta */
+
+.amp-wp-meta {
+	color: #696969;
+	display: inline-block;
+	flex: 2 1 50%;
+	font-size: .875em;
+	line-height: 1.5em;
+	margin: 0;
+	padding: 0;
+}
+
+.amp-wp-article-header .amp-wp-meta:last-of-type {
+	text-align: right;
+}
+
+.amp-wp-article-header .amp-wp-meta:first-of-type {
+	text-align: left;
+}
+
+.amp-wp-byline amp-img,
+.amp-wp-byline .amp-wp-author {
+	display: inline-block;
+	vertical-align: middle;
+}
+
+.amp-wp-byline amp-img {
+	border: 1px solid #0a89c0;
+	border-radius: 50%;
+	position: relative;
+	margin-right: 6px;
+}
+
+.amp-wp-posted-on {
+	text-align: right;
+}
+
+/* Featured image */
+
+.amp-wp-article-featured-image {
+	margin: 0 0 1em;
+}
+.amp-wp-article-featured-image amp-img {
+	margin: 0 auto;
+}
+.amp-wp-article-featured-image.wp-caption .wp-caption-text {
+	margin: 0 18px;
+}
+
+/* Article Content */
+
+.amp-wp-article-content {
+	margin: 0 16px;
+}
+
+.amp-wp-article-content ul,
+.amp-wp-article-content ol {
+	margin-left: 1em;
+}
+
+.amp-wp-article-content amp-img {
+	margin: 0 auto;
+}
+
+.amp-wp-article-content amp-img.alignright {
+	margin: 0 0 1em 16px;
+}
+
+.amp-wp-article-content amp-img.alignleft {
+	margin: 0 16px 1em 0;
+}
+
+/* Captions */
+
+.wp-caption {
+	padding: 0;
+}
+
+.wp-caption.alignleft {
+	margin-right: 16px;
+}
+
+.wp-caption.alignright {
+	margin-left: 16px;
+}
+
+.wp-caption .wp-caption-text {
+	border-bottom: 1px solid #c2c2c2;
+	color: #696969;
+	font-size: .875em;
+	line-height: 1.5em;
+	margin: 0;
+	padding: .66em 10px .75em;
+}
+
+/* AMP Media */
+
+amp-carousel {
+	background: #c2c2c2;
+	margin: 0 -16px 1.5em;
+}
+amp-iframe,
+amp-youtube,
+amp-instagram,
+amp-vine {
+	background: #c2c2c2;
+	margin: 0 -16px 1.5em;
+}
+
+.amp-wp-article-content amp-carousel amp-img {
+	border: none;
+}
+
+amp-carousel > amp-img > img {
+	object-fit: contain;
+}
+
+.amp-wp-iframe-placeholder {
+	background: #c2c2c2 url( https://s2.wp.com/wp-content/plugins/amp/assets/images/placeholder-icon.png ) no-repeat center 40%;
+	background-size: 48px 48px;
+	min-height: 48px;
+}
+
+/* Article Footer Meta */
+
+.amp-wp-article-footer .amp-wp-meta {
+	display: block;
+}
+
+.amp-wp-tax-category,
+.amp-wp-tax-tag {
+	color: #696969;
+	font-size: .875em;
+	line-height: 1.5em;
+	margin: 1.5em 16px;
+}
+
+.amp-wp-comments-link {
+	color: #696969;
+	font-size: .875em;
+	line-height: 1.5em;
+	text-align: center;
+	margin: 2.25em 0 1.5em;
+}
+
+.amp-wp-comments-link a {
+	border-style: solid;
+	border-color: #c2c2c2;
+	border-width: 1px 1px 2px;
+	border-radius: 4px;
+	background-color: transparent;
+	color: #0a89c0;
+	cursor: pointer;
+	display: block;
+	font-size: 14px;
+	font-weight: 600;
+	line-height: 18px;
+	margin: 0 auto;
+	max-width: 200px;
+	padding: 11px 16px;
+	text-decoration: none;
+	width: 50%;
+	-webkit-transition: background-color 0.2s ease;
+			transition: background-color 0.2s ease;
+}
+
+/* AMP Footer */
+
+.amp-wp-footer {
+	border-top: 1px solid #c2c2c2;
+	margin: calc(1.5em - 1px) 0 0;
+}
+
+.amp-wp-footer div {
+	margin: 0 auto;
+	max-width: calc(840px - 32px);
+	padding: 1.25em 16px 1.25em;
+	position: relative;
+}
+
+.amp-wp-footer h2 {
+	font-size: 1em;
+	line-height: 1.375em;
+	margin: 0 0 .5em;
+}
+
+.amp-wp-footer p {
+	color: #696969;
+	font-size: .8em;
+	line-height: 1.5em;
+	margin: 0 85px 0 0;
+}
+
+.amp-wp-footer a {
+	text-decoration: none;
+}
+
+.back-to-top {
+	bottom: 1.275em;
+	font-size: .8em;
+	font-weight: 600;
+	line-height: 2em;
+	position: absolute;
+	right: 16px;
+}
+				/* WordAds */
+		.wpcnt {
+			text-align: center;
+			line-height: 0;
+			display: block;
+			clear: both;
+			margin: 1em 0;
+		}
+
+		.rtl .wpcnt {
+			direction: ltr;
+		}
+
+		.wpa {
+			position: relative;
+			display: inline-block;
+			max-width: 100%;
+			text-align: left;
+			padding: 10px 0 0;
+			min-width: 300px;
+			-webkit-transform: translate3d(0, 0, 0);
+			transform: translate3d(0, 0, 0);
+		}
+
+		.wpa-about {
+			position: absolute;
+			top: 5px;
+			left: 0;
+			right: 0;
+			display: block;
+			min-width: 160px;
+			border-bottom: none;
+			font: 10px/1 "Open Sans", Arial, sans-serif;
+			text-align: left;
+			text-decoration: none;
+			opacity: 0.85;
+		}
+
+		.wpa .u>div, .wpadvert>div>* {
+			display: block;
+			margin-top: 5px;
+			margin-bottom: 1em;
+		}
+
+		div.wpa>div {
+			margin-top: 10px;
+		}/* Inline styles */
+.amp-wp-inline-07ef5183cff73ba83be03d671738fca7{max-width:160px;}	</style>
+</head>
+
+<body class="">
+
+<header id="#top" class="amp-wp-header">
+	<div>
+		<a href="https://bartoszmilewski.com">
+						  Bartosz Milewski&#039;s Programming Cafe		</a>
+	</div>
+</header>
+
+<article class="amp-wp-article">
+
+	<header class="amp-wp-article-header">
+		<h1 class="amp-wp-title">Products and Coproducts</h1>
+				<div class="amp-wp-meta amp-wp-byline">
+					<amp-img src="https://secure.gravatar.com/avatar/c018f213204496b4bbf481e7c8e6c15c?s=24&#038;d=mm&#038;r=g" width="24" height="24" layout="fixed"></amp-img>
+				<span class="amp-wp-author author vcard">Bartosz Milewski</span>
+	</div>
+<div class="amp-wp-meta amp-wp-posted-on">
+	<time datetime="2015-01-07T16:21:03+00:00">
+		3 years ago	</time>
+</div>
+	</header>
+
+	
+	<div class="amp-wp-article-content">
+				<div class="wpcnt">
+			<div class="wpa wpmrec">
+				<span class="wpa-about">Advertisements</span>
+				<div class="u">
+					<amp-ad width="300" height="250" type="pubmine" data-adsafe="1" data-section="2" data-siteid="2694" data-wordads="0"><div placeholder="" class="amp-wp-iframe-placeholder"></div>
+					</amp-ad></div>
+			</div>
+		</div><blockquote><p>Categories for Programmers. In the <a title="Kleisli Categories" href="../../../../../2014/12/23/kleisli-categories/trackback/index.html" target="_blank">previous installment</a> we discussed how to add logging to pure functions. See the <a title="Table of Contents" href="../../../../../2014/10/28/category-theory-for-programmers-the-preface/trackback/index.html" target="_blank">Table of Contents</a>.</p></blockquote>
+<h2>Follow the Arrows</h2>
+<p>The Ancient Greek playwright Euripides once said: “Every man is like the company he is wont to keep.” We are defined by our relationships. Nowhere is this more true than in category theory. If we want to single out a particular object in a category, we can only do this by describing its pattern of relationships with other objects (and itself). These relationships are defined by morphisms.</p>
+<p>There is a common construction in category theory called the <em>universal construction</em> for defining objects in terms of their relationships. One way of doing this is to pick a pattern, a particular shape constructed from objects and morphisms, and look for all its occurrences in the category. If it’s a common enough pattern, and the category is large, chances are you’ll have lots and lots of hits. The trick is to establish some kind of ranking among those hits, and pick what could be considered the best fit.</p>
+<p>This process is reminiscent of the way we do web searches. A query is like a pattern. A very general query will give you large <em>recall</em>: lots of hits. Some may be relevant, others not. To eliminate irrelevant hits, you refine your query. That increases its <em>precision</em>. Finally, the search engine will rank the hits and, hopefully, the one result that you’re interested in will be at the top of the list.</p>
+<h2>Initial Object</h2>
+<p>The simplest shape is a single object. Obviously, there are as many instances of this shape as there are objects in a given category. That’s a lot to choose from. We need to establish some kind of ranking and try to find the object that tops this hierarchy. The only means at our disposal are morphisms. If you think of morphisms as arrows, then it’s possible that there is an overall net flow of arrows from one end of the category to another. This is true in ordered categories, for instance in partial orders. We could generalize that notion of object precedence by saying that object <em>a</em> is “more initial” than object <em>b</em> if there is an arrow (a morphism) going from <em>a</em> to <em>b</em>. We would then define <em>the</em> initial object as one that has arrows going to all other objects. Obviously there is no guarantee that such an object exists, and that’s okay. A bigger problem is that there may be too many such objects: The recall is good, but precision is lacking. The solution is to take a hint from ordered categories — they allow at most one arrow between any two objects: there is only one way of being less-than or equal-to another object. Which leads us to this definition of the initial object:</p>
+<p class="box2">The <strong>initial object</strong> is the object that has one and only one morphism going to any object in the category.</p>
+<p><a href="https://bartoszmilewski.files.wordpress.com/2014/12/initial.jpg"><amp-img class="aligncenter size-medium wp-image-3763 amp-wp-enforced-sizes" src="https://bartoszmilewski.files.wordpress.com/2014/12/initial.jpg?w=285&amp;h=300" alt="Initial" width="285" height="300" srcset="https://bartoszmilewski.files.wordpress.com/2014/12/initial.jpg?w=285&amp;h=300 285w, https://bartoszmilewski.files.wordpress.com/2014/12/initial.jpg?w=570&amp;h=600 570w, https://bartoszmilewski.files.wordpress.com/2014/12/initial.jpg?w=143&amp;h=150 143w" sizes="(min-width: 285px) 285px, 100vw"></amp-img></a></p>
+<p>However, even that doesn’t guarantee the uniqueness of the initial object (if one exists). But it guarantees the next best thing: uniqueness <em>up to isomorphism</em>. Isomorphisms are very important in category theory, so I’ll talk about them shortly. For now, let’s just agree that uniqueness up to isomorphism justifies the use of “the” in the definition of the initial object.</p>
+<p>Here are some examples: The initial object in a partially ordered set (often called a <em>poset</em>) is its least element. Some posets don’t have an initial object — like the set of all integers, positive and negative, with less-than-or-equal relation for morphisms.</p>
+<p>In the category of sets and functions, the initial object is the empty set. Remember, an empty set corresponds to the Haskell type <code>Void</code> (there is no corresponding type in C++) and the unique polymorphic function from <code>Void</code> to any other type is called <code>absurd</code>:</p>
+<pre>absurd :: Void -&gt; a</pre>
+<p>It’s this family of morphisms that makes <code>Void</code> the initial object in the category of types.</p>
+<h2>Terminal Object</h2>
+<p>Let’s continue with the single-object pattern, but let’s change the way we rank the objects. We’ll say that object <em>a</em> is “more terminal” than object <em>b</em> if there is a morphism going from <em>b</em> to <em>a</em> (notice the reversal of direction). We’ll be looking for an object that’s more terminal than any other object in the category. Again, we will insist on uniqueness:</p>
+<p class="box2">The <strong>terminal object</strong> is the object with one and only one morphism coming to it from any object in the category.</p>
+<p><a href="https://bartoszmilewski.files.wordpress.com/2014/12/final.jpg"><amp-img class="aligncenter size-medium wp-image-3765 amp-wp-enforced-sizes" src="https://bartoszmilewski.files.wordpress.com/2014/12/final.jpg?w=300&amp;h=298" alt="Final" width="300" height="298" srcset="https://bartoszmilewski.files.wordpress.com/2014/12/final.jpg?w=300&amp;h=298 300w, https://bartoszmilewski.files.wordpress.com/2014/12/final.jpg?w=600&amp;h=596 600w, https://bartoszmilewski.files.wordpress.com/2014/12/final.jpg?w=150&amp;h=150 150w" sizes="(min-width: 300px) 300px, 100vw"></amp-img></a></p>
+<p>And again, the terminal object is unique, up to isomorphism, which I will show shortly. But first let’s look at some examples. In a poset, the terminal object, if it exists, is the biggest object. In the category of sets, the terminal object is a singleton. We’ve already talked about singletons — they correspond to the <code>void</code> type in C++ and the unit type <code>()</code> in Haskell. It’s a type that has only one value — implicit in C++ and explicit in Haskell, denoted by <code>()</code>. We’ve also established that there is one and only one pure function from any type to the unit type:</p>
+<pre>unit :: a -&gt; ()&#13;
+unit _ = ()</pre>
+<p>so all the conditions for the terminal object are satisfied.</p>
+<p>Notice that in this example the uniqueness condition is crucial, because there are other sets (actually, all of them, except for the empty set) that have incoming morphisms from every set. For instance, there is a Boolean-valued function (a predicate) defined for every type:</p>
+<pre>yes :: a -&gt; Bool&#13;
+yes _ = True</pre>
+<p>But <code>Bool</code> is not a terminal object. There is at least one more <code>Bool</code>-valued function from every type:</p>
+<pre>no :: a -&gt; Bool&#13;
+no _ = False</pre>
+<p>Insisting on uniqueness gives us just the right precision to narrow down the definition of the terminal object to just one type.</p>
+<h2>Duality</h2>
+<p>You can’t help but to notice the symmetry between the way we defined the initial object and the terminal object. The only difference between the two was the direction of morphisms. It turns out that for any category C we can define the <em>opposite category</em> C<sup>op</sup> just by reversing all the arrows. The opposite category automatically satisfies all the requirements of a category, as long as we simultaneously redefine composition. If original morphisms <code>f::a-&gt;b</code> and <code>g::b-&gt;c</code> composed to <code>h::a-&gt;c</code> with <code>h=g∘f</code>, then the reversed morphisms <code>f<sup>op</sup>::b-&gt;a</code> and <code>g<sup>op</sup>::c-&gt;b</code> will compose to <code>h<sup>op</sup>::c-&gt;a</code> with <code>h<sup>op</sup>=f<sup>op</sup>∘g<sup>op</sup></code>. And reversing the identity arrows is a (pun alert!) no-op.</p>
+<p>Duality is a very important property of categories because it doubles the productivity of every mathematician working in category theory. For every construction you come up with, there is its opposite; and for every theorem you prove, you get one for free. The constructions in the opposite category are often prefixed with “co”, so you have products and coproducts, monads and comonads, cones and cocones, limits and colimits, and so on. There are no cocomonads though, because reversing the arrows twice gets us back to the original state.</p>
+<p>It follows then that a terminal object is the initial object in the opposite category.</p>
+<h2>Isomorphisms</h2>
+<p>As programmers, we are well aware that defining equality is a nontrivial task. What does it mean for two objects to be equal? Do they have to occupy the same location in memory (pointer equality)? Or is it enough that the values of all their components are equal? Are two complex numbers equal if one is expressed as the real and imaginary part, and the other as modulus and angle? You’d think that mathematicians would have figured out the meaning of equality, but they haven’t. They have the same problem of multiple competing definitions for equality. There is the propositional equality, intensional equality, extensional equality, and equality as a path in homotopy type theory. And then there are the weaker notions of isomorphism, and even weaker of equivalence.</p>
+<p>The intuition is that isomorphic objects look the same — they have the same shape. It means that every part of one object corresponds to some part of another object in a one-to-one mapping. As far as our instruments can tell, the two objects are a perfect copy of each other. Mathematically it means that there is a mapping from object <em>a</em> to object <em>b</em>, and there is a mapping from object <em>b</em> back to object <em>a</em>, and they are the inverse of each other. In category theory we replace mappings with morphisms. An isomorphism is an invertible morphism; or a pair of morphisms, one being the inverse of the other.</p>
+<p>We understand the inverse in terms of composition and identity: Morphism <em>g</em> is the inverse of morphism <em>f</em> if their composition is the identity morphism. These are actually two equations because there are two ways of composing two morphisms:</p>
+<pre>f . g = id&#13;
+g . f = id</pre>
+<p>When I said that the initial (terminal) object was unique up to isomorphism, I meant that any two initial (terminal) objects are isomorphic. That’s actually easy to see. Let’s suppose that we have two initial objects i<sub>1</sub> and i<sub>2</sub>. Since i<sub>1</sub> is initial, there is a unique morphism <em>f</em> from i<sub>1</sub> to i<sub>2</sub>. By the same token, since i<sub>2</sub> is initial, there is a unique morphism <em>g</em> from i<sub>2</sub> to i<sub>1</sub>. What’s the composition of these two morphisms?</p>
+<div data-shortcode="caption" id="attachment_3837" class="wp-caption aligncenter amp-wp-inline-07ef5183cff73ba83be03d671738fca7"><a href="https://bartoszmilewski.files.wordpress.com/2014/12/uniqueness.jpg"><amp-img class="size-thumbnail wp-image-3837 amp-wp-enforced-sizes" src="https://bartoszmilewski.files.wordpress.com/2014/12/uniqueness.jpg?w=150&amp;h=94" alt="All morphisms in this diagram are unique" width="150" height="94" srcset="https://bartoszmilewski.files.wordpress.com/2014/12/uniqueness.jpg?w=150&amp;h=94 150w, https://bartoszmilewski.files.wordpress.com/2014/12/uniqueness.jpg?w=300&amp;h=188 300w" sizes="(min-width: 150px) 150px, 100vw"></amp-img></a><p class="wp-caption-text">All morphisms in this diagram are unique</p></div>
+<p>The composition <em>g∘f</em> must be a morphism from i<sub>1</sub> to i<sub>1</sub>. But i<sub>1</sub> is initial so there can only be one morphism going from i<sub>1</sub> to i<sub>1</sub>. Since we are in a category, we know that there is an identity morphism from i<sub>1</sub> to i<sub>1</sub>, and since there is room for only one, that must be it. Therefore <em>g∘f</em> is equal to identity. Similarly, <em>f∘g</em> must be equal to identity, because there can be only one morphism from i<sub>2</sub> back to i<sub>2</sub>. This proves that <em>f</em> and <em>g</em> must be the inverse of each other. Therefore any two initial objects are isomorphic.</p>
+<p>Notice that in this proof we used the uniqueness of the morphism from the initial object to itself. Without that we couldn’t prove the “up to isomorphism” part. But why do we need the uniqueness of <em>f</em> and <em>g</em>? Because not only is the initial object unique up to isomorphism, it is unique up to <em>unique</em> isomorphism. In principle, there could be more than one isomorphism between two objects, but that’s not the case here. This “uniqueness up to unique isomorphism” is the important property of all universal constructions.</p>
+<h2>Products</h2>
+<p>The next universal construction is that of a product. We know what a cartesian product of two sets is: it’s a set of pairs. But what’s the pattern that connects the product set with its constituent sets? If we can figure that out, we’ll be able to generalize it to other categories.</p>
+<p>All we can say is that there are two functions, the projections, from the product to each of the constituents. In Haskell, these two functions are called <code>fst</code> and <code>snd</code> and they pick, respectively, the first and the second component of a pair:</p>
+<pre>fst :: (a, b) -&gt; a&#13;
+fst (x, y) = x</pre>
+<pre>snd :: (a, b) -&gt; b&#13;
+snd (x, y) = y</pre>
+<p>Here, the functions are defined by pattern matching their arguments: the pattern that matches any pair is <code>(x, y)</code>, and it extracts its components into variables <code>x</code> and <code>y</code>.</p>
+<p>These definitions can be simplified even further with the use of wildcards:</p>
+<pre>fst (x, _) = x&#13;
+snd (_, y) = y</pre>
+<p>In C++, we would use template functions, for instance:</p>
+<pre>template&lt;class A, class B&gt;&#13;
+A fst(pair&lt;A, B&gt; const &amp; p) {&#13;
+    return p.first;&#13;
+}</pre>
+<p>Equipped with this seemingly very limited knowledge, let’s try to define a pattern of objects and morphisms in the category of sets that will lead us to the construction of a product of two sets, <em>a</em> and <em>b</em>. This pattern consists of an object <em>c</em> and two morphisms <em>p</em> and <em>q</em> connecting it to <em>a</em> and <em>b</em>, respectively:</p>
+<pre>p :: c -&gt; a&#13;
+q :: c -&gt; b</pre>
+<p><a href="https://bartoszmilewski.files.wordpress.com/2014/12/productpattern.jpg"><amp-img class="aligncenter wp-image-3767 size-thumbnail amp-wp-enforced-sizes" src="https://bartoszmilewski.files.wordpress.com/2014/12/productpattern.jpg?w=150&amp;h=99" alt="ProductPattern" width="150" height="99" srcset="https://bartoszmilewski.files.wordpress.com/2014/12/productpattern.jpg?w=150&amp;h=99 150w, https://bartoszmilewski.files.wordpress.com/2014/12/productpattern.jpg?w=300&amp;h=198 300w" sizes="(min-width: 150px) 150px, 100vw"></amp-img></a></p>
+<p>All <em>c</em>s that fit this pattern will be considered candidates for the product. There may be lots of them.</p>
+<p><a href="https://bartoszmilewski.files.wordpress.com/2014/12/productcandidates.jpg"><amp-img class="aligncenter size-thumbnail wp-image-3770 amp-wp-enforced-sizes" src="https://bartoszmilewski.files.wordpress.com/2014/12/productcandidates.jpg?w=150&amp;h=76" alt="ProductCandidates" width="150" height="76" srcset="https://bartoszmilewski.files.wordpress.com/2014/12/productcandidates.jpg?w=150&amp;h=76 150w, https://bartoszmilewski.files.wordpress.com/2014/12/productcandidates.jpg?w=300&amp;h=152 300w" sizes="(min-width: 150px) 150px, 100vw"></amp-img></a></p>
+<p>For instance, let’s pick, as our constituents, two Haskell types, <code>Int</code> and <code>Bool</code>, and get a sampling of candidates for their product.</p>
+<p>Here’s one: <code>Int</code>. Can <code>Int</code> be considered a candidate for the product of <code>Int</code> and <code>Bool</code>? Yes, it can — and here are its projections:</p>
+<pre>p :: Int -&gt; Int&#13;
+p x = x&#13;
+&#13;
+q :: Int -&gt; Bool&#13;
+q _ = True</pre>
+<p>That’s pretty lame, but it matches the criteria.</p>
+<p>Here’s another one: <code>(Int, Int, Bool)</code>. It’s a tuple of three elements, or a triple. Here are two morphisms that make it a legitimate candidate (we are using pattern matching on triples):</p>
+<pre>p :: (Int, Int, Bool) -&gt; Int&#13;
+p (x, _, _) = x&#13;
+&#13;
+q :: (Int, Int, Bool) -&gt; Bool&#13;
+q (_, _, b) = b</pre>
+<p>You may have noticed that while our first candidate was too small — it only covered the <code>Int</code> dimension of the product; the second was too big — it spuriously duplicated the <code>Int</code> dimension.</p>
+<p>But we haven’t explored yet the other part of the universal construction: the ranking. We want to be able to compare two instances of our pattern. We want to compare one candidate object <em>c</em> and its two projections <em>p</em> and <em>q</em> with another candidate object <em>c’</em> and its two projections <em>p’</em> and <em>q’</em>. We would like to say that <em>c</em> is “better” than <em>c’</em> if there is a morphism <em>m</em> from <em>c’</em> to <em>c</em> — but that’s too weak. We also want its projections to be “better,” or “more universal,” than the projections of <em>c’</em>. What it means is that the projections <em>p’</em> and <em>q’</em> can be reconstructed from <em>p</em> and <em>q</em> using <em>m</em>:</p>
+<pre>p’ = p . m&#13;
+q’ = q . m</pre>
+<p><a href="https://bartoszmilewski.files.wordpress.com/2014/12/productranking.jpg"><amp-img class="aligncenter size-thumbnail wp-image-3772 amp-wp-enforced-sizes" src="https://bartoszmilewski.files.wordpress.com/2014/12/productranking.jpg?w=150&amp;h=122" alt="ProductRanking" width="150" height="122" srcset="https://bartoszmilewski.files.wordpress.com/2014/12/productranking.jpg?w=150&amp;h=122 150w, https://bartoszmilewski.files.wordpress.com/2014/12/productranking.jpg?w=300&amp;h=244 300w" sizes="(min-width: 150px) 150px, 100vw"></amp-img></a></p>
+<p>Another way of looking at these equation is that <em>m</em> <em>factorizes</em> <em>p’</em> and <em>q’</em>. Just pretend that these equations are in natural numbers, and the dot is multiplication: <em>m</em> is a common factor shared by <em>p’</em> and <em>q’</em>.</p>
+<p>Just to build some intuitions, let me show you that the pair <code>(Int, Bool)</code> with the two canonical projections, <code>fst</code> and <code>snd</code> is indeed <em>better</em> than the two candidates I presented before.</p>
+<p><a href="https://bartoszmilewski.files.wordpress.com/2015/01/not-a-product.jpg"><amp-img class="aligncenter wp-image-4863  amp-wp-enforced-sizes" src="https://bartoszmilewski.files.wordpress.com/2015/01/not-a-product.jpg?w=212&amp;h=150" alt="Not a product" width="212" height="150" sizes="(min-width: 212px) 212px, 100vw"></amp-img></a></p>
+<p>The mapping <code>m</code> for the first candidate is:</p>
+<pre>m :: Int -&gt; (Int, Bool)&#13;
+m x = (x, True)</pre>
+<p>Indeed, the two projections, <code>p</code> and <code>q</code> can be reconstructed as:</p>
+<pre>p x = fst (m x) = x&#13;
+q x = snd (m x) = True</pre>
+<p>The <code>m</code> for the second example is similarly uniquely determined:</p>
+<pre>m (x, _, b) = (x, b)</pre>
+<p>We were able to show that <code>(Int, Bool)</code> is better than either of the two candidates. Let’s see why the opposite is not true. Could we find some <code>m'</code> that would help us reconstruct <code>fst</code> and <code>snd</code> from <code>p</code> and <code>q</code>?</p>
+<pre>fst = p . m’&#13;
+snd = q . m’</pre>
+<p>In our first example, <code>q</code> always returned <code>True</code> and we know that there are pairs whose second component is <code>False</code>. We can’t reconstruct <code>snd</code> from <code>q</code>.</p>
+<p>The second example is different: we retain enough information after running either <code>p</code> or <code>q</code>, but there is more than one way to factorize <code>fst</code> and <code>snd</code>. Because both <code>p</code> and <code>q</code> ignore the second component of the triple, our <code>m’</code> can put anything in it. We can have:</p>
+<pre>m’ (x, b) = (x, x, b)</pre>
+<p>or</p>
+<pre>m’ (x, b) = (x, 42, b)</pre>
+<p>and so on.</p>
+<p>Putting it all together, given any type <code>c</code> with two projections <code>p</code> and <code>q</code>, there is a unique <code>m</code> from <code>c</code> to the cartesian product <code>(a, b)</code> that factorizes them. In fact, it just combines <code>p</code> and <code>q</code> into a pair.</p>
+<pre>m :: c -&gt; (a, b)&#13;
+m x = (p x, q x)</pre>
+<p>That makes the cartesian product <code>(a, b)</code> our best match, which means that this universal construction works in the category of sets. It picks the product of any two sets.</p>
+<p>Now let’s forget about sets and define a product of two objects in any category using the same universal construction. Such product doesn’t always exist, but when it does, it is unique up to a unique isomorphism.</p>
+<p class="box2">A <strong>product</strong> of two objects <em>a</em> and <em>b</em> is the object <em>c</em> equipped with two projections such that for any other object <em>c’</em> equipped with two projections there is a unique morphism <em>m</em> from <em>c’</em> to <em>c</em> that factorizes those projections.</p>
+<p>A (higher order) function that produces the factorizing function <code>m</code> from two candidates is sometimes called the <em>factorizer</em>. In our case, it would be the function:</p>
+<pre>factorizer :: (c -&gt; a) -&gt; (c -&gt; b) -&gt; (c -&gt; (a, b))&#13;
+factorizer p q = \x -&gt; (p x, q x)</pre>
+<h2>Coproduct</h2>
+<p>Like every construction in category theory, the product has a dual, which is called the coproduct. When we reverse the arrows in the product pattern, we end up with an object <em>c</em> equipped with two <em>injections</em>, <code>i</code> and <code>j</code>: morphisms from <em>a</em> and <em>b</em> to <em>c</em>.</p>
+<pre>i :: a -&gt; c&#13;
+j :: b -&gt; c</pre>
+<p><a href="https://bartoszmilewski.files.wordpress.com/2014/12/coproductpattern.jpg"><amp-img class="aligncenter size-thumbnail wp-image-3774 amp-wp-enforced-sizes" src="https://bartoszmilewski.files.wordpress.com/2014/12/coproductpattern.jpg?w=150&amp;h=94" alt="CoproductPattern" width="150" height="94" srcset="https://bartoszmilewski.files.wordpress.com/2014/12/coproductpattern.jpg?w=150&amp;h=94 150w, https://bartoszmilewski.files.wordpress.com/2014/12/coproductpattern.jpg?w=300&amp;h=188 300w" sizes="(min-width: 150px) 150px, 100vw"></amp-img></a></p>
+<p>The ranking is also inverted: object <em>c</em> is “better” than object <em>c’</em> that is equipped with the injections <em>i’</em> and <em>j’</em> if there is a morphism <em>m</em> from <em>c</em> to <em>c’</em> that factorizes the injections:</p>
+<pre>i' = m . i&#13;
+j' = m . j</pre>
+<p><a href="https://bartoszmilewski.files.wordpress.com/2014/12/coproductranking.jpg"><amp-img class="aligncenter size-thumbnail wp-image-3775 amp-wp-enforced-sizes" src="https://bartoszmilewski.files.wordpress.com/2014/12/coproductranking.jpg?w=150&amp;h=125" alt="CoproductRanking" width="150" height="125" srcset="https://bartoszmilewski.files.wordpress.com/2014/12/coproductranking.jpg?w=150&amp;h=125 150w, https://bartoszmilewski.files.wordpress.com/2014/12/coproductranking.jpg?w=300&amp;h=250 300w" sizes="(min-width: 150px) 150px, 100vw"></amp-img></a></p>
+<p>The “best” such object, one with a unique morphism connecting it to any other pattern, is called a coproduct and, if it exists, is unique up to unique isomorphism.</p>
+<p class="box2">A <strong>coproduct</strong> of two objects <em>a</em> and <em>b</em> is the object <em>c</em> equipped with two injections such that for any other object <em>c’</em> equipped with two injections there is a unique morphism <em>m</em> from <em>c</em> to <em>c’</em> that factorizes those injections.</p>
+<p>In the category of sets, the coproduct is the <em>disjoint union</em> of two sets. An element of the disjoint union of <em>a</em> and <em>b</em> is either an element of <em>a</em> or an element of <em>b</em>. If the two sets overlap, the disjoint union contains two copies of the common part. You can think of an element of a disjoint union as being tagged with an identifier that specifies its origin.</p>
+<p>For a programmer, it’s easier to understand a coproduct in terms of types: it’s a tagged union of two types. C++ supports unions, but they are not tagged. It means that in your program you have to somehow keep track which member of the union is valid. To create a tagged union, you have to define a tag — an enumeration — and combine it with the union. For instance, a tagged union of an <code>int</code> and a <code>char const *</code> could be implemented as:</p>
+<pre>struct Contact {&#13;
+    enum { isPhone, isEmail } tag;&#13;
+    union { int phoneNum; char const * emailAddr; };&#13;
+};</pre>
+<p>The two injections can either be implemented as constructors or as functions. For instance, here’s the first injection as a function <code>PhoneNum</code>:</p>
+<pre>Contact PhoneNum(int n) {&#13;
+    Contact c;&#13;
+    c.tag = isPhone;&#13;
+    c.phoneNum = n;&#13;
+    return c;&#13;
+}</pre>
+<p>It injects an integer into <code>Contact</code>.</p>
+<p>A tagged union is also called a <em>variant</em>, and there is a very general implementation of a variant in the boost library, <code>boost::variant</code>.</p>
+<p>In Haskell, you can combine any data types into a tagged union by separating data constructors with a vertical bar. The <code>Contact</code> example translates into the declaration:</p>
+<pre>data Contact = PhoneNum Int | EmailAddr String</pre>
+<p>Here, <code>PhoneNum</code> and <code>EmailAddr</code> serve both as constructors (injections), and as tags for pattern matching (more about this later). For instance, this is how you would construct a contact using a phone number:</p>
+<pre>helpdesk :: Contact;&#13;
+helpdesk = PhoneNum 2222222</pre>
+<p>Unlike the canonical implementation of the product that is built into Haskell as the primitive pair, the canonical implementation of the coproduct is a data type called <code>Either</code>, which is defined in the standard Prelude as:</p>
+<pre>Either a b = Left a | Right b</pre>
+<p>It is parameterized by two types, <code>a</code> and <code>b</code> and has two constructors: <code>Left</code> that takes a value of type <code>a</code>, and <code>Right</code> that takes a value of type <code>b</code>.</p>
+<p>Just as we’ve defined the factorizer for a product, we can define one for the coproduct. Given a candidate type <code>c</code> and two candidate injections <code>i</code> and <code>j</code>, the factorizer for <code>Either</code> produces the factoring function:</p>
+<pre>factorizer :: (a -&gt; c) -&gt; (b -&gt; c) -&gt; Either a b -&gt; c&#13;
+factorizer i j (Left a)  = i a&#13;
+factorizer i j (Right b) = j b</pre>
+<h2>Asymmetry</h2>
+<p>We’ve seen two set of dual definitions: The definition of a terminal object can be obtained from the definition of the initial object by reversing the direction of arrows; in a similar way, the definition of the coproduct can be obtained from that of the product. Yet in the category of sets the initial object is very different from the final object, and coproduct is very different from product. We’ll see later that product behaves like multiplication, with the terminal object playing the role of one; whereas coproduct behaves more like the sum, with the initial object playing the role of zero. In particular, for finite sets, the size of the product is the product of the sizes of individual sets, and the size of the coproduct is the sum of the sizes.</p>
+<p>This shows that the category of sets is not symmetric with respect to the inversion of arrows.</p>
+<p>Notice that while the empty set has a unique morphism to any set (the <code>absurd</code> function), it has no morphisms coming back. The singleton set has a unique morphism coming to it from any set, but it <em>also</em> has outgoing morphisms to every set (except for the empty one). As we’ve seen before, these outgoing morphisms from the terminal object play a very important role of picking elements of other sets (the empty set has no elements, so there’s nothing to pick).</p>
+<p>It’s the relationship of the singleton set to the product that sets it apart from the coproduct. Consider using the singleton set, represented by the unit type <code>()</code>, as yet another — vastly inferior — candidate for the product pattern. Equip it with two projections <code>p</code> and <code>q</code>: functions from the singleton to each of the constituent sets. Each selects a concrete element from either set. Because the product is universal, there is also a (unique) morphism <code>m</code> from our candidate, the singleton, to the product. This morphism selects an element from the product set — it selects a concrete pair. It also factorizes the two projections:</p>
+<pre>p = fst . m&#13;
+q = snd . m</pre>
+<p>When acting on the singleton value <code>()</code>, the only element of the singleton set, these two equations become:</p>
+<pre>p () = fst (m ())&#13;
+q () = snd (m ())</pre>
+<p>Since <code>m ()</code> is the element of the product picked by <code>m</code>, these equations tell use that the element picked by <code>p</code> from the first set, <code>p ()</code>, is the first component of the pair picked by <code>m</code>. Similarly, <code>q ()</code> is equal to the second component. This is in total agreement with our understanding that elements of the product are pairs of elements from the constituent sets.</p>
+<p>There is no such simple interpretation of the coproduct. We could try the singleton set as a candidate for a coproduct, in an attempt to extract the elements from it, but there we would have two injections going into it rather than two projections coming out of it. They’d tell us nothing about their sources (in fact, we’ve seen that they ignore the input parameter). Neither would the unique morphism from the coproduct to our singleton. The category of sets just looks very different when seen from the direction of the initial object than it does when seen from the terminal end.</p>
+<p>This is not an intrinsic property of sets, it’s a property of functions, which we use as morphisms in <b>Set</b>. Functions are, in general, asymmetric. Let me explain.</p>
+<p>A function must be defined for every element of its domain set (in programming, we call it a <em>total</em> function), but it doesn’t have to cover the whole codomain. We’ve seen some extreme cases of it: functions from a singleton set — functions that select just a single element in the codomain. (Actually, functions from an empty set are the real extremes.) When the size of the domain is much smaller than the size of the codomain, we often think of such functions as embedding the domain in the codomain. For instance, we can think of a function from a singleton set as embedding its single element in the codomain. I call them <em>embedding</em> functions, but mathematicians prefer to give a name to the opposite: functions that tightly fill their codomains are called <em>surjective</em> or <em>onto</em>.</p>
+<p>The other source of asymmetry is that functions are allowed to map many elements of the domain set into one element of the codomain. They can collapse them. The extreme case are functions that map whole sets into a singleton. You’ve seen the polymorphic <code>unit</code> function that does just that. The collapsing can only be compounded by composition. A composition of two collapsing functions is even more collapsing than the individual functions. Mathematicians have a name for non-collapsing functions: they call them <em>injective</em> or <em>one-to-one</em></p>
+<p>Of course there are some functions that are neither embedding nor collapsing. They are called <em>bijections</em> and they are truly symmetric, because they are invertible. In the category of sets, an isomorphism is the same as a bijection.</p>
+<h2>Challenges</h2>
+<ol><li>Show that the terminal object is unique up to unique isomorphism.</li>
+<li>What is a product of two objects in a poset? Hint: Use the universal construction.</li>
+<li>What is a coproduct of two objects in a poset?</li>
+<li>Implement the equivalent of Haskell <code>Either</code> as a generic type in your favorite language (other than Haskell).</li>
+<li>Show that <code>Either</code> is a “better” coproduct than <code>int</code> equipped with two injections:
+<pre>int i(int n) { return n; }&#13;
+int j(bool b) { return b? 0: 1; }</pre>
+<p>Hint: Define a function</p>
+<pre>int m(Either const &amp; e);</pre>
+<p>that factorizes <code>i</code> and <code>j</code>.</p></li>
+<li>Continuing the previous problem: How would you argue that <code>int</code> with the two injections <code>i</code> and <code>j</code> cannot be “better” than <code>Either</code>?</li>
+<li>Still continuing: What about these injections?
+<pre>int i(int n) { &#13;
+    if (n &lt; 0) return n; &#13;
+    return n + 2;&#13;
+}&#13;
+int j(bool b) { return b? 0: 1; }</pre>
+</li>
+<li>Come up with an inferior candidate for a coproduct of <code>int</code> and <code>bool</code> that cannot be better than <code>Either</code> because it allows multiple acceptable morphisms from it to <code>Either</code>.</li>
+</ol><p>Next: <a title="Simple Algebraic Data Types" href="../../../13/simple-algebraic-data-types/trackback/index.html">Simple Algebraic Data Types</a>.</p>
+<h2>Bibliography</h2>
+<ol><li>The Catsters, <a href="https://www.youtube.com/watch?v=upCSDIO9pjc" target="_blank">Products and Coproducts</a> video.</li>
+</ol><h2>Acknowledments</h2>
+<p>I’m grateful to Gershom Bazerman for reviewing this post before publication and for stimulating discussions.</p>
+<a href="https://twitter.com/BartoszMilewski" class="twitter-follow-button" data-show-count="false" data-text-color="#29303b" data-link-color="#909d73">Follow @BartoszMilewski</a>
+		<div class="wpcnt">
+			<div class="wpa wpmrec">
+				<span class="wpa-about">Advertisements</span>
+				<div class="u">
+					<amp-ad width="300" height="250" type="pubmine" data-adsafe="1" data-section="0" data-siteid="11416" data-wordads="0"><div placeholder="" class="amp-wp-iframe-placeholder"></div>
+					</amp-ad></div>
+			</div>
+		</div>	</div>
+
+	<footer class="amp-wp-article-footer">
+			<div class="amp-wp-meta amp-wp-tax-category">
+		Categories: <a href="../../../../../category/category-theory/index.html" rel="category tag">Category Theory</a>, <a href="../../../../../category/haskell/index.html" rel="category tag">Haskell</a>	</div>
+
+		<div class="amp-wp-meta amp-wp-comments-link">
+		<a href="../trackback/index.html#comments">
+			Leave a Comment		</a>
+	</div>
+	</footer>
+
+</article>
+
+<footer class="amp-wp-footer">
+	<div>
+		<h2>  Bartosz Milewski&#039;s Programming Cafe</h2>
+		<p>
+			<a href="https://wordpress.com/?ref=footer_blog">Blog at WordPress.com.</a>
+		</p>
+		<a href="index.html#top" class="back-to-top">Back to top</a>
+	</div>
+</footer>
+
+	<amp-pixel src="https://pixel.wp.com/b.gif?rand=RANDOM&#038;host=bartoszmilewski.com&#038;ref=DOCUMENT_REFERRER&#038;amp=1&#038;blog=3549518&#038;v=wpcom&#038;tz=-7&#038;user_id=0&#038;post=3720&#038;subd=bartoszmilewski"></amp-pixel>
+	<amp-pixel src="https://pixel.wp.com/b.gif?rand=RANDOM&#038;v=wpcom-no-pv&#038;crypt=UE5XaGUuOTlwaD85flAmcm1mcmZsaDhkV11YdWtpP0NsWnVkPS9sL0ViLndld3BkTUV5ST9WY3J1RTlUZyw1R3ZSbnIsdHFTX0lCY0ZyS2M4cGlJUXppTGJkNjdSMj0mY2lfVS1NTlpEbGxNVi1YL35jW3M2M1Q1OXZmTEJvW2dibnZaME1HWjZMdHRSOGY%2FRXZ0TGk1cTlBTWZaUy4wMUs4bi5LMmo4XWpGeS5xQzVHK3M1cG4zfE1MNW9fOTVBSGVCOCU0XUlBblkxd2lURjZKRSZZTmpRYTY%3D"></amp-pixel>
+	
+</body>
+</html>

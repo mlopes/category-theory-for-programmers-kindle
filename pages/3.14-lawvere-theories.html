@@ -1,0 +1,669 @@
+<!doctype html>
+<html amp lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
+	
+<!-- Jetpack Open Graph Tags -->
+<meta property="og:type" content="article" />
+<meta property="og:title" content="Lawvere Theories" />
+<meta property="og:url" content="https://bartoszmilewski.com/2017/08/26/lawvere-theories/" />
+<meta property="og:description" content="This is part 30 of Categories for Programmers. Previously: Topoi. See the Table of Contents. Nowadays you can&#8217;t talk about functional programming without mentioning monads. But there is an al…" />
+<meta property="article:published_time" content="2017-08-26T18:28:51+00:00" />
+<meta property="article:modified_time" content="2017-09-07T06:09:28+00:00" />
+<meta property="og:site_name" content="  Bartosz Milewski&#039;s Programming Cafe" />
+<meta property="og:image" content="https://bartoszmilewski.files.wordpress.com/2017/08/equalize1.png" />
+<meta property="og:image:width" content="481" />
+<meta property="og:image:height" content="356" />
+<meta property="og:locale" content="en_US" />
+<meta name="twitter:site" content="@BartoszMilewski" />
+<meta name="twitter:text:title" content="Lawvere Theories" />
+<meta name="twitter:image" content="https://bartoszmilewski.files.wordpress.com/2017/08/lawvere1.png?w=240" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:creator" content="@BartoszMilewski" />
+<meta property="article:publisher" content="https://www.facebook.com/WordPresscom" />
+	<title>Lawvere Theories &#8211;   Bartosz Milewski&#039;s Programming Cafe</title>
+		<link rel="canonical" href="../trackback/index.html" />
+			<script custom-element="amp-ad" src="https://cdn.ampproject.org/v0/amp-ad-0.1.js" async></script>
+		<script src="https://cdn.ampproject.org/v0.js" async></script>
+			<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Merriweather:400,400italic,700,700italic">
+		<style amp-boilerplate>body{-webkit-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-moz-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-ms-animation:-amp-start 8s steps(1,end) 0s 1 normal both;animation:-amp-start 8s steps(1,end) 0s 1 normal both}@-webkit-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-moz-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-ms-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-o-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}</style><noscript><style amp-boilerplate>body{-webkit-animation:none;-moz-animation:none;-ms-animation:none;animation:none}</style></noscript>
+		<script type="application/ld+json">{"@context":"http:\/\/schema.org","@type":"BlogPosting","mainEntityOfPage":"https:\/\/bartoszmilewski.com\/2017\/08\/26\/lawvere-theories\/","publisher":{"@type":"Organization","name":"\u00a0\u00a0Bartosz Milewski&#039;s Programming Cafe","logo":{"@type":"ImageObject","url":"https:\/\/s2.wp.com\/i\/favicons\/apple-touch-icon-60x60.png","width":60,"height":60}},"headline":"Lawvere Theories","datePublished":"2017-08-26T11:28:51+00:00","dateModified":"2017-09-06T23:09:28+00:00","author":{"@type":"Person","name":"Bartosz Milewski"},"image":{"@type":"ImageObject","url":"https:\/\/bartoszmilewski.files.wordpress.com\/2017\/08\/equalize1.png","width":481,"height":356}}</script>
+		<style amp-custom>
+		/* Generic WP styling */
+
+.alignright {
+	float: right;
+}
+
+.alignleft {
+	float: left;
+}
+
+.aligncenter {
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.amp-wp-enforced-sizes {
+	/** Our sizes fallback is 100vw, and we have a padding on the container; the max-width here prevents the element from overflowing. **/
+	max-width: 100%;
+	margin: 0 auto;
+}
+
+.amp-wp-unknown-size img {
+	/** Worst case scenario when we can't figure out dimensions for an image. **/
+	/** Force the image into a box of fixed dimensions and use object-fit to scale. **/
+	object-fit: contain;
+}
+
+/* Template Styles */
+
+.amp-wp-content,
+.amp-wp-title-bar div {
+		margin: 0 auto;
+	max-width: 510px;
+	}
+
+html {
+	background: #0a89c0;
+}
+
+body {
+	background: #fff;
+	color: #353535;
+	font-family: 'Merriweather', 'Times New Roman', Times, Serif;
+	font-weight: 300;
+	line-height: 1.75em;
+}
+
+p,
+ol,
+ul,
+figure {
+	margin: 0 0 1em;
+	padding: 0;
+}
+
+a,
+a:visited {
+	color: #0a89c0;
+}
+
+a:hover,
+a:active,
+a:focus {
+	color: #353535;
+}
+
+/* Quotes */
+
+blockquote {
+	color: #353535;
+	background: rgba(127,127,127,.125);
+	border-left: 2px solid #0a89c0;
+	margin: 8px 0 24px 0;
+	padding: 16px;
+}
+
+blockquote p:last-child {
+	margin-bottom: 0;
+}
+
+/* UI Fonts */
+
+.amp-wp-meta,
+.amp-wp-header div,
+.amp-wp-title,
+.wp-caption-text,
+.amp-wp-tax-category,
+.amp-wp-tax-tag,
+.amp-wp-comments-link,
+.amp-wp-footer p,
+.back-to-top {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen-Sans", "Ubuntu", "Cantarell", "Helvetica Neue", sans-serif;
+}
+
+/* Header */
+
+.amp-wp-header {
+	background-color: #0a89c0;
+}
+
+.amp-wp-header div {
+	color: #fff;
+	font-size: 1em;
+	font-weight: 400;
+	margin: 0 auto;
+	max-width: calc(840px - 32px);
+	padding: .875em 16px;
+	position: relative;
+}
+
+.amp-wp-header a {
+	color: #fff;
+	text-decoration: none;
+}
+
+/* Site Icon */
+
+.amp-wp-header .amp-wp-site-icon {
+	/** site icon is 32px **/
+	background-color: #fff;
+	border: 1px solid #fff;
+	border-radius: 50%;
+	position: absolute;
+	right: 18px;
+	top: 10px;
+}
+
+/* Article */
+
+.amp-wp-article {
+	color: #353535;
+	font-weight: 400;
+	margin: 1.5em auto;
+	max-width: 840px;
+	overflow-wrap: break-word;
+	word-wrap: break-word;
+}
+
+/* Article Header */
+
+.amp-wp-article-header {
+	align-items: center;
+	align-content: stretch;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	margin: 1.5em 16px 1.5em;
+}
+
+.amp-wp-title {
+	color: #353535;
+	display: block;
+	flex: 1 0 100%;
+	font-weight: 900;
+	margin: 0 0 .625em;
+	width: 100%;
+}
+
+/* Article Meta */
+
+.amp-wp-meta {
+	color: #696969;
+	display: inline-block;
+	flex: 2 1 50%;
+	font-size: .875em;
+	line-height: 1.5em;
+	margin: 0;
+	padding: 0;
+}
+
+.amp-wp-article-header .amp-wp-meta:last-of-type {
+	text-align: right;
+}
+
+.amp-wp-article-header .amp-wp-meta:first-of-type {
+	text-align: left;
+}
+
+.amp-wp-byline amp-img,
+.amp-wp-byline .amp-wp-author {
+	display: inline-block;
+	vertical-align: middle;
+}
+
+.amp-wp-byline amp-img {
+	border: 1px solid #0a89c0;
+	border-radius: 50%;
+	position: relative;
+	margin-right: 6px;
+}
+
+.amp-wp-posted-on {
+	text-align: right;
+}
+
+/* Featured image */
+
+.amp-wp-article-featured-image {
+	margin: 0 0 1em;
+}
+.amp-wp-article-featured-image amp-img {
+	margin: 0 auto;
+}
+.amp-wp-article-featured-image.wp-caption .wp-caption-text {
+	margin: 0 18px;
+}
+
+/* Article Content */
+
+.amp-wp-article-content {
+	margin: 0 16px;
+}
+
+.amp-wp-article-content ul,
+.amp-wp-article-content ol {
+	margin-left: 1em;
+}
+
+.amp-wp-article-content amp-img {
+	margin: 0 auto;
+}
+
+.amp-wp-article-content amp-img.alignright {
+	margin: 0 0 1em 16px;
+}
+
+.amp-wp-article-content amp-img.alignleft {
+	margin: 0 16px 1em 0;
+}
+
+/* Captions */
+
+.wp-caption {
+	padding: 0;
+}
+
+.wp-caption.alignleft {
+	margin-right: 16px;
+}
+
+.wp-caption.alignright {
+	margin-left: 16px;
+}
+
+.wp-caption .wp-caption-text {
+	border-bottom: 1px solid #c2c2c2;
+	color: #696969;
+	font-size: .875em;
+	line-height: 1.5em;
+	margin: 0;
+	padding: .66em 10px .75em;
+}
+
+/* AMP Media */
+
+amp-carousel {
+	background: #c2c2c2;
+	margin: 0 -16px 1.5em;
+}
+amp-iframe,
+amp-youtube,
+amp-instagram,
+amp-vine {
+	background: #c2c2c2;
+	margin: 0 -16px 1.5em;
+}
+
+.amp-wp-article-content amp-carousel amp-img {
+	border: none;
+}
+
+amp-carousel > amp-img > img {
+	object-fit: contain;
+}
+
+.amp-wp-iframe-placeholder {
+	background: #c2c2c2 url( https://s2.wp.com/wp-content/plugins/amp/assets/images/placeholder-icon.png ) no-repeat center 40%;
+	background-size: 48px 48px;
+	min-height: 48px;
+}
+
+/* Article Footer Meta */
+
+.amp-wp-article-footer .amp-wp-meta {
+	display: block;
+}
+
+.amp-wp-tax-category,
+.amp-wp-tax-tag {
+	color: #696969;
+	font-size: .875em;
+	line-height: 1.5em;
+	margin: 1.5em 16px;
+}
+
+.amp-wp-comments-link {
+	color: #696969;
+	font-size: .875em;
+	line-height: 1.5em;
+	text-align: center;
+	margin: 2.25em 0 1.5em;
+}
+
+.amp-wp-comments-link a {
+	border-style: solid;
+	border-color: #c2c2c2;
+	border-width: 1px 1px 2px;
+	border-radius: 4px;
+	background-color: transparent;
+	color: #0a89c0;
+	cursor: pointer;
+	display: block;
+	font-size: 14px;
+	font-weight: 600;
+	line-height: 18px;
+	margin: 0 auto;
+	max-width: 200px;
+	padding: 11px 16px;
+	text-decoration: none;
+	width: 50%;
+	-webkit-transition: background-color 0.2s ease;
+			transition: background-color 0.2s ease;
+}
+
+/* AMP Footer */
+
+.amp-wp-footer {
+	border-top: 1px solid #c2c2c2;
+	margin: calc(1.5em - 1px) 0 0;
+}
+
+.amp-wp-footer div {
+	margin: 0 auto;
+	max-width: calc(840px - 32px);
+	padding: 1.25em 16px 1.25em;
+	position: relative;
+}
+
+.amp-wp-footer h2 {
+	font-size: 1em;
+	line-height: 1.375em;
+	margin: 0 0 .5em;
+}
+
+.amp-wp-footer p {
+	color: #696969;
+	font-size: .8em;
+	line-height: 1.5em;
+	margin: 0 85px 0 0;
+}
+
+.amp-wp-footer a {
+	text-decoration: none;
+}
+
+.back-to-top {
+	bottom: 1.275em;
+	font-size: .8em;
+	font-weight: 600;
+	line-height: 2em;
+	position: absolute;
+	right: 16px;
+}
+				/* WordAds */
+		.wpcnt {
+			text-align: center;
+			line-height: 0;
+			display: block;
+			clear: both;
+			margin: 1em 0;
+		}
+
+		.rtl .wpcnt {
+			direction: ltr;
+		}
+
+		.wpa {
+			position: relative;
+			display: inline-block;
+			max-width: 100%;
+			text-align: left;
+			padding: 10px 0 0;
+			min-width: 300px;
+			-webkit-transform: translate3d(0, 0, 0);
+			transform: translate3d(0, 0, 0);
+		}
+
+		.wpa-about {
+			position: absolute;
+			top: 5px;
+			left: 0;
+			right: 0;
+			display: block;
+			min-width: 160px;
+			border-bottom: none;
+			font: 10px/1 "Open Sans", Arial, sans-serif;
+			text-align: left;
+			text-decoration: none;
+			opacity: 0.85;
+		}
+
+		.wpa .u>div, .wpadvert>div>* {
+			display: block;
+			margin-top: 5px;
+			margin-bottom: 1em;
+		}
+
+		div.wpa>div {
+			margin-top: 10px;
+		}/* Inline styles */
+.amp-wp-inline-fc5426e27cec08f5fc06a1a6def2c1cf{max-width:520px;}	</style>
+</head>
+
+<body class="">
+
+<header id="#top" class="amp-wp-header">
+	<div>
+		<a href="https://bartoszmilewski.com">
+						  Bartosz Milewski&#039;s Programming Cafe		</a>
+	</div>
+</header>
+
+<article class="amp-wp-article">
+
+	<header class="amp-wp-article-header">
+		<h1 class="amp-wp-title">Lawvere Theories</h1>
+				<div class="amp-wp-meta amp-wp-byline">
+					<amp-img src="https://secure.gravatar.com/avatar/c018f213204496b4bbf481e7c8e6c15c?s=24&#038;d=mm&#038;r=g" width="24" height="24" layout="fixed"></amp-img>
+				<span class="amp-wp-author author vcard">Bartosz Milewski</span>
+	</div>
+<div class="amp-wp-meta amp-wp-posted-on">
+	<time datetime="2017-08-26T11:28:51+00:00">
+		2 months ago	</time>
+</div>
+	</header>
+
+	
+	<div class="amp-wp-article-content">
+				<div class="wpcnt">
+			<div class="wpa wpmrec">
+				<span class="wpa-about">Advertisements</span>
+				<div class="u">
+					<amp-ad width="300" height="250" type="pubmine" data-adsafe="1" data-section="2" data-siteid="2694" data-wordads="0"><div placeholder="" class="amp-wp-iframe-placeholder"></div>
+					</amp-ad></div>
+			</div>
+		</div><blockquote><p>This is part 30 of Categories for Programmers. Previously: Topoi<a href="../../../../07/22/topoi/trackback/index.html" target="_blank" rel="noopener">. See the </a><a title="Table of Contents" href="../../../../../2014/10/28/category-theory-for-programmers-the-preface/trackback/index.html" target="_blank" rel="noopener noreferrer">Table of Contents</a><a href="../../../../07/22/topoi/trackback/index.html" target="_blank" rel="noopener">.</a></p></blockquote>
+<p>Nowadays you can’t talk about functional programming without mentioning monads. But there is an alternative universe in which, by chance, Eugenio Moggi turned his attention to Lawvere theories rather than monads. Let’s explore that universe.</p>
+<h2>Universal Algebra</h2>
+<p>There are many ways of describing algebras at various levels of abstraction. We try to find a general language to describe things like monoids, groups, or rings. At the simplest level, all these constructions define <em>operations</em> on elements of a set, plus some <em>laws</em> that must be satisfied by these operations. For instance, a monoid can be defined in terms of a binary operation that is associative. We also have a unit element and unit laws. But with a little bit of imagination we can turn the unit element to a nullary operation — an operation that takes no arguments and returns a special element of the set. If we want to talk about groups, we add a unary operator that takes an element and returns its inverse. There are corresponding left and right inverse laws to go with it. A ring defines two binary operators plus some more laws. And so on.</p>
+<p>The big picture is that an algebra is defined by a set of n-ary operations for various values of n, and a set of equational identities. These identities are all universally quantified. The associativity equation must be satisfied for all possible combinations of three elements, and so on.</p>
+<p>Incidentally, this eliminates fields from consideration, for the simple reason that zero (unit with respect to addition) has no inverse with respect to multiplication. The inverse law for a field can’t be universally quantified.</p>
+<p>This definition of a universal algebra can be extended to categories other than <b>Set</b>, if we replace operations (functions) with morphisms. Instead of a set, we select an object <code>a</code> (called a generic object). A unary operation is just an endomorphism of <code>a</code>. But what about other arities (<em>arity</em> is the number of arguments for a given operation)? A binary operation (arity 2) can be defined as a morphism from the product <code>a×a</code> back to <code>a</code>. A general n-ary operation is a morphism from the n-th power of <code>a</code> to <code>a</code>:</p>
+<pre>α<sub>n</sub> :: a<sup>n</sup> -&gt; a</pre>
+<p>A nullary operation is a morphism from the terminal object (the zeroth power of <code>a</code>). So all we need in order to define any algebra is a category whose objects are powers of one special object <code>a</code>. The specific algebra is encoded in the hom-sets of this category. This is a Lawvere theory in a nutshell.</p>
+<p>The derivation of Lawvere theories goes through many steps, so here’s the roadmap:</p>
+<ol><li>Category of finite sets <b>FinSet</b>.</li>
+<li>Its skeleton <b>F</b>.</li>
+<li>Its opposite <b>F</b><sup>op</sup>.</li>
+<li>Lawvere theory <b>L</b>: an object in the category <b>Law</b>.</li>
+<li>Model <code>M</code> of a Lawvere category: an object in the category <code>Mod(Law, Set)</code>.</li>
+</ol><p><a href="https://bartoszmilewski.files.wordpress.com/2017/08/lawvere1.png"><amp-img class="alignnone size-large wp-image-9070 amp-wp-enforced-sizes" src="https://bartoszmilewski.files.wordpress.com/2017/08/lawvere1.png?w=510&amp;h=246" alt="" width="510" height="246" srcset="https://bartoszmilewski.files.wordpress.com/2017/08/lawvere1.png?w=510&amp;h=246 510w, https://bartoszmilewski.files.wordpress.com/2017/08/lawvere1.png?w=150&amp;h=72 150w, https://bartoszmilewski.files.wordpress.com/2017/08/lawvere1.png?w=300&amp;h=144 300w, https://bartoszmilewski.files.wordpress.com/2017/08/lawvere1.png?w=768&amp;h=370 768w, https://bartoszmilewski.files.wordpress.com/2017/08/lawvere1.png 841w" sizes="(min-width: 510px) 510px, 100vw"></amp-img></a></p>
+<h2>Lavwere Theories</h2>
+<p>All Lawvere theories share a common backbone. All objects in a Lawvere theory are generated from just one object using products (really, just powers). But how do we define these products in a general category? It turns out that we can define products using a mapping from a simpler category. In fact this simpler category may define coproducts instead of products, and we’ll use a <em>contravariant</em> functor to embed them in our target category. A contravariant functor turns coproducts into products and injections to projections.</p>
+<p>The natural choice for the backbone of a Lawvere category is the category of finite sets, <b>FinSet</b>. It contains the empty set <code>0</code>, a singleton set <code>1</code>, a two-element set <code>2</code>, and so on. All objects in this category can be generated from the singleton set using coproducts (treating the empty set as a special case of a nullary coproduct). For instance, a two-element set is a sum of two singletons, <code>2 = 1 + 1</code>, as expressed in Haskell:</p>
+<pre>type Two = Either () ()</pre>
+<p>However, even though it’s natural to think that there’s only one empty set, there may be many distinct singleton sets. In particular, the set <code>1 + 0</code> is different from the set <code>0 + 1</code>, and different from <code>1</code> — even though they are all isomorphic. The coproduct in the category of sets is not associative. We can remedy that situation by building a category that identifies all isomorphic sets. Such a category is called a <em>skeleton</em>. In other words, the backbone of any Lawvere theory is the skeleton <b>F</b> of <b>FinSet</b>. The objects in this category can be identified with natural numbers (including zero) that correspond to the element count in <b>FinSet</b>. Coproduct plays the role of addition. Morphisms in <b>F</b> correspond to functions between finite sets. For instance, there is a unique morphism from <code>0</code> to <code>n</code> (empty set being the initial object), no morphisms from <code>n</code> to <code>0</code> (except <code>0-&gt;0</code>), n morphisms from <code>1</code> to <code>n</code> (the injections), one morphism from <code>n</code> to <code>1</code>, and so on. Here, <code>n</code> denotes an object in <b>F</b> corresponding to all n-element sets in <b>FinSet</b> that have been identified through isomorphims.</p>
+<p>Using the category <b>F</b> we can formally define a <em>Lawvere theory</em> as a category <b>L</b> equipped with a special functor</p>
+<pre>I<sub>L</sub> :: <b>F</b><sup>op</sup> -&gt; L</pre>
+<p>This functor must be a bijection on objects and it must preserve finite products (products in <b>F</b><sup>op</sup> are the same as coproducts in <b>F</b>):</p>
+<pre>I<sub>L</sub> (m × n) = I<sub>L</sub> m × I<sub>L</sub> n</pre>
+<p>You may sometimes see this functor characterized as identity-on-objects, which means that the objects in <b>F</b> and <b>L</b> are the same. We will therefore use the same names for them — we’ll denote them by natural numbers. Keep in mind though that objects in <b>F</b> are not the same as sets (they are classes of isomorphic sets).</p>
+<p>The hom-sets in <b>L</b> are, in general, richer than those in <b>F</b><sup>op</sup>. They may contain morphisms other than the ones corresponding to functions in <b>FinSet</b> (the latter are sometimes called <em>basic product operations</em>). Equational laws of a Lawvere theory are encoded in those morphisms.</p>
+<p>The key observation is that the singleton set <code>1</code> in <b>F</b> is mapped to some object that we also call <code>1</code> in <b>L</b>, and all the other objects in <b>L</b> are automatically powers of this object. For instance, the two-element set <code>2</code> in <b>F</b> is the coproduct <code>1+1</code>, so it must be mapped to a product <code>1×1</code> (or <code>1<sup>2</sup></code>) in <b>L</b>. In this sense, the category <b>F</b> behaves like the logarithm of <b>L</b>.</p>
+<p>Among morphisms in <b>L</b> we have those transferred by the functor <code>I<sub>L</sub></code> from <b>F</b>. They play structural role in <b>L</b>. In particular coproduct injections <code>i<sub>k</sub></code> become product projections <code>p<sub>k</sub></code>. A useful intuition is to imagine the projection:</p>
+<pre>p<sub>k</sub> :: 1<sup>n</sup> -&gt; 1</pre>
+<p>as the prototype for a function of n variables that ignores all but the k’th variable. Conversely, constant morphisms <code>n-&gt;1</code> in <b>F</b> become diagonal morphisms <code>1-&gt;1<sup>n</sup></code> in <b>L</b>. They correspond to duplication of variables.</p>
+<p>The interesting morphisms in <b>L</b> are the ones that define n-ary operations other than projections. It’s those morphisms that distinguish one Lawvere theory from another. These are the multiplications, the additions, the selections of unit elements, and so on, that define the algebra. But to make <b>L</b> a full category, we also need compound operations <code>n-&gt;m</code> (or, equivalently, <code>1<sup>n</sup> -&gt; 1<sup>m</sup></code>). Because of the simple structure of the category, they turn out to be products of simpler morphisms of the type <code>n-&gt;1</code>. This is a generalization of the statement that a function that returns a product is a product of functions (or, as we’ve seen earlier, that the hom-functor is continuous).</p>
+<div data-shortcode="caption" id="attachment_9070" class="wp-caption alignnone amp-wp-inline-fc5426e27cec08f5fc06a1a6def2c1cf"><a href="https://bartoszmilewski.files.wordpress.com/2017/08/lawvere1.png"><amp-img class="wp-image-9070 size-large amp-wp-enforced-sizes" src="https://bartoszmilewski.files.wordpress.com/2017/08/lawvere1.png?w=510&amp;h=246" alt="" width="510" height="246" srcset="https://bartoszmilewski.files.wordpress.com/2017/08/lawvere1.png?w=510&amp;h=246 510w, https://bartoszmilewski.files.wordpress.com/2017/08/lawvere1.png?w=150&amp;h=72 150w, https://bartoszmilewski.files.wordpress.com/2017/08/lawvere1.png?w=300&amp;h=144 300w, https://bartoszmilewski.files.wordpress.com/2017/08/lawvere1.png?w=768&amp;h=370 768w, https://bartoszmilewski.files.wordpress.com/2017/08/lawvere1.png 841w" sizes="(min-width: 510px) 510px, 100vw"></amp-img></a><p class="wp-caption-text">Lawvere theory L is based on <b>F</b><sup>op</sup>, from which it inherits the “boring” morphisms that define the products. It adds the “interesting” morphisms that describe the n-ary operations (dotted arrows).</p></div>
+<p>Lavwere theories form a category <b>Law</b>, in which morphisms are functors that preserve finite products and commute with the functors <code>I</code>. Given two such theories, <code>(L, I<sub>L</sub>)</code> and <code>(L', I'<sub>L'</sub>)</code>, a morphism between them is a functor <code>F :: L -&gt; L'</code> such that:</p>
+<pre>F (m × n) = F m × F n&#13;
+F ∘ I<sub>L</sub> = I'<sub>L'</sub></pre>
+<p>Morphisms between Lawvere theories encapsulate the idea of the interpretation of one theory inside another. For instance, group multiplication may be interpreted as monoid multiplication if we ignore inverses.</p>
+<p>The simplest trivial example of a Lawvere category is <b>F</b><sup>op</sup> itself (corresponding to the choice of the identity functor for <code>I<sub>L</sub></code>). This Lawvere theory that has no operations or laws happens to be the initial object in <b>Law</b>.</p>
+<p>At this point it would be very helpful to present a non-trivial example of a Lawvere theory, but it would be hard to explain it without first understanding what models are.</p>
+<h2>Models of Lawvere Theories</h2>
+<p>The key to understand Lawvere theories is to realize that one such theory generalizes a lot of individual algebras that share the same structure. For instance, the Lawvere theory of monoids describes the essence of being a monoid. It must be valid for all monoids. A particular monoid becomes a model of such a theory. A model is defined as a functor from the Lawvere theory <b>L</b> to the category of sets <b>Set</b>. (There are generalizations of Lawvere theories that use other categories for models but here I’ll just concentrate on <b>Set</b>.) Since the structure of <b>L</b> depends heavily on products, we require that such a functor preserve finite products. A model of <b>L</b>, also called the algebra over the Lawvere theory <b>L</b>, is therefore defined by a functor:</p>
+<pre>M :: L -&gt; Set&#13;
+M (a × b) ≅ M a × M b</pre>
+<p>Notice that we require the preservation of products only <em>up to isomorphism</em>. This is very important, because strict preservation of products would eliminate most interesting theories.</p>
+<p>The preservation of products by models means that the image of <code>M</code> in <b>Set</b> is a sequence of sets generated by powers of the set <code>M 1</code> — the image of the object <code>1</code> from <b>L</b>. Let’s call this set <code>a</code>. (This set is sometimes called a <i>sort</i>, and such algebra is called single-sorted. There exist generalizations of Lawvere theories to multi-sorted algebras.) In particular, binary operations from <b>L</b> are mapped to functions:</p>
+<pre>a × a -&gt; a</pre>
+<p>As with any functor, it’s possible that multiple morphisms in <b>L</b> are collapsed to the same function in <b>Set</b>.</p>
+<p>Incidentally, the fact that all laws are universally quantified equalities means that every Lawvere theory has a trivial model: a constant functor mapping all objects to a single set, and all morphisms to the identity function on it.</p>
+<p>A general morphism in <b>L</b> of the form <code>m -&gt; n</code> is mapped to a function:</p>
+<pre>a<sup>m</sup> -&gt; a<sup>n</sup></pre>
+<p>If we have two different models, <code>M</code> and <code>N</code>, a natural transformation between them is a family of functions indexed by <code>n</code>:</p>
+<pre>μ<sub>n</sub> :: M n -&gt; N n</pre>
+<p>or, equivalently:</p>
+<pre>μ<sub>n</sub> :: a<sup>n</sup> -&gt; b<sup>n</sup></pre>
+<p>where <code>b = N 1</code>.</p>
+<p>Notice that the naturality condition guarantees the preservation of n-ary operations:</p>
+<pre>N f ∘ μ<sub>n</sub> = μ<sub>1</sub> ∘ M f</pre>
+<p>where <code>f :: n -&gt; 1</code> is an n-ary operation in <b>L</b>.</p>
+<p>The functors that define models form a category of models, <code>Mod(L, Set)</code>, with natural transformations as morphisms.</p>
+<p>Consider a model for the trivial Lawvere category <b>F</b><sup>op</sup>. Such model is completely determined by its value at <code>1</code>, <code>M 1</code>. Since <code>M 1</code> can be any set, there are as many of these models as there are sets in <b>Set</b>. Moreover, every morphism in <code>Mod(<b>F</b><sup>op</sup>, Set)</code> (a natural transformation between functors <code>M</code> and <code>N</code>) is uniquely determined by its component at <code>M 1</code>. Conversely, every function <code>M 1 -&gt; N 1</code> induces a natural transformation between the two models <code>M</code> and <code>N</code>. Therefore <code>Mod(<b>F</b><sup>op</sup>, Set)</code> is equivalent to <b>Set</b>.</p>
+<h2>The Theory of Monoids</h2>
+<p>The simplest nontrivial example of a Lawvere theory describes the structure of monoids. It is a single theory that distills the structure of all possible monoids, in the sense that the models of this theory span the whole category <b>Mon</b> of monoids. We’ve already seen a <a href="../../../../../2015/07/21/free-monoids/trackback/index.html">universal construction</a>, which showed that every monoid can be obtained from an appropriate free monoid by identifying a subset of morphisms. So a single free monoid already generalizes a whole lot of monoids. There are, however, infinitely many free monoids. The Lawvere theory for monoids <b>L<sub>Mon</sub></b> combines all of them in one elegant construction.</p>
+<p>Every monoid must have a unit, so we have to have a special morphism <code>η</code> in <b>L<sub>Mon</sub></b> that goes from <code>0</code> to <code>1</code>. Notice that there can be no corresponding morphism in <b>F</b>. Such morphism would go in the opposite direction, from <code>1</code> to <code>0</code> which, in <b>FinSet</b>, would be a function from the singleton set to the empty set. No such function exists.</p>
+<p>Next, consider morphisms <code>2-&gt;1</code>, members of <code>L<sub>Mon</sub>(2, 1)</code>, which must contain prototypes of all binary operations. When constructing models in <code>Mod(L<sub>Mon</sub>, Set)</code>, these morphisms will be mapped to functions from the cartesian product <code>M 1 × M 1</code> to <code>M 1</code>. In other words, functions of two arguments.</p>
+<p>The question is: how many functions of two arguments can one implement using only the monoidal operator. Let’s call the two arguments <code>a</code> and <code>b</code>. There is one function that ignores both arguments and returns the monoidal unit. Then there are two projections that return <code>a</code> and <code>b</code>, respectively. They are followed by functions that return <code>ab</code>, <code>ba</code>, <code>aa</code>, <code>bb</code>, <code>aab</code>, and so on… In fact there are as many such functions of two arguments as there are elements in the free monoid with generators <code>a</code> and <code>b</code>. Notice that <code>L<sub>Mon</sub>(2, 1)</code> must contain all those morphisms because one of the models is the free monoid. In a free monoid they correspond to distinct functions. Other models may collapse multiple morphisms in <code>L<sub>Mon</sub>(2, 1)</code> down to a single function, but not the free monoid.</p>
+<p>If we denote the free monoid with n generators <code>n<sup>*</sup></code>, we may identify the hom-set <code>L(2, 1)</code> with the hom-set <code>Mon(1<sup>*</sup>, 2<sup>*</sup>)</code> in <b>Mon</b>, the category of monoids. In general, we pick <code>L<sub>Mon</sub>(m, n)</code> to be <code>Mon(n<sup>*</sup>, m<sup>*</sup>)</code>. In other words, the category <code>L<sub>Mon</sub></code> is the opposite of the category of free monoids.</p>
+<p>The category of <em>models</em> of the Lawvere theory for monoids, <code>Mod(L<sub>Mon</sub>, Set)</code>, is equivalent to the category of all monoids, <b>Mon</b>.</p>
+<h2>Lawvere Theories and Monads</h2>
+<p>As you may remember, algebraic theories can be described using monads — in particular <a href="../../../../03/14/algebras-for-monads/trackback/index.html" target="_blank" rel="noopener">algebras for monads</a>. It should be no surprise then that there is a connection between Lawvere theories and monads.</p>
+<p>First, let’s see how a Lawvere theory induces a monad. It does it through an <a href="../../../../../2016/06/15/freeforgetful-adjunctions/trackback/index.html" target="_blank" rel="noopener">adjunction</a> between a forgetful functor and a free functor. The forgetful functor <code>U</code> assigns a set to each model. This set is given by evaluating the functor M from <code>Mod(L, Set)</code> at the object <code>1</code> in <b>L</b>.</p>
+<p>Another way of deriving <code>U</code> is by exploiting the fact that <b>F</b><sup>op</sup> is the initial object in <b>Law</b>. It meanst that, for any Lawvere theory <b>L</b>, there is a unique functor <code><b>F</b><sup>op</sup> -&gt; L</code>. This functor induces the opposite functor on models (since models are functors <em>from</em> theories to sets):</p>
+<pre>Mod(L, Set) -&gt; Mod(<b>F</b><sup>op</sup>, Set)</pre>
+<p>But, as we discussed, the category of models of <b>F</b><sub>op</sub> is equivalent to <b>Set</b>, so we get the forgetful functor:</p>
+<pre>U :: Mod(L, Set) -&gt; Set</pre>
+<p>It can be shown that so defined <code>U</code> always has a left adjoint, the free functor <code>F</code>.</p>
+<p>This is easily seen for finite sets. The free functor <code>F</code> produces free algebras. A free algebra is a particular model in <code>Mod(L, Set)</code> that is generated from a finite set of generators <code>n</code>. We can implement <code>F</code> as the representable functor:</p>
+<pre>L(n, -) :: L -&gt; Set</pre>
+<p>To show that it’s indeed free, all we have to do is to prove that it’s a left adjoint to the forgetful functor:</p>
+<pre>Mod(L(n, -), M) ≅ Set(n, U(M))</pre>
+<p>Let’s simplify the right hand side:</p>
+<pre>Set(n, U(M)) ≅ Set(n, M 1) ≅ (M 1)<sup>n</sup> ≅ M n</pre>
+<p>(I used the fact that a set of morphisms is isomorphic to the exponential which, in this case, is just the iterated product.) The adjunction is the result of the Yoneda lemma:</p>
+<pre>[L, Set](L(n, -), M) ≅ M n</pre>
+<p>Together, the forgetful and the free functor define a <a href="../../../../../2016/12/27/monads-categorically/trackback/index.html" target="_blank" rel="noopener">monad</a> <code>T = U∘F</code> on <b>Set</b>. Thus every Lawvere theory generates a monad.</p>
+<p>It turns out that the category of <a href="../../../../03/14/algebras-for-monads/trackback/index.html" target="_blank" rel="noopener">algebras for this monad</a> is equivalent to the category of models.</p>
+<p>You may recall that monad algebras define ways to evaluate expressions that are formed using monads. A Lawvere theory defines n-ary operations that can be used to generate expressions. Models provide means to evaluate these expressions.</p>
+<p>The connection between monads and Lawvere theories doesn’t go both ways, though. Only finitary monads lead to Lawvere thories. A finitary monad is based on a finitary functor. A finitary functor on <b>Set</b> is fully determined by its action on finite sets. Its action on an arbitrary set <code>a</code> can be evaluated using the following coend:</p>
+<pre>F a = ∫<sup> n </sup>a<sup>n</sup> × (F n)</pre>
+<p>Since the coend generalizes a coproduct, or a sum, this formula is a generalization of a power series expansion. Or we can use the intuition that a functor is a generalized container. In that case a finitary container of <code>a</code>s can be described as a sum of shapes and contents. Here, <code>F n</code> is a set of shapes for storing n elements, and the contents is an n-tuple of elements, itself an element of <code>a<sup>n</sup></code>. For instance, a list (as a functor) is finitary, with one shape for every arity. A tree has more shapes per arity, and so on.</p>
+<p>First off, all monads that are generated from Lawvere theories are finitary and they can be expressed as coends:</p>
+<pre>T<sub>L</sub> a = ∫<sup> n </sup>a<sup>n</sup> × L(n, 1)</pre>
+<p>Conversely, given any finitary monad <code>T</code> on <b>Set</b>, we can construct a Lawvere theory. We start by constructing a Kleisli category for <code>T</code>. As you may remember, a morphism in a Kleisli category from <code>a</code> to <code>b</code> is given by a morphism in the underlying category:</p>
+<pre>a -&gt; T b</pre>
+<p>When restricted to finite sets, this becomes:</p>
+<pre>m -&gt; T n</pre>
+<p>The category opposite to this Kleisli category, <b>Kl</b><sub>T</sub><sup>op</sup>, restricted to finite sets, is the Lawvere theory in question. In particular, the hom-set <code>L(n, 1)</code> that describes n-ary operations in <b>L</b> is given by the hom-set <code>Kl<sub>T</sub>(1, n)</code>.</p>
+<p>It turns out that most monads that we encounter in programming are finitary, with the notable exception of the continuation monad. It is possible to to extend the notion of Lawvere theory beyond finitary operations.</p>
+<h2>Monads as Coends</h2>
+<p>Let’s explore the coend formula in more detail.</p>
+<pre>T<sub>L</sub> a = ∫<sup> n</sup> a<sup>n</sup> × L(n, 1)</pre>
+<p>To begin with, this coend is taken over a profunctor <code>P</code> in <b>F</b> defined as:</p>
+<pre>P n m = a<sup>n</sup> × L(m, 1)</pre>
+<p>This profunctor is contravariant in the first argument, <code>n</code>. Consider how it lifts morphisms. A morphism in <b>FinSet</b> is a mapping of finite sets <code>f :: m -&gt; n</code>. Such a mapping describes a selection of m elements from an n-element set (repetitions are allowed). It can be lifted to the mapping of powers of <code>a</code>, namely (notice the direction):</p>
+<pre>a<sup>n</sup> -&gt; a<sup>m</sup></pre>
+<p>The lifting simply selects m elements from a tuple of n elements <code>(a<sub>1</sub>, a<sub>2</sub>,...a<sub>n</sub>)</code> (possibly with repetitions).</p>
+<p><a href="https://bartoszmilewski.files.wordpress.com/2017/08/liftpower.png"><amp-img class="alignnone size-medium wp-image-9065 amp-wp-enforced-sizes" src="https://bartoszmilewski.files.wordpress.com/2017/08/liftpower.png?w=300&amp;h=288" alt="" width="300" height="288" srcset="https://bartoszmilewski.files.wordpress.com/2017/08/liftpower.png?w=300&amp;h=288 300w, https://bartoszmilewski.files.wordpress.com/2017/08/liftpower.png?w=150&amp;h=144 150w, https://bartoszmilewski.files.wordpress.com/2017/08/liftpower.png 412w" sizes="(min-width: 300px) 300px, 100vw"></amp-img></a></p>
+<p>For instance, let’s take <code>f<sub>k</sub> :: 1 -&gt; n</code> — a selection of the <code>k</code>th element from an n-element set. It lifts to a function that takes a n-tuple of elements of <code>a</code> and returns the <code>k</code>th one.</p>
+<p>Or let’s take <code>f :: m -&gt; 1</code> — a constant function that maps all m elements to one. Its lifting is a function that takes a single element of <code>a</code> and duplicates it m times:</p>
+<pre>λx -&gt; (x, x, ... x)</pre>
+<p>You might notice that it’s not immediately obvious that the profunctor in question is covariant in the second argument. The hom-functor <code>L(m, 1)</code> is actually contravariant in <code>m</code>. However, we are taking the coend not in the category <b>L</b> but in the category <b>F</b>. The coend variable <code>n</code> goes over finite sets (or the skeletons of such). The category <b>L</b> contains the opposite of <b>F</b>, so a morphism <code>m -&gt; n</code> in <b>F</b> is a member of <code>L(n, m)</code> in <b>L</b> (the embedding is given by the functor <code>I<sub>L</sub></code>).</p>
+<p>Let’s check the functoriality of <code>L(m, 1)</code> as a functor from <b>F</b> to <b>Set</b>. We want to lift a function <code>f :: m -&gt; n</code>, so our goal is to implement a function from <code>L(m, 1)</code> to <code>L(n, 1)</code>. Corresponding to the function <code>f</code> there is a morphism in <b>L</b> from <code>n</code> to <code>m</code> (notice the direction). Precomposing this morphism with <code>L(m, 1)</code> gives us a subset of <code>L(n, 1)</code>.<br/><a href="https://bartoszmilewski.files.wordpress.com/2017/08/liftl.png"><amp-img class="alignnone size-medium wp-image-9064 amp-wp-enforced-sizes" src="https://bartoszmilewski.files.wordpress.com/2017/08/liftl.png?w=300&amp;h=234" alt="" width="300" height="234" srcset="https://bartoszmilewski.files.wordpress.com/2017/08/liftl.png?w=300&amp;h=234 300w, https://bartoszmilewski.files.wordpress.com/2017/08/liftl.png?w=150&amp;h=117 150w, https://bartoszmilewski.files.wordpress.com/2017/08/liftl.png 338w" sizes="(min-width: 300px) 300px, 100vw"></amp-img></a><br/>
+Notice that, by lifting a function <code>1-&gt;n</code> we can go from <code>L(1, 1)</code> to <code>L(n, 1)</code>. We’ll use this fact later on.</p>
+<p>The product of a contravariant functor <code>a<sup>n</sup></code> and a covariant functor <code>L(m, 1)</code> is a profunctor <code>F<sup>op</sup>×F-&gt;Set</code>. Remember that a coend can be defined as a coproduct (disjoint sum) of all the diagonal members of a profunctor, in which some elements are identified. The identifications correspond to cowedge conditions.</p>
+<p>Here, the coend starts as the disjoint sum of sets <code>a<sup>n</sup> × L(n, 1)</code> over all <code>n</code>s. The identifications can be generated by expressing the <a href="../../../../03/29/ends-and-coends/trackback/index.html" target="_blank" rel="noopener">coend as a coequilizer</a>. We start with an off-diagonal term <code>a<sup>n</sup> × L(m, 1)</code>. To get to the diagonal, we can apply a morphism <code>f :: m -&gt; n</code> either to the first or the second component of the product. The two results are then identified.</p>
+<p><a href="https://bartoszmilewski.files.wordpress.com/2017/08/equalize1.png"><amp-img class="alignnone size-medium wp-image-9061 amp-wp-enforced-sizes" src="https://bartoszmilewski.files.wordpress.com/2017/08/equalize1.png?w=300&amp;h=222" alt="" width="300" height="222" srcset="https://bartoszmilewski.files.wordpress.com/2017/08/equalize1.png?w=300&amp;h=222 300w, https://bartoszmilewski.files.wordpress.com/2017/08/equalize1.png?w=150&amp;h=111 150w, https://bartoszmilewski.files.wordpress.com/2017/08/equalize1.png 481w" sizes="(min-width: 300px) 300px, 100vw"></amp-img></a></p>
+<p>I have shown before that the lifting of <code>f :: 1 -&gt; n</code> results in these two transformations:</p>
+<pre>a<sup>n</sup> -&gt; a</pre>
+<p>and:</p>
+<pre>L(1, 1) -&gt; L(n, 1)</pre>
+<p>Therefore, starting from <code>a<sup>n</sup> × L(1, 1)</code> we can reach both:</p>
+<pre>a × L(1, 1)</pre>
+<p>when we lift <code>&lt;f, id&gt;</code> and:</p>
+<pre>a<sup>n</sup> × L(n, 1)</pre>
+<p>when we lift <code>&lt;id, f&gt;</code>. This doesn’t mean, however, that all elements of <code>a<sup>n</sup> × L(n, 1)</code> can be identified with <code>a × L(1, 1)</code>. That’s because not all elements of <code>L(n, 1)</code> can be reached from <code>L(1, 1)</code>. Remember that we can only lift morphisms from <b>F</b>. A non-trivial n-ary operation in <b>L</b> cannot be constructed by lifting a morphism <code>f :: 1 -&gt; n</code>.</p>
+<p>In other words, we can only identify all addends in the coend formula for which <code>L(n, 1)</code> can be reached from <code>L(1, 1)</code> through the application of basic morphisms. They are all equivalent to <code>a × L(1, 1)</code>. Basic morphisms are the ones that are images of morphisms in <b>F</b>.</p>
+<p>Let’s see how this works in the simplest case of the Lawvere theory, the <b>F</b><sup>op</sup> itself. In such a theory, every <code>L(n, 1)</code> can be reached from <code>L(1, 1)</code>. This is because <code>L(1, 1)</code> is a singleton containing just the identity morphism, and <code>L(n, 1)</code> only contains morphisms corresponding to injections <code>1-&gt;n</code> in <b>F</b>, which <em>are</em> basic morphisms. Therefore all the addends in the coproduct are equivalent and we get:</p>
+<pre>T a = a × L(1, 1) = a</pre>
+<p>which is the identity monad.</p>
+<h2>Lawvere Theory of Side Effects</h2>
+<p>Since there is such a strong connection between monads and Lawvere theories, it’s natural to ask the question if Lawvere theories could be used in programming as an alternative to monads. The major problem with monads is that they don’t compose nicely. There is no generic recipe for building monad transformers. Lawvere theories have an advantage in this area: they can be composed using coproducts and tensor products. On the other hand, only finitary monads can be easily converted to Lawvere theories. The outlier here is the continuation monad. There is ongoing research in this area (see bibliography). </p>
+<p>To give you a taste of how a Lawvere theory can be used to describe side effects, I’ll discuss the simple case of exceptions that are traditionally implemented using the <code>Maybe</code> monad.</p>
+<p>The <code>Maybe</code> monad is generated by the Lawvere theory with a single nullary operation <code>0-&gt;1</code>. A model of this theory is a functor that maps <code>1</code> to some set <code>a</code>, and maps the nullary operation to a function:</p>
+<pre>raise :: () -&gt; a</pre>
+<p>We can recover the <code>Maybe</code> monad using the coend formula. Let’s consider what the addition of the nullary operation does to the hom-sets <code>L(n, 1)</code>. Besides creating a new <code>L(0, 1)</code> (which is absent from <b>F</b><sup>op</sup>), it also adds new morphisms to <code>L(n, 1)</code>. These are the results of composing morphism of the type <code>n-&gt;0</code> with our <code>0-&gt;1</code>. Such contributions are all identified with <code>a<sup>0</sup> × L(0, 1)</code> in the coend formula, because they can be obtained from:</p>
+<pre>a<sup>n</sup> × L(0, 1)</pre>
+<p>by lifting <code>0-&gt;n</code> in two different ways.</p>
+<p><a href="https://bartoszmilewski.files.wordpress.com/2017/08/equalize2.png"><amp-img class="alignnone size-medium wp-image-9062 amp-wp-enforced-sizes" src="https://bartoszmilewski.files.wordpress.com/2017/08/equalize2.png?w=300&amp;h=228" alt="" width="300" height="228" srcset="https://bartoszmilewski.files.wordpress.com/2017/08/equalize2.png?w=300&amp;h=228 300w, https://bartoszmilewski.files.wordpress.com/2017/08/equalize2.png?w=150&amp;h=114 150w, https://bartoszmilewski.files.wordpress.com/2017/08/equalize2.png 474w" sizes="(min-width: 300px) 300px, 100vw"></amp-img></a></p>
+<p>The coend reduces to:</p>
+<pre>T<sub>L</sub> a = a<sup>0</sup> + a<sup>1</sup></pre>
+<p>or, using Haskell notation:</p>
+<pre>type Maybe a = Either () a</pre>
+<p>which is equivalent to:</p>
+<pre>data Maybe a = Nothing | Just a</pre>
+<p>Notice that this Lawvere theory only supports the raising of exceptions, not their handling.</p>
+<p>Next: <a href="../../../../09/06/monads-monoids-and-categories/trackback/index.html">Monads, Monoids, and Categories</a>.</p>
+<h2>Challenges</h2>
+<ol><li>Enumarate all morphisms between 2 and 3 in <b>F</b> (the skeleton of <b>FinSet</b>).</li>
+<li>Show that the category of models for the Lawvere theory of monoids is equivalent to the category of monad algebras for the list monad.</li>
+<li>The Lawvere theory of monoids generates the list monad. Show that its binary operations can be generated using the corresponding Kleisli arrows.</li>
+<li><b>FinSet</b> is a subcategory of <b>Set</b> and there is a functor that embeds it in <b>Set</b>. Any functor on <b>Set</b> can be restricted to <b>FinSet</b>. Show that a finitary functor is the left Kan extension of its own restriction.</li>
+</ol><h2>Acknowledgments</h2>
+<p>I’m grateful to Gershom Bazerman for many useful comments.</p>
+<h2>Further Reading</h2>
+<ol><li><a href="http://www.tac.mta.ca/tac/reprints/articles/5/tr5.pdf" target="_blank" rel="noopener">Functorial Semantics of Algebraic Theories</a>, F. William Lawvere</li>
+<li><a href="http://homepages.inf.ed.ac.uk/gdp/publications/Comp_Eff_Monads.pdf" target="_blank" rel="noopener">Notions of computation determine monads</a>, Gordon Plotkin and John Power</li>
+</ol><div class="wpcnt">
+			<div class="wpa wpmrec">
+				<span class="wpa-about">Advertisements</span>
+				<div class="u">
+					<amp-ad width="300" height="250" type="pubmine" data-adsafe="1" data-section="0" data-siteid="11416" data-wordads="0"><div placeholder="" class="amp-wp-iframe-placeholder"></div>
+					</amp-ad></div>
+			</div>
+		</div>	</div>
+
+	<footer class="amp-wp-article-footer">
+			<div class="amp-wp-meta amp-wp-tax-category">
+		Categories: <a href="../../../../../category/programming/index.html" rel="category tag">Programming</a>	</div>
+
+		<div class="amp-wp-meta amp-wp-comments-link">
+		<a href="../trackback/index.html#comments">
+			Leave a Comment		</a>
+	</div>
+	</footer>
+
+</article>
+
+<footer class="amp-wp-footer">
+	<div>
+		<h2>  Bartosz Milewski&#039;s Programming Cafe</h2>
+		<p>
+			<a href="https://wordpress.com/?ref=footer_blog">Blog at WordPress.com.</a>
+		</p>
+		<a href="index.html#top" class="back-to-top">Back to top</a>
+	</div>
+</footer>
+
+	<amp-pixel src="https://pixel.wp.com/b.gif?rand=RANDOM&#038;host=bartoszmilewski.com&#038;ref=DOCUMENT_REFERRER&#038;amp=1&#038;blog=3549518&#038;v=wpcom&#038;tz=-7&#038;user_id=0&#038;post=8958&#038;subd=bartoszmilewski"></amp-pixel>
+	<amp-pixel src="https://pixel.wp.com/b.gif?rand=RANDOM&#038;v=wpcom-no-pv&#038;crypt=UE5XaGUuOTlwaD85flAmcm1mcmZsaDhkV11YdWtpP0NsWnVkPS9sL0ViLndld3BkTUV5ST9WY3J1RTlUZyw1R3ZSbnIsdHFTX0lCY0ZyS2M4cGlJUXppTGJkNjdSMj0mY2lfVS1NTlpEbGxNVi1YL35jW3M2M0hUZUhUaGlWLFk%2FNVZUWytDdiwsYWd6Wz0mNUJ1d1NXQ1FyXWtWN1lmYmRodHV6W3AsdmVnP3ROVWUxWlZjRld4ZC1mSFp6QlklRUYrWzhbTXozNS5HLEJTcCx1U2xbP2p6QnY%3D"></amp-pixel>
+	
+</body>
+</html>
