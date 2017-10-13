@@ -27,5 +27,12 @@
       <content src="pages/0.0-category-theory-for-programmers-the-preface.html"/>
     </navPoint>
 
+    <navPoint class="chapter" id="preface">
+      <navLabel>
+        <text>Category: The Essence of Composition</text>
+      </navLabel>
+      <content src="pages/1.1-category-the-essence-of-composition.html"/>
+    </navPoint>
+
   </navMap>
 </ncx>
