@@ -1,0 +1,35 @@
+#cover {
+  margin-top:20%;
+}
+
+p {
+  text-indent: 0px;
+}
+
+h2 {
+  margin: 1em 0;
+}
+
+pre {
+  margin: 1em 0;
+}
+
+.fixed {
+  font-family: monospace;
+}
+
+.image, img.center {
+  text-align: center;
+  margin: auto;
+  display: block;
+}
+
+img.right {
+  float: right;
+  margin-left: 0.5em;
+}
+
+img.left {
+  float: left;
+  margin-right: 0.5em;
+}

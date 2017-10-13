@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE ncx PUBLIC "-//NISO//DTD ncx 2005-1//EN" "http://www.daisy.org/z3986/2005/ncx-2005-1.dtd">
+
+<ncx xmlns="http://www.daisy.org/z3986/2005/ncx/" version="2005-1" xml:lang="en-US">
+  <head>
+    <meta name="dtb:uid" content="BookId"/>
+    <meta name="dtb:depth" content="2"/>
+    <meta name="dtb:totalPageCount" content="0"/>
+    <meta name="dtb:maxPageNumber" content="0"/>
+  </head>
+
+  <docTitle><text>Category Theory for Programmers</text></docTitle>
+  <docAuthor><text>Bartosz Milewski</text></docAuthor>
+
+  <navMap>
+    <navPoint class="toc" id="toc">
+      <navLabel>
+        <text>Table of Contents</text>
+      </navLabel>
+      <content src="pages/toc.html"/>
+    </navPoint>
+
+    <navPoint class="chapter" id="preface">
+      <navLabel>
+        <text>Introduction</text>
+      </navLabel>
+      <content src="pages/0.0-category-theory-for-programmers-the-preface.html"/>
+    </navPoint>
+
+  </navMap>
+</ncx>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<package xmlns="http://www.idpf.org/2007/opf" version="2.0">
+  <metadata xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:opf="http://www.idpf.org/2007/opf">
+    <dc:title>Category Theory for Programmers</dc:title>
+    <dc:language>en-us</dc:language>
+    <dc:creator>Bartosz Milewski</dc:creator>
+    <meta name="cover" content="cover"/>
+  </metadata>
+
+  <manifest>
+    <item id="preamble" media-type="application/xhtml+xml" href="pages/preamble.html"/>
+    <item id="license" media-type="application/xhtml+xml" href="pages/license.html"/>
+    <item id="toc" media-type="application/xhtml+xml" href="pages/toc.html"/>
+    <item id="preface" media-type="application/xhtml+xml" href="pages/0.0-category-theory-for-programmers-the-preface.html"/>
+
+    <item id="ncx-toc" media-type="application/x-dtbncx+xml" href="toc.ncx"/>
+    <item id="cover" media-type="image/png" href="images/cover.png"/>
+
+    <item media-type="image/png" href="images/img_1299.jpg"/>
+    <item media-type="image/png" href="images/beauvais_interior_supports.jpg"/>
+  </manifest>
+
+  <spine toc="ncx-toc">
+    <itemref idref="preamble"/>
+    <itemref idref="license"/>
+    <itemref idref="toc"/>
+    <itemref idref="preface"/>
+  </spine>
+
+  <guide>
+    <reference type="toc" title="Table of Contents" href="pages/toc.html"></reference>
+    <reference type="text" title="Preface" href="pages/0.0-category-theory-for-programmers-the-preface.html"></reference>
+  </guide>
+</package>
