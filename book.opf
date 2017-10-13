@@ -34,6 +34,5 @@
   <guide>
     <reference type="toc" title="Table of Contents" href="pages/toc.html"></reference>
     <reference type="text" title="Preface" href="pages/0.0-category-theory-for-programmers-the-preface.html"></reference>
-    <reference type="text" title="Category: The Essence of Composition" href="pages/1.1-category-the-essence-of-composition.html"></reference>
   </guide>
 </package>
