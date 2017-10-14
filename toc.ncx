@@ -47,5 +47,13 @@
       </navLabel>
       <content src="pages/1.3-categories-great-and-small.html"/>
     </navPoint>
+
+    <navPoint class="chapter" id="kleisli-categories" playOrder="5">
+      <navLabel>
+        <text>Categories Great and Small</text>
+      </navLabel>
+      <content src="pages/1.4-kleisli-categories.html"/>
+    </navPoint>
+
   </navMap>
 </ncx>
