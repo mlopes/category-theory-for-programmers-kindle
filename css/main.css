@@ -12,9 +12,14 @@ h2 {
 
 pre {
   margin: 1em 0;
+  font-family: monospace;
 }
 
 .fixed {
+  font-family: monospace;
+}
+
+code {
   font-family: monospace;
 }
 
