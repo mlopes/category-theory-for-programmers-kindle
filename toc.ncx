@@ -69,5 +69,11 @@
       <content src="pages/1.6-simple-algebraic-data-types.html"/>
     </navPoint>
 
+    <navPoint class="chapter" id="functors" playOrder="8">
+      <navLabel>
+        <text>Functors</text>
+      </navLabel>
+      <content src="pages/1.7-functors.html"/>
+    </navPoint>
   </navMap>
 </ncx>

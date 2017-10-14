@@ -21,6 +21,7 @@
     <item id="kleisli-categories" media-type="application/xhtml+xml" href="pages/1.4-kleisli-categories.html"/>
     <item id="products-and-coproducts" media-type="application/xhtml+xml" href="pages/1.5-products-and-coproducts.html"/>
     <item id="simple-algebraic-data-types" media-type="application/xhtml+xml" href="pages/1.6-simple-algebraic-data-types.html"/>
+    <item id="functors" media-type="application/xhtml+xml" href="pages/1.7-functors.html"/>
 
     <item id="ncx-toc" media-type="application/x-dtbncx+xml" href="toc.ncx"/>
     <item id="cover" media-type="image/png" href="images/cover.png"/>
@@ -42,6 +43,10 @@
     <item media-type="image/png" href="images/coproductpattern.jpg"/>
     <item media-type="image/png" href="images/coproductranking.jpg"/>
     <item media-type="image/png" href="images/pair.jpg"/>
+    <item media-type="image/png" href="images/functor.jpg"/>
+    <item media-type="image/png" href="images/functorcompos.jpg"/>
+    <item media-type="image/png" href="images/functorid.jpg"/>
+    <item media-type="image/png" href="images/functormaybe.jpg"/>
   </manifest>
 
   <spine toc="ncx-toc">
@@ -55,6 +60,7 @@
     <itemref idref="kleisli-categories"/>
     <itemref idref="products-and-coproducts"/>
     <itemref idref="simple-algebraic-data-types"/>
+    <itemref idref="functors"/>
   </spine>
 
   <guide>
