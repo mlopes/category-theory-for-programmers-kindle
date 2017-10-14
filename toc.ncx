@@ -41,5 +41,11 @@
       <content src="pages/1.2-types-and-functions.html"/>
     </navPoint>
 
+    <navPoint class="chapter" id="categories-great-and-small" playOrder="4">
+      <navLabel>
+        <text>Categories Great and Small</text>
+      </navLabel>
+      <content src="pages/1.3-categories-great-and-small.html"/>
+    </navPoint>
   </navMap>
 </ncx>
