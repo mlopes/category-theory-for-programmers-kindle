@@ -61,5 +61,13 @@
       </navLabel>
       <content src="pages/1.5-products-and-coproducts.html"/>
     </navPoint>
+
+    <navPoint class="chapter" id="simple-algebraic-data-types" playOrder="7">
+      <navLabel>
+        <text>Simple Algebraic Data Types</text>
+      </navLabel>
+      <content src="pages/1.6-simple-algebraic-data-types.html"/>
+    </navPoint>
+
   </navMap>
 </ncx>
