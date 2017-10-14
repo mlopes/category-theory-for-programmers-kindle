@@ -14,6 +14,7 @@
     <item id="toc" media-type="application/xhtml+xml" href="pages/toc.html"/>
     <item id="preface" media-type="application/xhtml+xml" href="pages/0.0-category-theory-for-programmers-the-preface.html"/>
     <item id="category-the-essence-of-composition" media-type="application/xhtml+xml" href="pages/1.1-category-the-essence-of-composition.html"/>
+    <item id="types-and-functions" media-type="application/xhtml+xml" href="pages/1.2-types-and-functions.html"/>
 
     <item id="ncx-toc" media-type="application/x-dtbncx+xml" href="toc.ncx"/>
     <item id="cover" media-type="image/png" href="images/cover.png"/>
@@ -21,6 +22,7 @@
     <item media-type="image/png" href="images/img_1299.jpg"/>
     <item media-type="image/png" href="images/beauvais_interior_supports.jpg"/>
     <item media-type="image/png" href="images/img_1330.jpg"/>
+    <item media-type="image/png" href="images/img_1329.jpg"/>
   </manifest>
 
   <spine toc="ncx-toc">
@@ -29,6 +31,7 @@
     <itemref idref="toc"/>
     <itemref idref="preface"/>
     <itemref idref="category-the-essence-of-composition"/>
+    <itemref idref="types-and-functions"/>
   </spine>
 
   <guide>

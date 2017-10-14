@@ -13,25 +13,32 @@
   <docAuthor><text>Bartosz Milewski</text></docAuthor>
 
   <navMap>
-    <navPoint class="toc" id="toc">
+    <navPoint class="toc" id="toc" playOrder="0">
       <navLabel>
         <text>Table of Contents</text>
       </navLabel>
       <content src="pages/toc.html"/>
     </navPoint>
 
-    <navPoint class="chapter" id="preface">
+    <navPoint class="chapter" id="preface" playOrder="1">
       <navLabel>
         <text>Introduction</text>
       </navLabel>
       <content src="pages/0.0-category-theory-for-programmers-the-preface.html"/>
     </navPoint>
 
-    <navPoint class="chapter" id="preface">
+    <navPoint class="chapter" id="category-the-essence-of-composition" playOrder="2">
       <navLabel>
         <text>Category: The Essence of Composition</text>
       </navLabel>
       <content src="pages/1.1-category-the-essence-of-composition.html"/>
+    </navPoint>
+
+    <navPoint class="chapter" id="types-and-functions" playOrder="3">
+      <navLabel>
+        <text>Category: The Essence of Composition</text>
+      </navLabel>
+      <content src="pages/1.2-types-and-functions.html"/>
     </navPoint>
 
   </navMap>
