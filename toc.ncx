@@ -55,5 +55,11 @@
       <content src="pages/1.4-kleisli-categories.html"/>
     </navPoint>
 
+    <navPoint class="chapter" id="products-and-coproducts" playOrder="6">
+      <navLabel>
+        <text>Products and Coproducts</text>
+      </navLabel>
+      <content src="pages/1.5-products-and-coproducts.html"/>
+    </navPoint>
   </navMap>
 </ncx>

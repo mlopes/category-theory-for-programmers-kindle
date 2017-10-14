@@ -19,6 +19,7 @@
     <item id="types-and-functions" media-type="application/xhtml+xml" href="pages/1.2-types-and-functions.html"/>
     <item id="categories-great-and-small" media-type="application/xhtml+xml" href="pages/1.3-categories-great-and-small.html"/>
     <item id="kleisli-categories" media-type="application/xhtml+xml" href="pages/1.4-kleisli-categories.html"/>
+    <item id="products-and-coproducts" media-type="application/xhtml+xml" href="pages/1.5-products-and-coproducts.html"/>
 
     <item id="ncx-toc" media-type="application/x-dtbncx+xml" href="toc.ncx"/>
     <item id="cover" media-type="image/png" href="images/cover.png"/>
@@ -30,6 +31,15 @@
     <item media-type="image/png" href="images/monoid.jpg"/>
     <item media-type="image/png" href="images/monoidhomset.jpg"/>
     <item media-type="image/png" href="images/piggyback.jpg"/>
+    <item media-type="image/png" href="images/initial.jpg"/>
+    <item media-type="image/png" href="images/final.jpg"/>
+    <item media-type="image/png" href="images/uniqueness.jpg"/>
+    <item media-type="image/png" href="images/productpattern.jpg"/>
+    <item media-type="image/png" href="images/productcandidates.jpg"/>
+    <item media-type="image/png" href="images/productranking.jpg"/>
+    <item media-type="image/png" href="images/not-a-product.jpg"/>
+    <item media-type="image/png" href="images/coproductpattern.jpg"/>
+    <item media-type="image/png" href="images/coproductranking.jpg"/>
   </manifest>
 
   <spine toc="ncx-toc">
@@ -41,6 +51,7 @@
     <itemref idref="types-and-functions"/>
     <itemref idref="categories-great-and-small"/>
     <itemref idref="kleisli-categories"/>
+    <itemref idref="products-and-coproducts"/>
   </spine>
 
   <guide>
