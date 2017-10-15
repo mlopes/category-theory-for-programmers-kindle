@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
 <head>
-	<meta charset="utf-8">
+    <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>Category Theory for Programmers</title>
     <link rel="stylesheet" href="../css/main.css" type="text/css" charset="utf-8">
@@ -10,7 +10,7 @@
 <body>
 
 <div>
-		<h1>Functors</h1>
+        <h1>Functors</h1>
 <p>At the risk of sounding like a broken record, I will say this about functors: A functor is a very simple but powerful idea. Category theory is just full of those simple but powerful ideas. A functor is a mapping between categories. Given two categories, C and D, a functor F maps objects in C to objects in D — it’s a function on objects. If <em>a</em> is an object in C, we’ll write its image in D as <em>F a</em> (no parentheses). But a category is not just objects — it’s objects and morphisms that connect them. A functor also maps morphisms — it’s a function on morphisms. But it doesn’t map morphisms willy-nilly — it preserves connections. So if a morphism <em>f</em> in C connects object <em>a</em> to object <em>b</em>,</p>
 <pre>f :: a -&gt; b</pre>
 <p>the image of <em>f</em> in D, <em>F f</em>, will connect the image of <em>a</em> to the image of <em>b</em>:</p>
@@ -264,7 +264,7 @@ mis2 = fmap (fmap square) mis</pre>
 <li>Prove the functor laws for the list functor. Assume that the laws are true for the tail part of the list you’re applying it to (in other words, use <em>induction</em>).</li>
 </ol><h2>Acknowledgments</h2>
 <p>Gershom Bazerman is kind enough to keep reviewing these posts. I’m grateful for his patience and insight. </p>
-	
+
 </div>
 </body>
 </html>

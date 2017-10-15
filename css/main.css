@@ -42,3 +42,7 @@ img.left {
 p.caption-text {
     text-align: center;
 }
+
+ul.chapters {
+	list-style: none;
+}
