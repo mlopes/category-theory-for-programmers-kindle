@@ -24,6 +24,7 @@
     <item id="functors" media-type="application/xhtml+xml" href="pages/1.7-functors.html"/>
     <item id="functoriality" media-type="application/xhtml+xml" href="pages/1.8-functoriality.html"/>
     <item id="function-types" media-type="application/xhtml+xml" href="pages/1.9-function-types.html"/>
+    <item id="natural-transformations" media-type="application/xhtml+xml" href="pages/1.10-natural-transformations.html"/>
 
     <item id="ncx-toc" media-type="application/x-dtbncx+xml" href="toc.ncx"/>
     <item id="cover" media-type="image/png" href="images/cover.png"/>
@@ -63,6 +64,20 @@
     <item media-type="image/png" href="images/hom-set.jpg"/>
     <item media-type="image/png" href="images/set-hom-set.jpg"/>
     <item media-type="image/png" href="images/universalfunctionobject.jpg"/>
+
+    <item media-type="image/png" href="images/1_functors.jpg"/>
+    <item media-type="image/png" href="images/2_natcomp.jpg"/>
+    <item media-type="image/png" href="images/3_naturality.jpg"/>
+    <item media-type="image/png" href="images/4_transport.jpg"/>
+    <item media-type="image/png" href="images/naturality.jpg"/>
+    <item media-type="image/png" href="images/5_vertical.jpg"/>
+    <item media-type="image/png" href="images/6_verticalnaturality.jpg"/>
+    <item media-type="image/png" href="images/6a_vertical.jpg"/>
+    <item media-type="image/png" href="images/7_cathomset.jpg"/>
+    <item media-type="image/png" href="images/8_cat-2-cat.jpg"/>
+    <item media-type="image/png" href="images/10_horizontal.jpg"/>
+    <item media-type="image/png" href="images/9_horizontal.jpg"/>
+    <item media-type="image/png" href="images/sideways.jpg"/>
   </manifest>
 
   <spine toc="ncx-toc">
@@ -79,6 +94,7 @@
     <itemref idref="functors"/>
     <itemref idref="functoriality"/>
     <itemref idref="function-types"/>
+    <itemref idref="natural-transformations"/>
   </spine>
 
   <guide>

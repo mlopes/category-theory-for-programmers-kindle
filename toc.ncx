@@ -90,5 +90,12 @@
       <content src="pages/1.9-function-types.html"/>
     </navPoint>
 
+    <navPoint class="chapter" id="natural-transformations" playOrder="11">
+      <navLabel>
+        <text>Natural Transformations</text>
+      </navLabel>
+      <content src="pages/1.10-natural-transformations.html"/>
+    </navPoint>
+
   </navMap>
 </ncx>
