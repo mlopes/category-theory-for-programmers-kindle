@@ -23,6 +23,7 @@
     <item id="simple-algebraic-data-types" media-type="application/xhtml+xml" href="pages/1.6-simple-algebraic-data-types.html"/>
     <item id="functors" media-type="application/xhtml+xml" href="pages/1.7-functors.html"/>
     <item id="functoriality" media-type="application/xhtml+xml" href="pages/1.8-functoriality.html"/>
+    <item id="function-types" media-type="application/xhtml+xml" href="pages/1.9-function-types.html"/>
 
     <item id="ncx-toc" media-type="application/x-dtbncx+xml" href="toc.ncx"/>
     <item id="cover" media-type="image/png" href="images/cover.png"/>
@@ -55,6 +56,13 @@
     <item media-type="image/png" href="images/dimap.jpg"/>
     <item media-type="image/png" href="images/first.jpg"/>
     <item media-type="image/png" href="images/second.jpg"/>
+
+    <item media-type="image/png" href="images/functionpattern.jpg"/>
+    <item media-type="image/png" href="images/functionranking.jpg"/>
+    <item media-type="image/png" href="images/functionset.jpg"/>
+    <item media-type="image/png" href="images/hom-set.jpg"/>
+    <item media-type="image/png" href="images/set-hom-set.jpg"/>
+    <item media-type="image/png" href="images/universalfunctionobject.jpg"/>
   </manifest>
 
   <spine toc="ncx-toc">
@@ -70,6 +78,7 @@
     <itemref idref="simple-algebraic-data-types"/>
     <itemref idref="functors"/>
     <itemref idref="functoriality"/>
+    <itemref idref="function-types"/>
   </spine>
 
   <guide>

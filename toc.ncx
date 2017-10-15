@@ -83,5 +83,12 @@
       <content src="pages/1.8-functoriality.html"/>
     </navPoint>
 
+    <navPoint class="chapter" id="function-types" playOrder="10">
+      <navLabel>
+        <text>Function Types</text>
+      </navLabel>
+      <content src="pages/1.9-function-types.html"/>
+    </navPoint>
+
   </navMap>
 </ncx>
