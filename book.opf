@@ -22,6 +22,7 @@
     <item id="products-and-coproducts" media-type="application/xhtml+xml" href="pages/1.5-products-and-coproducts.html"/>
     <item id="simple-algebraic-data-types" media-type="application/xhtml+xml" href="pages/1.6-simple-algebraic-data-types.html"/>
     <item id="functors" media-type="application/xhtml+xml" href="pages/1.7-functors.html"/>
+    <item id="functoriality" media-type="application/xhtml+xml" href="pages/1.8-functoriality.html"/>
 
     <item id="ncx-toc" media-type="application/x-dtbncx+xml" href="toc.ncx"/>
     <item id="cover" media-type="image/png" href="images/cover.png"/>
@@ -47,6 +48,13 @@
     <item media-type="image/png" href="images/functorcompos.jpg"/>
     <item media-type="image/png" href="images/functorid.jpg"/>
     <item media-type="image/png" href="images/functormaybe.jpg"/>
+
+    <item media-type="image/png" href="images/bifunctor.jpg"/>
+    <item media-type="image/png" href="images/bimap.jpg"/>
+    <item media-type="image/png" href="images/contravariant.jpg"/>
+    <item media-type="image/png" href="images/dimap.jpg"/>
+    <item media-type="image/png" href="images/first.jpg"/>
+    <item media-type="image/png" href="images/second.jpg"/>
   </manifest>
 
   <spine toc="ncx-toc">
@@ -61,6 +69,7 @@
     <itemref idref="products-and-coproducts"/>
     <itemref idref="simple-algebraic-data-types"/>
     <itemref idref="functors"/>
+    <itemref idref="functoriality"/>
   </spine>
 
   <guide>

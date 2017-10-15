@@ -38,3 +38,7 @@ img.left {
   float: left;
   margin-right: 0.5em;
 }
+
+p.caption-text {
+    text-align: center;
+}

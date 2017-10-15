@@ -75,5 +75,13 @@
       </navLabel>
       <content src="pages/1.7-functors.html"/>
     </navPoint>
+
+    <navPoint class="chapter" id="functoriality" playOrder="9">
+      <navLabel>
+        <text>Functoriality</text>
+      </navLabel>
+      <content src="pages/1.8-functoriality.html"/>
+    </navPoint>
+
   </navMap>
 </ncx>

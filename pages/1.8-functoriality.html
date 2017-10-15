@@ -1,486 +1,20 @@
 <!doctype html>
-<html amp lang="en">
+<html lang="en">
 <head>
 	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
-	
-<!-- Jetpack Open Graph Tags -->
-<meta property="og:type" content="article" />
-<meta property="og:title" content="Functoriality" />
-<meta property="og:url" content="https://bartoszmilewski.com/2015/02/03/functoriality/" />
-<meta property="og:description" content="This is part 8 of Categories for Programmers. Previously: Functors. See the Table of Contents. Now that you know what a functor is, and have seen a few examples, let&#8217;s see how we can build la…" />
-<meta property="article:published_time" content="2015-02-03T16:39:01+00:00" />
-<meta property="article:modified_time" content="2015-06-05T16:17:46+00:00" />
-<meta property="og:site_name" content="  Bartosz Milewski&#039;s Programming Cafe" />
-<meta property="og:image" content="https://bartoszmilewski.files.wordpress.com/2015/01/bimap.jpg" />
-<meta property="og:image:width" content="438" />
-<meta property="og:image:height" content="426" />
-<meta property="og:locale" content="en_US" />
-<meta name="twitter:site" content="@BartoszMilewski" />
-<meta name="twitter:text:title" content="Functoriality" />
-<meta name="twitter:image" content="https://bartoszmilewski.files.wordpress.com/2015/01/bifunctor.jpg?w=240" />
-<meta name="twitter:card" content="summary" />
-<meta name="twitter:creator" content="@BartoszMilewski" />
-<meta property="article:publisher" content="https://www.facebook.com/WordPresscom" />
-	<title>Functoriality &#8211;   Bartosz Milewski&#039;s Programming Cafe</title>
-		<link rel="canonical" href="../trackback/index.html" />
-			<script custom-element="amp-ad" src="https://cdn.ampproject.org/v0/amp-ad-0.1.js" async></script>
-		<script src="https://cdn.ampproject.org/v0.js" async></script>
-			<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Merriweather:400,400italic,700,700italic">
-		<style amp-boilerplate>body{-webkit-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-moz-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-ms-animation:-amp-start 8s steps(1,end) 0s 1 normal both;animation:-amp-start 8s steps(1,end) 0s 1 normal both}@-webkit-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-moz-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-ms-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-o-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}</style><noscript><style amp-boilerplate>body{-webkit-animation:none;-moz-animation:none;-ms-animation:none;animation:none}</style></noscript>
-		<script type="application/ld+json">{"@context":"http:\/\/schema.org","@type":"BlogPosting","mainEntityOfPage":"https:\/\/bartoszmilewski.com\/2015\/02\/03\/functoriality\/","publisher":{"@type":"Organization","name":"\u00a0\u00a0Bartosz Milewski&#039;s Programming Cafe","logo":{"@type":"ImageObject","url":"https:\/\/s2.wp.com\/i\/favicons\/apple-touch-icon-60x60.png","width":60,"height":60}},"headline":"Functoriality","datePublished":"2015-02-03T17:39:01+00:00","dateModified":"2015-06-05T18:17:46+00:00","author":{"@type":"Person","name":"Bartosz Milewski"},"image":{"@type":"ImageObject","url":"https:\/\/bartoszmilewski.files.wordpress.com\/2015\/01\/bifunctor.jpg","width":313,"height":298}}</script>
-		<style amp-custom>
-		/* Generic WP styling */
-
-.alignright {
-	float: right;
-}
-
-.alignleft {
-	float: left;
-}
-
-.aligncenter {
-	display: block;
-	margin-left: auto;
-	margin-right: auto;
-}
-
-.amp-wp-enforced-sizes {
-	/** Our sizes fallback is 100vw, and we have a padding on the container; the max-width here prevents the element from overflowing. **/
-	max-width: 100%;
-	margin: 0 auto;
-}
-
-.amp-wp-unknown-size img {
-	/** Worst case scenario when we can't figure out dimensions for an image. **/
-	/** Force the image into a box of fixed dimensions and use object-fit to scale. **/
-	object-fit: contain;
-}
-
-/* Template Styles */
-
-.amp-wp-content,
-.amp-wp-title-bar div {
-		margin: 0 auto;
-	max-width: 510px;
-	}
-
-html {
-	background: #0a89c0;
-}
-
-body {
-	background: #fff;
-	color: #353535;
-	font-family: 'Merriweather', 'Times New Roman', Times, Serif;
-	font-weight: 300;
-	line-height: 1.75em;
-}
-
-p,
-ol,
-ul,
-figure {
-	margin: 0 0 1em;
-	padding: 0;
-}
-
-a,
-a:visited {
-	color: #0a89c0;
-}
-
-a:hover,
-a:active,
-a:focus {
-	color: #353535;
-}
-
-/* Quotes */
-
-blockquote {
-	color: #353535;
-	background: rgba(127,127,127,.125);
-	border-left: 2px solid #0a89c0;
-	margin: 8px 0 24px 0;
-	padding: 16px;
-}
-
-blockquote p:last-child {
-	margin-bottom: 0;
-}
-
-/* UI Fonts */
-
-.amp-wp-meta,
-.amp-wp-header div,
-.amp-wp-title,
-.wp-caption-text,
-.amp-wp-tax-category,
-.amp-wp-tax-tag,
-.amp-wp-comments-link,
-.amp-wp-footer p,
-.back-to-top {
-	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen-Sans", "Ubuntu", "Cantarell", "Helvetica Neue", sans-serif;
-}
-
-/* Header */
-
-.amp-wp-header {
-	background-color: #0a89c0;
-}
-
-.amp-wp-header div {
-	color: #fff;
-	font-size: 1em;
-	font-weight: 400;
-	margin: 0 auto;
-	max-width: calc(840px - 32px);
-	padding: .875em 16px;
-	position: relative;
-}
-
-.amp-wp-header a {
-	color: #fff;
-	text-decoration: none;
-}
-
-/* Site Icon */
-
-.amp-wp-header .amp-wp-site-icon {
-	/** site icon is 32px **/
-	background-color: #fff;
-	border: 1px solid #fff;
-	border-radius: 50%;
-	position: absolute;
-	right: 18px;
-	top: 10px;
-}
-
-/* Article */
-
-.amp-wp-article {
-	color: #353535;
-	font-weight: 400;
-	margin: 1.5em auto;
-	max-width: 840px;
-	overflow-wrap: break-word;
-	word-wrap: break-word;
-}
-
-/* Article Header */
-
-.amp-wp-article-header {
-	align-items: center;
-	align-content: stretch;
-	display: flex;
-	flex-wrap: wrap;
-	justify-content: space-between;
-	margin: 1.5em 16px 1.5em;
-}
-
-.amp-wp-title {
-	color: #353535;
-	display: block;
-	flex: 1 0 100%;
-	font-weight: 900;
-	margin: 0 0 .625em;
-	width: 100%;
-}
-
-/* Article Meta */
-
-.amp-wp-meta {
-	color: #696969;
-	display: inline-block;
-	flex: 2 1 50%;
-	font-size: .875em;
-	line-height: 1.5em;
-	margin: 0;
-	padding: 0;
-}
-
-.amp-wp-article-header .amp-wp-meta:last-of-type {
-	text-align: right;
-}
-
-.amp-wp-article-header .amp-wp-meta:first-of-type {
-	text-align: left;
-}
-
-.amp-wp-byline amp-img,
-.amp-wp-byline .amp-wp-author {
-	display: inline-block;
-	vertical-align: middle;
-}
-
-.amp-wp-byline amp-img {
-	border: 1px solid #0a89c0;
-	border-radius: 50%;
-	position: relative;
-	margin-right: 6px;
-}
-
-.amp-wp-posted-on {
-	text-align: right;
-}
-
-/* Featured image */
-
-.amp-wp-article-featured-image {
-	margin: 0 0 1em;
-}
-.amp-wp-article-featured-image amp-img {
-	margin: 0 auto;
-}
-.amp-wp-article-featured-image.wp-caption .wp-caption-text {
-	margin: 0 18px;
-}
-
-/* Article Content */
-
-.amp-wp-article-content {
-	margin: 0 16px;
-}
-
-.amp-wp-article-content ul,
-.amp-wp-article-content ol {
-	margin-left: 1em;
-}
-
-.amp-wp-article-content amp-img {
-	margin: 0 auto;
-}
-
-.amp-wp-article-content amp-img.alignright {
-	margin: 0 0 1em 16px;
-}
-
-.amp-wp-article-content amp-img.alignleft {
-	margin: 0 16px 1em 0;
-}
-
-/* Captions */
-
-.wp-caption {
-	padding: 0;
-}
-
-.wp-caption.alignleft {
-	margin-right: 16px;
-}
-
-.wp-caption.alignright {
-	margin-left: 16px;
-}
-
-.wp-caption .wp-caption-text {
-	border-bottom: 1px solid #c2c2c2;
-	color: #696969;
-	font-size: .875em;
-	line-height: 1.5em;
-	margin: 0;
-	padding: .66em 10px .75em;
-}
-
-/* AMP Media */
-
-amp-carousel {
-	background: #c2c2c2;
-	margin: 0 -16px 1.5em;
-}
-amp-iframe,
-amp-youtube,
-amp-instagram,
-amp-vine {
-	background: #c2c2c2;
-	margin: 0 -16px 1.5em;
-}
-
-.amp-wp-article-content amp-carousel amp-img {
-	border: none;
-}
-
-amp-carousel > amp-img > img {
-	object-fit: contain;
-}
-
-.amp-wp-iframe-placeholder {
-	background: #c2c2c2 url( https://s2.wp.com/wp-content/plugins/amp/assets/images/placeholder-icon.png ) no-repeat center 40%;
-	background-size: 48px 48px;
-	min-height: 48px;
-}
-
-/* Article Footer Meta */
-
-.amp-wp-article-footer .amp-wp-meta {
-	display: block;
-}
-
-.amp-wp-tax-category,
-.amp-wp-tax-tag {
-	color: #696969;
-	font-size: .875em;
-	line-height: 1.5em;
-	margin: 1.5em 16px;
-}
-
-.amp-wp-comments-link {
-	color: #696969;
-	font-size: .875em;
-	line-height: 1.5em;
-	text-align: center;
-	margin: 2.25em 0 1.5em;
-}
-
-.amp-wp-comments-link a {
-	border-style: solid;
-	border-color: #c2c2c2;
-	border-width: 1px 1px 2px;
-	border-radius: 4px;
-	background-color: transparent;
-	color: #0a89c0;
-	cursor: pointer;
-	display: block;
-	font-size: 14px;
-	font-weight: 600;
-	line-height: 18px;
-	margin: 0 auto;
-	max-width: 200px;
-	padding: 11px 16px;
-	text-decoration: none;
-	width: 50%;
-	-webkit-transition: background-color 0.2s ease;
-			transition: background-color 0.2s ease;
-}
-
-/* AMP Footer */
-
-.amp-wp-footer {
-	border-top: 1px solid #c2c2c2;
-	margin: calc(1.5em - 1px) 0 0;
-}
-
-.amp-wp-footer div {
-	margin: 0 auto;
-	max-width: calc(840px - 32px);
-	padding: 1.25em 16px 1.25em;
-	position: relative;
-}
-
-.amp-wp-footer h2 {
-	font-size: 1em;
-	line-height: 1.375em;
-	margin: 0 0 .5em;
-}
-
-.amp-wp-footer p {
-	color: #696969;
-	font-size: .8em;
-	line-height: 1.5em;
-	margin: 0 85px 0 0;
-}
-
-.amp-wp-footer a {
-	text-decoration: none;
-}
-
-.back-to-top {
-	bottom: 1.275em;
-	font-size: .8em;
-	font-weight: 600;
-	line-height: 2em;
-	position: absolute;
-	right: 16px;
-}
-				/* WordAds */
-		.wpcnt {
-			text-align: center;
-			line-height: 0;
-			display: block;
-			clear: both;
-			margin: 1em 0;
-		}
-
-		.rtl .wpcnt {
-			direction: ltr;
-		}
-
-		.wpa {
-			position: relative;
-			display: inline-block;
-			max-width: 100%;
-			text-align: left;
-			padding: 10px 0 0;
-			min-width: 300px;
-			-webkit-transform: translate3d(0, 0, 0);
-			transform: translate3d(0, 0, 0);
-		}
-
-		.wpa-about {
-			position: absolute;
-			top: 5px;
-			left: 0;
-			right: 0;
-			display: block;
-			min-width: 160px;
-			border-bottom: none;
-			font: 10px/1 "Open Sans", Arial, sans-serif;
-			text-align: left;
-			text-decoration: none;
-			opacity: 0.85;
-		}
-
-		.wpa .u>div, .wpadvert>div>* {
-			display: block;
-			margin-top: 5px;
-			margin-bottom: 1em;
-		}
-
-		div.wpa>div {
-			margin-top: 10px;
-		}/* Inline styles */
-.amp-wp-inline-94dd042f5fe2bf3f7b398ea33bd1b851{max-width:310px;}.amp-wp-inline-07ef5183cff73ba83be03d671738fca7{max-width:160px;}	</style>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Category Theory for Programmers</title>
+    <link rel="stylesheet" href="../css/main.css" type="text/css" charset="utf-8">
 </head>
 
-<body class="">
+<body>
 
-<header id="#top" class="amp-wp-header">
-	<div>
-		<a href="https://bartoszmilewski.com">
-						  Bartosz Milewski&#039;s Programming Cafe		</a>
-	</div>
-</header>
-
-<article class="amp-wp-article">
-
-	<header class="amp-wp-article-header">
+<div>
 		<h1 class="amp-wp-title">Functoriality</h1>
-				<div class="amp-wp-meta amp-wp-byline">
-					<amp-img src="https://secure.gravatar.com/avatar/c018f213204496b4bbf481e7c8e6c15c?s=24&#038;d=mm&#038;r=g" width="24" height="24" layout="fixed"></amp-img>
-				<span class="amp-wp-author author vcard">Bartosz Milewski</span>
-	</div>
-<div class="amp-wp-meta amp-wp-posted-on">
-	<time datetime="2015-02-03T17:39:01+00:00">
-		3 years ago	</time>
-</div>
-	</header>
-
-	
-	<div class="amp-wp-article-content">
-				<div class="wpcnt">
-			<div class="wpa wpmrec">
-				<span class="wpa-about">Advertisements</span>
-				<div class="u">
-					<amp-ad width="300" height="250" type="pubmine" data-adsafe="1" data-section="2" data-siteid="2694" data-wordads="0"><div placeholder="" class="amp-wp-iframe-placeholder"></div>
-					</amp-ad></div>
-			</div>
-		</div><blockquote><p>This is part 8 of Categories for Programmers. Previously: Functors. See the <a title="Table of Contents" href="../../../../../2014/10/28/category-theory-for-programmers-the-preface/trackback/index.html" target="_blank">Table of Contents</a>.</p></blockquote>
 <p>Now that you know what a functor is, and have seen a few examples, let’s see how we can build larger functors from smaller ones. In particular it’s interesting to see which type constructors (which correspond to mappings between objects in a category) can be extended to functors (which include mappings between morphisms).</p>
 <h2>Bifunctors</h2>
 <p>Since functors are morphisms in <em>Cat</em> (the category of categories), a lot of intuitions about morphisms — and functions in particular — apply to functors as well. For instance, just like you can have a function of two arguments, you can have a functor of two arguments, or a <em>bifunctor</em>. On objects, a bifunctor maps every pair of objects, one from category C, and one from category D, to an object in category E. Notice that this is just saying that it’s a mapping from a <em>cartesian product</em> of categories C×D to E.</p>
-<p><a href="https://bartoszmilewski.files.wordpress.com/2015/01/bifunctor.jpg"><amp-img class="aligncenter size-medium wp-image-4068 amp-wp-enforced-sizes" src="https://bartoszmilewski.files.wordpress.com/2015/01/bifunctor.jpg?w=300&amp;h=286" alt="Bifunctor" width="300" height="286" srcset="https://bartoszmilewski.files.wordpress.com/2015/01/bifunctor.jpg?w=300&amp;h=286 300w, https://bartoszmilewski.files.wordpress.com/2015/01/bifunctor.jpg?w=150&amp;h=143 150w, https://bartoszmilewski.files.wordpress.com/2015/01/bifunctor.jpg 313w" sizes="(min-width: 300px) 300px, 100vw"></amp-img></a></p>
+<p><img class="center" src="../images/bifunctor.jpg" alt="Bifunctor" width="300" height="286" /></p>
 <p>That’s pretty straightforward. But functoriality means that a bifunctor has to map morphisms as well. This time, though, it must map a pair of morphisms, one from C and one from D, to a morphism in E. </p>
 <p>Again, a pair of morphisms is just a single morphism in the product category C×D. We define a morphism in a cartesian product of categories as a pair of morphisms which goes from one pair of objects to another pair of objects. These pairs of morphisms can be composed in the obvious way:</p>
 <pre>(f, g) ∘ (f', g') = (f ∘ f', g ∘ g')</pre>
@@ -495,16 +29,16 @@ amp-carousel > amp-img > img {
     second :: (b -&gt; d) -&gt; <span class="red">f a b</span> -&gt; <span class="red">f a d</span>&#13;
     second = bimap id</pre>
 <p>The type variable <code>f</code> represents the bifunctor. You can see that in all type signatures it’s always applied to two type arguments. The first type signature defines <code>bimap</code>: a mapping of two functions at once. The result is a lifted function, <code>(f a b -&gt; f c d)</code>, operating on types generated by the bifunctor’s type constructor. There is a default implementation of <code>bimap</code> in terms of <code>first</code> and <code>second</code>, which shows that it’s enough to have functoriality in each argument separately to be able to define a bifunctor.</p>
-<div data-shortcode="caption" id="attachment_4070" class="wp-caption aligncenter amp-wp-inline-94dd042f5fe2bf3f7b398ea33bd1b851"><a href="https://bartoszmilewski.files.wordpress.com/2015/01/bimap.jpg"><amp-img class="wp-image-4070 size-medium amp-wp-enforced-sizes" src="https://bartoszmilewski.files.wordpress.com/2015/01/bimap.jpg?w=300&amp;h=292" alt="Bimap" width="300" height="292" srcset="https://bartoszmilewski.files.wordpress.com/2015/01/bimap.jpg?w=300&amp;h=292 300w, https://bartoszmilewski.files.wordpress.com/2015/01/bimap.jpg?w=150&amp;h=146 150w, https://bartoszmilewski.files.wordpress.com/2015/01/bimap.jpg 438w" sizes="(min-width: 300px) 300px, 100vw"></amp-img></a><p class="wp-caption-text">bimap</p></div>
+<img class="center" src="../images/bimap.jpg" alt="Bimap" width="300" height="292" /><p class="caption-text">bimap</p>
 <p>The two other type signatures, <code>first</code> and <code>second</code>, are the two <code>fmap</code>s witnessing the functoriality of <code>f</code> in the first and the second argument, respectively.</p>
 <table width="100%"><tbody><tr><td>
-<p></p><div data-shortcode="caption" id="attachment_4071" class="wp-caption aligncenter amp-wp-inline-07ef5183cff73ba83be03d671738fca7"><a href="https://bartoszmilewski.files.wordpress.com/2015/01/first.jpg"><amp-img class="wp-image-4071 size-thumbnail amp-wp-enforced-sizes" src="https://bartoszmilewski.files.wordpress.com/2015/01/first.jpg?w=150&amp;h=124" alt="First" width="150" height="124" srcset="https://bartoszmilewski.files.wordpress.com/2015/01/first.jpg?w=150&amp;h=124 150w, https://bartoszmilewski.files.wordpress.com/2015/01/first.jpg?w=300&amp;h=248 300w" sizes="(min-width: 150px) 150px, 100vw"></amp-img></a><p class="wp-caption-text">first</p></div></td>
+<img class="center" src="../images/first.jpg" alt="First" width="150" height="124" /><p class="caption-text">first</p></td>
 <td>
-<p></p><div data-shortcode="caption" id="attachment_4072" class="wp-caption aligncenter amp-wp-inline-07ef5183cff73ba83be03d671738fca7"><a href="https://bartoszmilewski.files.wordpress.com/2015/01/second.jpg"><amp-img class="wp-image-4072 size-thumbnail amp-wp-enforced-sizes" src="https://bartoszmilewski.files.wordpress.com/2015/01/second.jpg?w=150&amp;h=138" alt="Second" width="150" height="138" srcset="https://bartoszmilewski.files.wordpress.com/2015/01/second.jpg?w=150&amp;h=138 150w, https://bartoszmilewski.files.wordpress.com/2015/01/second.jpg?w=300&amp;h=276 300w" sizes="(min-width: 150px) 150px, 100vw"></amp-img></a><p class="wp-caption-text">second</p></div></td>
+<img class="center" src="../images/second.jpg" alt="Second" width="150" height="138" /><p class="caption-text">second</p></td>
 </tr></tbody></table><p>The typeclass definition provides default implementations for both of them in terms of <code>bimap</code>. </p>
 <p>When declaring an instance of <code>Bifunctor</code>, you have a choice of either implementing <code>bimap</code> and accepting the defaults for <code>first</code> and <code>second</code>, or implementing both <code>first</code> and <code>second</code> and accepting the default for <code>bimap</code> (of course, you may implement all three of them, but then it’s up to you to make sure they are related to each other in this manner).</p>
 <h2>Product and Coproduct Bifunctors</h2>
-<p>An important example of a bifunctor is the categorical product — a product of two objects that is defined by a <a href="../../../../01/07/products-and-coproducts/trackback/index.html" title="Products and Coproducts" target="_blank">universal construction</a>. If the product exists for any pair of objects, the mapping from those objects to the product is bifunctorial. This is true in general, and in Haskell in particular. Here’s the <code>Bifunctor</code> instance for a pair constructor — the simplest product type:</p>
+<p>An important example of a bifunctor is the categorical product — a product of two objects that is defined by a <a href="1.5-products-and-coproducts.html" title="Products and Coproducts">universal construction</a>. If the product exists for any pair of objects, the mapping from those objects to the product is bifunctorial. This is true in general, and in Haskell in particular. Here’s the <code>Bifunctor</code> instance for a pair constructor — the simplest product type:</p>
 <pre>instance Bifunctor (,) where&#13;
     bimap f g (x, y) = (f x, g y)</pre>
 <p>There isn’t much choice: <code>bimap</code> simply applies the first function to the first component, and the second function to the second component of a pair. The code pretty much writes itself, given the types:</p>
@@ -603,7 +137,7 @@ Tree&lt;B&gt; * fmap(std::function&lt;B(A)&gt; f, Tree&lt;A&gt; * t)&#13;
     fmap f (Node t t') = Node (fmap f t) (fmap f t')</pre>
 <p>This implementation can also be automatically derived by the compiler.</p>
 <h2>The Writer Functor</h2>
-<p>I promised that I would come back to the <a href="../../../../../2014/12/23/kleisli-categories/trackback/index.html" title="Kleisli Categories" target="_blank">Kleisli category</a> I described earlier. Morphisms in that category were represented as “embellished” functions returning the <code>Writer</code> data structure.</p>
+<p>I promised that I would come back to the <a href="1.4-kleisli-categories.html" title="Kleisli Categories">Kleisli category</a> I described earlier. Morphisms in that category were represented as “embellished” functions returning the <code>Writer</code> data structure.</p>
 <pre>type Writer a = (a, String)</pre>
 <p>I said that the embellishment was somehow related to endofunctors. And, indeed, the <code>Writer</code> type constructor is functorial in <code>a</code>. We don’t even have to implement <code>fmap</code> for it, because it’s just a simple product type.</p>
 <p>But what’s the relation between a Kleisli category and a functor — in general? A Kleisli category, being a category, defines composition and identity. Let’ me remind you that the composition is given by the fish operator:</p>
@@ -639,7 +173,7 @@ return x = (x, "")</pre>
 <p>Consider a functor that goes between <em>C<sup>op</sup></em> and some other category <em>D</em>:<br/><em>F :: C<sup>op</sup> → D</em><br/>
 Such a functor maps a morphism <em>f<sup>op</sup> :: a → b</em> in <em>C<sup>op</sup></em> to the morphism <em>F f<sup>op</sup> :: F a → F b</em> in <em>D</em>. But the morphism <em>f<sup>op</sup></em> secretly corresponds to some morphism <em>f :: b → a</em> in the original category <em>C</em>. Notice the inversion.</p>
 <p>Now, <em>F</em> is a regular functor, but there is another mapping we can define based on <em>F</em>, which is not a functor — let’s call it <em>G</em>. It’s a mapping from <em>C</em> to <em>D</em>. It maps objects the same way <em>F</em> does, but when it comes to mapping morphisms, it reverses them. It takes a morphism <em>f :: b → a</em> in <em>C</em>, maps it first to the opposite morphism <em>f<sup>op</sup> :: a → b</em> and then uses the functor F on it, to get <em>F f<sup>op</sup> :: F a → F b</em>.</p>
-<p><a href="https://bartoszmilewski.files.wordpress.com/2015/01/contravariant.jpg"><amp-img class="aligncenter size-medium wp-image-4077 amp-wp-enforced-sizes" src="https://bartoszmilewski.files.wordpress.com/2015/01/contravariant.jpg?w=300&amp;h=295" alt="Contravariant" width="300" height="295" srcset="https://bartoszmilewski.files.wordpress.com/2015/01/contravariant.jpg?w=300&amp;h=295 300w, https://bartoszmilewski.files.wordpress.com/2015/01/contravariant.jpg?w=150&amp;h=148 150w, https://bartoszmilewski.files.wordpress.com/2015/01/contravariant.jpg 530w" sizes="(min-width: 300px) 300px, 100vw"></amp-img></a></p>
+<p><img class="center" src="../images/contravariant.jpg" alt="Contravariant" width="300" height="295" /></p>
 <p>Considering that <em>F a</em> is the same as <em>G a</em> and <em>F b</em> is the same as <em>G b</em>, the whole trip can be described as:<br/><em>G f :: (b → a) → (G a → G b)</em><br/>
 It’s a “functor with a twist.” A mapping of categories that inverts the direction of morphisms in this manner is called a <em>contravariant functor</em>. Notice that a contravariant functor is just a regular functor from the opposite category. The regular functors, by the way — the kind we’ve been studying thus far — are called <em>covariant</em> functors.</p>
 <p>Here’s the typeclass defining a contravariant functor (really, a contravariant <em>endo</em>functor) in Haskell:</p>
@@ -666,7 +200,7 @@ flip f y x = f x y</pre>
   rmap :: (b -&gt; c) -&gt; p a b -&gt; p a c&#13;
   rmap = dimap id</pre>
 <p>All three functions come with default implementations. Just like with <code>Bifunctor</code>, when declaring an instance of <code>Profunctor</code>, you have a choice of either implementing <code>dimap</code> and accepting the defaults for <code>lmap</code> and <code>rmap</code>, or implementing both <code>lmap</code> and <code>rmap</code> and accepting the default for <code>dimap</code>.</p>
-<div data-shortcode="caption" id="attachment_4078" class="wp-caption aligncenter amp-wp-inline-94dd042f5fe2bf3f7b398ea33bd1b851"><a href="https://bartoszmilewski.files.wordpress.com/2015/01/dimap.jpg"><amp-img class="size-medium wp-image-4078 amp-wp-enforced-sizes" src="https://bartoszmilewski.files.wordpress.com/2015/01/dimap.jpg?w=300&amp;h=243" alt="dimap" width="300" height="243" srcset="https://bartoszmilewski.files.wordpress.com/2015/01/dimap.jpg?w=300&amp;h=243 300w, https://bartoszmilewski.files.wordpress.com/2015/01/dimap.jpg?w=150&amp;h=122 150w, https://bartoszmilewski.files.wordpress.com/2015/01/dimap.jpg 497w" sizes="(min-width: 300px) 300px, 100vw"></amp-img></a><p class="wp-caption-text">dimap</p></div>
+<img class="center" src="../images/dimap.jpg" alt="dimap" width="300" height="243" /><p class="caption-text">dimap</p>
 <p>Now we can assert that the function-arrow operator is an instance of a <code>Profunctor</code>:</p>
 <pre>instance Profunctor (-&gt;) where&#13;
   dimap ab cd bc = cd . bc . ab&#13;
@@ -691,42 +225,10 @@ flip f y x = f x y</pre>
 <p>For additional credit, check your solutions agains Conor McBride’s paper <a href="http://strictlypositive.org/CJ.pdf" target="_blank">Clowns to the Left of me, Jokers to the Right</a>.</p></li>
 <li>Define a bifunctor in a language other than Haskell. Implement <code>bimap</code> for a generic pair in that language.</li>
 <li>Should <code>std::map</code> be considered a bifunctor or a profunctor in the two template arguments <code>Key</code> and <code>T</code>? How would you redesign this data type to make it so?</li>
-</ol><p>Next: <a href="../../../../03/13/function-types/trackback/index.html" title="Function Types">Function Types</a>.</p>
+</ol>
 <h2>Acknowledgment</h2>
-<p>As usual, big thanks go to Gershom Bazerman for reviewing this article.<br/><a href="https://twitter.com/BartoszMilewski" class="twitter-follow-button" data-show-count="false" data-text-color="#29303b" data-link-color="#909d73">Follow @BartoszMilewski</a></p>
-		<div class="wpcnt">
-			<div class="wpa wpmrec">
-				<span class="wpa-about">Advertisements</span>
-				<div class="u">
-					<amp-ad width="300" height="250" type="pubmine" data-adsafe="1" data-section="0" data-siteid="11416" data-wordads="0"><div placeholder="" class="amp-wp-iframe-placeholder"></div>
-					</amp-ad></div>
-			</div>
-		</div>	</div>
-
-	<footer class="amp-wp-article-footer">
-			<div class="amp-wp-meta amp-wp-tax-category">
-		Categories: <a href="../../../../../category/c/index.html" rel="category tag">C++</a>, <a href="../../../../../category/category-theory/index.html" rel="category tag">Category Theory</a>, <a href="../../../../../category/functional-programming/index.html" rel="category tag">Functional Programming</a>, <a href="../../../../../category/haskell/index.html" rel="category tag">Haskell</a>, <a href="../../../../../category/programming/index.html" rel="category tag">Programming</a>	</div>
-
-		<div class="amp-wp-meta amp-wp-comments-link">
-		<a href="../trackback/index.html#comments">
-			Leave a Comment		</a>
-	</div>
-	</footer>
-
-</article>
-
-<footer class="amp-wp-footer">
-	<div>
-		<h2>  Bartosz Milewski&#039;s Programming Cafe</h2>
-		<p>
-			<a href="https://wordpress.com/?ref=footer_website">Create a free website or blog at WordPress.com.</a>
-		</p>
-		<a href="index.html#top" class="back-to-top">Back to top</a>
-	</div>
-</footer>
-
-	<amp-pixel src="https://pixel.wp.com/b.gif?rand=RANDOM&#038;host=bartoszmilewski.com&#038;ref=DOCUMENT_REFERRER&#038;amp=1&#038;blog=3549518&#038;v=wpcom&#038;tz=-7&#038;user_id=0&#038;post=4008&#038;subd=bartoszmilewski"></amp-pixel>
-	<amp-pixel src="https://pixel.wp.com/b.gif?rand=RANDOM&#038;v=wpcom-no-pv&#038;crypt=UE5XaGUuOTlwaD85flAmcm1mcmZsaDhkV11YdWtpP0NsWnVkPS9sL0ViLndld3BkTUV5ST9WY3J1RTlUZyw1R3ZSbnIsdHFTX0lCY0ZyS2M4cGlJUXppTGJkNjdSMj0mY2lfVS1NTlpEbGxNVi1YL35jW3M2MzFiM19vLE1tQWp5T1o5a0JsVDNbT24xNjMxcF1ZcitPMXM2aUE3TVczcXEzWUhkJVA0VnVlTk9sYkVOUzllbmFyTlQ4YVRxVkgsdU92NncwL18yT0VSaDdzNTNnakdOTU5NZEU%3D"></amp-pixel>
+<p>As usual, big thanks go to Gershom Bazerman for reviewing this article.</p><br/>
 	
+</div>
 </body>
 </html>
