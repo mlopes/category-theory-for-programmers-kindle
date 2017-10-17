@@ -37,6 +37,7 @@
     <item id="monads-programmers-definition" media-type="application/xhtml+xml" href="pages/3.4-monads-programmers-definition.html"/>
     <item id="monads-and-effects" media-type="application/xhtml+xml" href="pages/3.5-monads-and-effects.html"/>
     <item id="monads-categorically" media-type="application/xhtml+xml" href="pages/3.6-monads-categorically.html"/>
+    <item id="comonads" media-type="application/xhtml+xml" href="pages/3.7-comonads.html"/>
 
     <item id="ncx-toc" media-type="application/x-dtbncx+xml" href="toc.ncx"/>
 
@@ -189,6 +190,7 @@
     <itemref idref="monads-programmers-definition"/>
     <itemref idref="monads-and-effects"/>
     <itemref idref="monads-categorically"/>
+    <itemref idref="comonads"/>
   </spine>
 
   <guide>

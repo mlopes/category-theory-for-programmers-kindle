@@ -180,5 +180,12 @@
       </navLabel>
       <content src="pages/3.6-monads-categorically.html"/>
     </navPoint>
+
+    <navPoint class="chapter" id="comonads" playOrder="24">
+      <navLabel>
+        <text>Comonads</text>
+      </navLabel>
+      <content src="pages/3.7-comonads.html"/>
+    </navPoint>
   </navMap>
 </ncx>
