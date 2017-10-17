@@ -187,5 +187,12 @@
       </navLabel>
       <content src="pages/3.7-comonads.html"/>
     </navPoint>
+
+    <navPoint class="chapter" id="f-algebras" playOrder="25">
+      <navLabel>
+        <text>F-Algebras</text>
+      </navLabel>
+      <content src="pages/3.8-f-algebras.html"/>
+    </navPoint>
   </navMap>
 </ncx>

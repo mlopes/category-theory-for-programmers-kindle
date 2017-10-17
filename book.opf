@@ -38,6 +38,7 @@
     <item id="monads-and-effects" media-type="application/xhtml+xml" href="pages/3.5-monads-and-effects.html"/>
     <item id="monads-categorically" media-type="application/xhtml+xml" href="pages/3.6-monads-categorically.html"/>
     <item id="comonads" media-type="application/xhtml+xml" href="pages/3.7-comonads.html"/>
+    <item id="f-algebras" media-type="application/xhtml+xml" href="pages/3.8-f-algebras.html"/>
 
     <item id="ncx-toc" media-type="application/x-dtbncx+xml" href="toc.ncx"/>
 
@@ -159,6 +160,15 @@
     <item media-type="image/png" href="images/unitmon.jpg"/>
     <item media-type="image/png" href="images/horizcomp.png"/>
     <item media-type="image/png" href="images/unitlawcomp.png"/>
+
+    <item media-type="image/png" href="images/alg.png"/>
+    <item media-type="image/png" href="images/alg2.png"/>
+    <item media-type="image/png" href="images/alg3a.png"/>
+    <item media-type="image/png" href="images/alg3.png"/>
+    <item media-type="image/png" href="images/alg4.png"/>
+    <item media-type="image/png" href="images/alg5.png"/>
+    <item media-type="image/png" href="images/alg6.png"/>
+    <item media-type="image/png" href="images/alg7.png"/>
   </manifest>
 
   <spine toc="ncx-toc">
@@ -191,6 +201,7 @@
     <itemref idref="monads-and-effects"/>
     <itemref idref="monads-categorically"/>
     <itemref idref="comonads"/>
+    <itemref idref="f-algebras"/>
   </spine>
 
   <guide>
