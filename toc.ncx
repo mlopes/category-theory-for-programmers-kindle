@@ -166,5 +166,12 @@
       </navLabel>
       <content src="pages/3.4-monads-programmers-definition.html"/>
     </navPoint>
+
+    <navPoint class="chapter" id="monads-and-effects" playOrder="22">
+      <navLabel>
+        <text>Monads and Effects</text>
+      </navLabel>
+      <content src="pages/3.5-monads-and-effects.html"/>
+    </navPoint>
   </navMap>
 </ncx>
