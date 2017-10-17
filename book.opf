@@ -32,6 +32,7 @@
     <item id="the-yoneda-lemma" media-type="application/xhtml+xml" href="pages/2.5-the-yoneda-lemma.html"/>
     <item id="yoneda-embedding" media-type="application/xhtml+xml" href="pages/2.6-yoneda-embedding.html"/>
     <item id="its-all-about-morphisms" media-type="application/xhtml+xml" href="pages/3.1-its-all-about-morphisms.html"/>
+    <item id="adjunctions" media-type="application/xhtml+xml" href="pages/3.2-adjunctions.html"/>
 
     <item id="ncx-toc" media-type="application/x-dtbncx+xml" href="toc.ncx"/>
 
@@ -126,6 +127,16 @@
     <item media-type="image/png" href="images/yoneda-embedding-2.jpg"/>
 
     <item media-type="image/png" href="images/sheets.png"/>
+
+    <item media-type="image/png" href="images/adj-1.jpg"/>
+    <item media-type="image/png" href="images/adj-unit.jpg"/>
+    <item media-type="image/png" href="images/adj-counit.jpg"/>
+    <item media-type="image/png" href="images/triangles.png"/>
+    <item media-type="image/png" href="images/triangles-2.png"/>
+    <item media-type="image/png" href="images/adj-homsets.jpg"/>
+    <item media-type="image/png" href="images/adj-productcat.jpg"/>
+    <item media-type="image/png" href="images/adj-product.jpg"/>
+    <item media-type="image/png" href="images/adj-expo.jpg"/>
   </manifest>
 
   <spine toc="ncx-toc">
@@ -152,6 +163,7 @@
     <itemref idref="yoneda-embedding"/>
 
     <itemref idref="its-all-about-morphisms"/>
+    <itemref idref="adjunctions"/>
   </spine>
 
   <guide>

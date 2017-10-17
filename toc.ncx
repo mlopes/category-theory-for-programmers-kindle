@@ -145,5 +145,12 @@
       </navLabel>
       <content src="pages/3.1-its-all-about-morphisms.html"/>
     </navPoint>
+
+    <navPoint class="chapter" id="adjunctions" playOrder="19">
+      <navLabel>
+        <text>Adjunctions</text>
+      </navLabel>
+      <content src="pages/3.2-adjunctions.html"/>
+    </navPoint>
   </navMap>
 </ncx>
