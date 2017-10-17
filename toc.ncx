@@ -97,5 +97,19 @@
       <content src="pages/1.10-natural-transformations.html"/>
     </navPoint>
 
+    <navPoint class="chapter" id="category-theory-and-declarative-programming" playOrder="12">
+      <navLabel>
+        <text>Category Theory and Declarative Programming</text>
+      </navLabel>
+      <content src="pages/2.1-category-theory-and-declarative-programming.html"/>
+    </navPoint>
+
+    <navPoint class="chapter" id="limits-and-colimits" playOrder="13">
+      <navLabel>
+        <text>Limits and Colimits</text>
+      </navLabel>
+      <content src="pages/2.2-limits-and-colimits.html"/>
+    </navPoint>
+
   </navMap>
 </ncx>

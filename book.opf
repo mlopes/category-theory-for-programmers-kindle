@@ -25,6 +25,8 @@
     <item id="functoriality" media-type="application/xhtml+xml" href="pages/1.8-functoriality.html"/>
     <item id="function-types" media-type="application/xhtml+xml" href="pages/1.9-function-types.html"/>
     <item id="natural-transformations" media-type="application/xhtml+xml" href="pages/1.10-natural-transformations.html"/>
+    <item id="category-theory-and-declarative-programming" media-type="application/xhtml+xml" href="pages/2.1-category-theory-and-declarative-programming.html"/>
+    <item id="limits-and-colimits" media-type="application/xhtml+xml" href="pages/2.2-limits-and-colimits.html"/>
 
     <item id="ncx-toc" media-type="application/x-dtbncx+xml" href="toc.ncx"/>
     <item id="cover" media-type="image/png" href="images/cover.png"/>
@@ -78,6 +80,28 @@
     <item media-type="image/png" href="images/10_horizontal.jpg"/>
     <item media-type="image/png" href="images/9_horizontal.jpg"/>
     <item media-type="image/png" href="images/sideways.jpg"/>
+
+    <item media-type="image/png" href="images/asteroids.jpg"/>
+    <item media-type="image/png" href="images/snell.jpg"/>
+    <item media-type="image/png" href="images/mortar.jpg"/>
+    <item media-type="image/png" href="images/feynman.jpg"/>
+    <item media-type="image/png" href="images/productranking2.jpg"/>
+
+    <item media-type="image/png" href="images/two.jpg"/>
+    <item media-type="image/png" href="images/twodelta.jpg"/>
+    <item media-type="image/png" href="images/productcone.jpg"/>
+    <item media-type="image/png" href="images/cone.jpg"/>
+    <item media-type="image/png" href="images/conenaturality.jpg"/>
+    <item media-type="image/png" href="images/conecommutativity.jpg"/>
+    <item media-type="image/png" href="images/homsetmapping.jpg"/>
+    <item media-type="image/png" href="images/natmapping.jpg"/>
+    <item media-type="image/png" href="images/equalizercone.jpg"/>
+    <item media-type="image/png" href="images/equilizerlimit.jpg"/>
+    <item media-type="image/png" href="images/pullbackcone.jpg"/>
+    <item media-type="image/png" href="images/pullbacklimit.jpg"/>
+    <item media-type="image/png" href="images/classes.jpg"/>
+    <item media-type="image/png" href="images/colimit.jpg"/>
+    <item media-type="image/png" href="images/continuity.jpg"/>
   </manifest>
 
   <spine toc="ncx-toc">
@@ -95,6 +119,8 @@
     <itemref idref="functoriality"/>
     <itemref idref="function-types"/>
     <itemref idref="natural-transformations"/>
+    <itemref idref="category-theory-and-declarative-programming"/>
+    <itemref idref="limits-and-colimits"/>
   </spine>
 
   <guide>
