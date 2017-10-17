@@ -117,5 +117,19 @@
       </navLabel>
       <content src="pages/2.3-free-monoids.html"/>
     </navPoint>
+
+    <navPoint class="chapter" id="representable-functors" playOrder="15">
+      <navLabel>
+        <text>Representable Functors</text>
+      </navLabel>
+      <content src="pages/2.4-representable-functors.html"/>
+    </navPoint>
+
+    <navPoint class="chapter" id="the-yoneda-lemma" playOrder="16">
+      <navLabel>
+        <text>The Yoneda Lemma</text>
+      </navLabel>
+      <content src="pages/2.5-the-yoneda-lemma.html"/>
+    </navPoint>
   </navMap>
 </ncx>
