@@ -152,5 +152,12 @@
       </navLabel>
       <content src="pages/3.2-adjunctions.html"/>
     </navPoint>
+
+    <navPoint class="chapter" id="freeforgetful-adjunctions" playOrder="20">
+      <navLabel>
+        <text>Free/Forgetful Adjunctions</text>
+      </navLabel>
+      <content src="pages/3.3-freeforgetful-adjunctions.html"/>
+    </navPoint>
   </navMap>
 </ncx>

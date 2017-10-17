@@ -33,6 +33,7 @@
     <item id="yoneda-embedding" media-type="application/xhtml+xml" href="pages/2.6-yoneda-embedding.html"/>
     <item id="its-all-about-morphisms" media-type="application/xhtml+xml" href="pages/3.1-its-all-about-morphisms.html"/>
     <item id="adjunctions" media-type="application/xhtml+xml" href="pages/3.2-adjunctions.html"/>
+    <item id="freeforgetful-adjunctions" media-type="application/xhtml+xml" href="pages/3.3-freeforgetful-adjunctions.html"/>
 
     <item id="ncx-toc" media-type="application/x-dtbncx+xml" href="toc.ncx"/>
 
@@ -137,6 +138,11 @@
     <item media-type="image/png" href="images/adj-productcat.jpg"/>
     <item media-type="image/png" href="images/adj-product.jpg"/>
     <item media-type="image/png" href="images/adj-expo.jpg"/>
+
+    <item media-type="image/png" href="images/forgetful.jpg"/>
+    <item media-type="image/png" href="images/freemonadjunction.jpg"/>
+    <item media-type="image/png" href="images/forgettingmorphisms.jpg"/>
+    <item media-type="image/png" href="images/freeimage.jpg"/>
   </manifest>
 
   <spine toc="ncx-toc">
@@ -164,6 +170,7 @@
 
     <itemref idref="its-all-about-morphisms"/>
     <itemref idref="adjunctions"/>
+    <itemref idref="freeforgetful-adjunctions"/>
   </spine>
 
   <guide>
