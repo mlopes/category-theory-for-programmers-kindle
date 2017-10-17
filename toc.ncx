@@ -131,5 +131,12 @@
       </navLabel>
       <content src="pages/2.5-the-yoneda-lemma.html"/>
     </navPoint>
+
+    <navPoint class="chapter" id="yoneda-embedding" playOrder="17">
+      <navLabel>
+        <text>Yoneda Embedding</text>
+      </navLabel>
+      <content src="pages/2.6-yoneda-embedding.html"/>
+    </navPoint>
   </navMap>
 </ncx>

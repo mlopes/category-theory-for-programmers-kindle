@@ -30,6 +30,7 @@
     <item id="free-monoids" media-type="application/xhtml+xml" href="pages/2.3-free-monoids.html"/>
     <item id="representable-functors" media-type="application/xhtml+xml" href="pages/2.4-representable-functors.html"/>
     <item id="the-yoneda-lemma" media-type="application/xhtml+xml" href="pages/2.5-the-yoneda-lemma.html"/>
+    <item id="yoneda-embedding" media-type="application/xhtml+xml" href="pages/2.6-yoneda-embedding.html"/>
 
     <item id="ncx-toc" media-type="application/x-dtbncx+xml" href="toc.ncx"/>
 
@@ -119,6 +120,9 @@
     <item media-type="image/png" href="images/yoneda3.png"/>
     <item media-type="image/png" href="images/yoneda4.png"/>
     <item media-type="image/png" href="images/yoneda5.png"/>
+
+    <item media-type="image/png" href="images/yoneda-embedding.jpg"/>
+    <item media-type="image/png" href="images/yoneda-embedding-2.jpg"/>
   </manifest>
 
   <spine toc="ncx-toc">
@@ -141,6 +145,7 @@
     <itemref idref="free-monoids"/>
     <itemref idref="representable-functors"/>
     <itemref idref="the-yoneda-lemma"/>
+    <itemref idref="yoneda-embedding"/>
   </spine>
 
   <guide>
