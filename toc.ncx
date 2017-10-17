@@ -173,5 +173,12 @@
       </navLabel>
       <content src="pages/3.5-monads-and-effects.html"/>
     </navPoint>
+
+    <navPoint class="chapter" id="monads-categorically" playOrder="23">
+      <navLabel>
+        <text>Monads Categorically</text>
+      </navLabel>
+      <content src="pages/3.6-monads-categorically.html"/>
+    </navPoint>
   </navMap>
 </ncx>

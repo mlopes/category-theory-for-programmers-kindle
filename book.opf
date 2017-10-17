@@ -36,6 +36,7 @@
     <item id="freeforgetful-adjunctions" media-type="application/xhtml+xml" href="pages/3.3-freeforgetful-adjunctions.html"/>
     <item id="monads-programmers-definition" media-type="application/xhtml+xml" href="pages/3.4-monads-programmers-definition.html"/>
     <item id="monads-and-effects" media-type="application/xhtml+xml" href="pages/3.5-monads-and-effects.html"/>
+    <item id="monads-categorically" media-type="application/xhtml+xml" href="pages/3.6-monads-categorically.html"/>
 
     <item id="ncx-toc" media-type="application/x-dtbncx+xml" href="toc.ncx"/>
 
@@ -145,6 +146,18 @@
     <item media-type="image/png" href="images/freemonadjunction.jpg"/>
     <item media-type="image/png" href="images/forgettingmorphisms.jpg"/>
     <item media-type="image/png" href="images/freeimage.jpg"/>
+
+    <item media-type="image/png" href="images/exptree.png"/>
+    <item media-type="image/png" href="images/assoc1.png"/>
+    <item media-type="image/png" href="images/assoc2.png"/>
+    <item media-type="image/png" href="images/assoc.png"/>
+    <item media-type="image/png" href="images/unitlawcomp-1.png"/>
+    <item media-type="image/png" href="images/assocmon.png"/>
+    <item media-type="image/png" href="images/monoid-1.jpg"/>
+    <item media-type="image/png" href="images/assoctensor.jpg"/>
+    <item media-type="image/png" href="images/unitmon.jpg"/>
+    <item media-type="image/png" href="images/horizcomp.png"/>
+    <item media-type="image/png" href="images/unitlawcomp.png"/>
   </manifest>
 
   <spine toc="ncx-toc">
@@ -175,6 +188,7 @@
     <itemref idref="freeforgetful-adjunctions"/>
     <itemref idref="monads-programmers-definition"/>
     <itemref idref="monads-and-effects"/>
+    <itemref idref="monads-categorically"/>
   </spine>
 
   <guide>
