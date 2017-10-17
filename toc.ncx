@@ -138,5 +138,12 @@
       </navLabel>
       <content src="pages/2.6-yoneda-embedding.html"/>
     </navPoint>
+
+    <navPoint class="chapter" id="its-all-about-morphisms" playOrder="18">
+      <navLabel>
+        <text>It’s All About Morphisms</text>
+      </navLabel>
+      <content src="pages/3.1-its-all-about-morphisms.html"/>
+    </navPoint>
   </navMap>
 </ncx>
