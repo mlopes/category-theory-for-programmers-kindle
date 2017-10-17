@@ -111,5 +111,11 @@
       <content src="pages/2.2-limits-and-colimits.html"/>
     </navPoint>
 
+    <navPoint class="chapter" id="free-monoids" playOrder="14">
+      <navLabel>
+        <text>Free Monoids</text>
+      </navLabel>
+      <content src="pages/2.3-free-monoids.html"/>
+    </navPoint>
   </navMap>
 </ncx>

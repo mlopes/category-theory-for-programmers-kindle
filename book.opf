@@ -27,6 +27,7 @@
     <item id="natural-transformations" media-type="application/xhtml+xml" href="pages/1.10-natural-transformations.html"/>
     <item id="category-theory-and-declarative-programming" media-type="application/xhtml+xml" href="pages/2.1-category-theory-and-declarative-programming.html"/>
     <item id="limits-and-colimits" media-type="application/xhtml+xml" href="pages/2.2-limits-and-colimits.html"/>
+    <item id="free-monoids" media-type="application/xhtml+xml" href="pages/2.3-free-monoids.html"/>
 
     <item id="ncx-toc" media-type="application/x-dtbncx+xml" href="toc.ncx"/>
     <item id="cover" media-type="image/png" href="images/cover.png"/>
@@ -102,6 +103,10 @@
     <item media-type="image/png" href="images/classes.jpg"/>
     <item media-type="image/png" href="images/colimit.jpg"/>
     <item media-type="image/png" href="images/continuity.jpg"/>
+
+    <item media-type="image/png" href="images/bunnies.jpg"/>
+    <item media-type="image/png" href="images/monoid-pattern.jpg"/>
+    <item media-type="image/png" href="images/monoid-ranking.jpg"/>
   </manifest>
 
   <spine toc="ncx-toc">
@@ -121,6 +126,7 @@
     <itemref idref="natural-transformations"/>
     <itemref idref="category-theory-and-declarative-programming"/>
     <itemref idref="limits-and-colimits"/>
+    <itemref idref="free-monoids"/>
   </spine>
 
   <guide>
