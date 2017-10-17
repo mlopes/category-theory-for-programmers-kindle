@@ -159,5 +159,12 @@
       </navLabel>
       <content src="pages/3.3-freeforgetful-adjunctions.html"/>
     </navPoint>
+
+    <navPoint class="chapter" id="monads-programmers-definition" playOrder="21">
+      <navLabel>
+        <text>Monads: Programmer’s Definition</text>
+      </navLabel>
+      <content src="pages/3.4-monads-programmers-definition.html"/>
+    </navPoint>
   </navMap>
 </ncx>

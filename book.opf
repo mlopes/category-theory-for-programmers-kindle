@@ -34,6 +34,7 @@
     <item id="its-all-about-morphisms" media-type="application/xhtml+xml" href="pages/3.1-its-all-about-morphisms.html"/>
     <item id="adjunctions" media-type="application/xhtml+xml" href="pages/3.2-adjunctions.html"/>
     <item id="freeforgetful-adjunctions" media-type="application/xhtml+xml" href="pages/3.3-freeforgetful-adjunctions.html"/>
+    <item id="monads-programmers-definition" media-type="application/xhtml+xml" href="pages/3.4-monads-programmers-definition.html"/>
 
     <item id="ncx-toc" media-type="application/x-dtbncx+xml" href="toc.ncx"/>
 
@@ -171,6 +172,7 @@
     <itemref idref="its-all-about-morphisms"/>
     <itemref idref="adjunctions"/>
     <itemref idref="freeforgetful-adjunctions"/>
+    <itemref idref="monads-programmers-definition"/>
   </spine>
 
   <guide>
