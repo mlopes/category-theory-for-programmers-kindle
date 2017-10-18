@@ -194,5 +194,12 @@
       </navLabel>
       <content src="pages/3.8-f-algebras.html"/>
     </navPoint>
+
+    <navPoint class="chapter" id="algebras-for-monads" playOrder="26">
+      <navLabel>
+        <text>Algebras for Monads</text>
+      </navLabel>
+      <content src="pages/3.9-algebras-for-monads.html"/>
+    </navPoint>
   </navMap>
 </ncx>

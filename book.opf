@@ -39,6 +39,7 @@
     <item id="monads-categorically" media-type="application/xhtml+xml" href="pages/3.6-monads-categorically.html"/>
     <item id="comonads" media-type="application/xhtml+xml" href="pages/3.7-comonads.html"/>
     <item id="f-algebras" media-type="application/xhtml+xml" href="pages/3.8-f-algebras.html"/>
+    <item id="algebras-for-monads" media-type="application/xhtml+xml" href="pages/3.9-algebras-for-monads.html"/>
 
     <item id="ncx-toc" media-type="application/x-dtbncx+xml" href="toc.ncx"/>
 
@@ -169,6 +170,13 @@
     <item media-type="image/png" href="images/alg5.png"/>
     <item media-type="image/png" href="images/alg6.png"/>
     <item media-type="image/png" href="images/alg7.png"/>
+
+    <item media-type="image/png" href="images/pigalg.png"/>
+    <item media-type="image/png" href="images/talg1.png"/>
+    <item media-type="image/png" href="images/talg2.png"/>
+    <item media-type="image/png" href="images/talg31.png"/>
+    <item media-type="image/png" href="images/talg4.png"/>
+    <item media-type="image/png" href="images/talg5.png"/>
   </manifest>
 
   <spine toc="ncx-toc">
@@ -202,6 +210,7 @@
     <itemref idref="monads-categorically"/>
     <itemref idref="comonads"/>
     <itemref idref="f-algebras"/>
+    <itemref idref="algebras-for-monads"/>
   </spine>
 
   <guide>
