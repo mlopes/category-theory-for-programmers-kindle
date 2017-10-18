@@ -41,6 +41,7 @@
     <item id="f-algebras" media-type="application/xhtml+xml" href="pages/3.8-f-algebras.html"/>
     <item id="algebras-for-monads" media-type="application/xhtml+xml" href="pages/3.9-algebras-for-monads.html"/>
     <item id="ends-and-coends" media-type="application/xhtml+xml" href="pages/3.10-ends-and-coends.html"/>
+    <item id="kan-extensions" media-type="application/xhtml+xml" href="pages/3.11-kan-extensions.html"/>
 
     <item id="ncx-toc" media-type="application/x-dtbncx+xml" href="toc.ncx"/>
 
@@ -185,6 +186,22 @@
     <item media-type="image/png" href="images/end-21.jpg"/>
     <item media-type="image/png" href="images/end1.jpg"/>
     <item media-type="image/png" href="images/end-31.jpg"/>
+
+    <item media-type="image/png" href="images/kan2.jpg"/>
+    <item media-type="image/png" href="images/kan15.jpg"/>
+    <item media-type="image/png" href="images/kan3-e1492120491591.jpg"/>
+    <item media-type="image/png" href="images/kan31-e1492120512209.jpg"/>
+    <item media-type="image/png" href="images/kan5.jpg"/>
+    <item media-type="image/png" href="images/kan7.jpg"/>
+    <item media-type="image/png" href="images/kan6.jpg"/>
+    <item media-type="image/png" href="images/kan92.jpg"/>
+    <item media-type="image/png" href="images/kan81.jpg"/>
+    <item media-type="image/png" href="images/kan10a.jpg"/>
+    <item media-type="image/png" href="images/kan10b.jpg"/>
+    <item media-type="image/png" href="images/kan14.jpg"/>
+    <item media-type="image/png" href="images/kan112.jpg"/>
+    <item media-type="image/png" href="images/kan12.jpg"/>
+    <item media-type="image/png" href="images/kan13.jpg"/>
   </manifest>
 
   <spine toc="ncx-toc">
@@ -220,6 +237,7 @@
     <itemref idref="f-algebras"/>
     <itemref idref="algebras-for-monads"/>
     <itemref idref="ends-and-coends"/>
+    <itemref idref="kan-extensions"/>
   </spine>
 
   <guide>

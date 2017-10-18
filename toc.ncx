@@ -208,5 +208,12 @@
       </navLabel>
       <content src="pages/3.10-ends-and-coends.html"/>
     </navPoint>
+
+    <navPoint class="chapter" id="kan-extensions" playOrder="28">
+      <navLabel>
+        <text>Kan Extensions</text>
+      </navLabel>
+      <content src="pages/3.11-kan-extensions.html"/>
+    </navPoint>
   </navMap>
 </ncx>
