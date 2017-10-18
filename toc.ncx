@@ -222,5 +222,12 @@
       </navLabel>
       <content src="pages/3.12-enriched-categories.html"/>
     </navPoint>
+
+    <navPoint class="chapter" id="topoi" playOrder="30">
+      <navLabel>
+        <text>Topoi</text>
+      </navLabel>
+      <content src="pages/3.13-topoi.html"/>
+    </navPoint>
   </navMap>
 </ncx>

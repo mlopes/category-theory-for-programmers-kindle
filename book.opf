@@ -43,6 +43,7 @@
     <item id="ends-and-coends" media-type="application/xhtml+xml" href="pages/3.10-ends-and-coends.html"/>
     <item id="kan-extensions" media-type="application/xhtml+xml" href="pages/3.11-kan-extensions.html"/>
     <item id="enriched-categories" media-type="application/xhtml+xml" href="pages/3.12-enriched-categories.html"/>
+    <item id="topoi" media-type="application/xhtml+xml" href="pages/3.13-topoi.html"/>
 
     <item id="ncx-toc" media-type="application/x-dtbncx+xml" href="toc.ncx"/>
 
@@ -213,6 +214,12 @@
     <item media-type="image/png" href="images/leftid.jpg"/>
     <item media-type="image/png" href="images/functorcomp.jpg"/>
     <item media-type="image/png" href="images/functorid1.jpg"/>
+
+    <item media-type="image/png" href="images/subsetinjection.jpg"/>
+    <item media-type="image/png" href="images/monomorphism.jpg"/>
+    <item media-type="image/png" href="images/notmono.jpg"/>
+    <item media-type="image/png" href="images/true.jpg"/>
+    <item media-type="image/png" href="images/pullback.jpg"/>
   </manifest>
 
   <spine toc="ncx-toc">
@@ -250,6 +257,7 @@
     <itemref idref="ends-and-coends"/>
     <itemref idref="kan-extensions"/>
     <itemref idref="enriched-categories"/>
+    <itemref idref="topoi"/>
   </spine>
 
   <guide>
