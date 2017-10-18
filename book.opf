@@ -42,6 +42,7 @@
     <item id="algebras-for-monads" media-type="application/xhtml+xml" href="pages/3.9-algebras-for-monads.html"/>
     <item id="ends-and-coends" media-type="application/xhtml+xml" href="pages/3.10-ends-and-coends.html"/>
     <item id="kan-extensions" media-type="application/xhtml+xml" href="pages/3.11-kan-extensions.html"/>
+    <item id="enriched-categories" media-type="application/xhtml+xml" href="pages/3.12-enriched-categories.html"/>
 
     <item id="ncx-toc" media-type="application/x-dtbncx+xml" href="toc.ncx"/>
 
@@ -202,6 +203,16 @@
     <item media-type="image/png" href="images/kan112.jpg"/>
     <item media-type="image/png" href="images/kan12.jpg"/>
     <item media-type="image/png" href="images/kan13.jpg"/>
+
+    <item media-type="image/png" href="images/assoc.jpg"/>
+    <item media-type="image/png" href="images/idcoherence.jpg"/>
+    <item media-type="image/png" href="images/composition.jpg"/>
+    <item media-type="image/png" href="images/id.jpg"/>
+    <item media-type="image/png" href="images/compcoherence.jpg"/>
+    <item media-type="image/png" href="images/rightid.jpg"/>
+    <item media-type="image/png" href="images/leftid.jpg"/>
+    <item media-type="image/png" href="images/functorcomp.jpg"/>
+    <item media-type="image/png" href="images/functorid1.jpg"/>
   </manifest>
 
   <spine toc="ncx-toc">
@@ -238,6 +249,7 @@
     <itemref idref="algebras-for-monads"/>
     <itemref idref="ends-and-coends"/>
     <itemref idref="kan-extensions"/>
+    <itemref idref="enriched-categories"/>
   </spine>
 
   <guide>

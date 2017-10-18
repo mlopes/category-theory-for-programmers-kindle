@@ -215,5 +215,12 @@
       </navLabel>
       <content src="pages/3.11-kan-extensions.html"/>
     </navPoint>
+
+    <navPoint class="chapter" id="enriched-categories" playOrder="29">
+      <navLabel>
+        <text>Enriched Categories</text>
+      </navLabel>
+      <content src="pages/3.12-enriched-categories.html"/>
+    </navPoint>
   </navMap>
 </ncx>

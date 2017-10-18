@@ -1,481 +1,16 @@
 <!doctype html>
-<html amp lang="en">
+<html lang="en">
 <head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
-	
-<!-- Jetpack Open Graph Tags -->
-<meta property="og:type" content="article" />
-<meta property="og:title" content="Enriched Categories" />
-<meta property="og:url" content="https://bartoszmilewski.com/2017/05/13/enriched-categories/" />
-<meta property="og:description" content="This is part 28 of Categories for Programmers. Previously: Kan Extensions. See the Table of Contents. A category is small if its objects form a set. But we know that there are things larger than se…" />
-<meta property="article:published_time" content="2017-05-13T12:15:01+00:00" />
-<meta property="article:modified_time" content="2017-08-03T07:16:21+00:00" />
-<meta property="og:site_name" content="  Bartosz Milewski&#039;s Programming Cafe" />
-<meta property="og:image" content="https://bartoszmilewski.files.wordpress.com/2017/05/functorid.jpg" />
-<meta property="og:image:width" content="1169" />
-<meta property="og:image:height" content="527" />
-<meta property="og:locale" content="en_US" />
-<meta name="twitter:site" content="@BartoszMilewski" />
-<meta name="twitter:text:title" content="Enriched Categories" />
-<meta name="twitter:image" content="https://bartoszmilewski.files.wordpress.com/2017/05/assoc.jpg?w=240" />
-<meta name="twitter:card" content="summary" />
-<meta name="twitter:creator" content="@BartoszMilewski" />
-<meta property="article:publisher" content="https://www.facebook.com/WordPresscom" />
-	<title>Enriched Categories &#8211;   Bartosz Milewski&#039;s Programming Cafe</title>
-		<link rel="canonical" href="../trackback/index.html" />
-			<script custom-element="amp-ad" src="https://cdn.ampproject.org/v0/amp-ad-0.1.js" async></script>
-		<script src="https://cdn.ampproject.org/v0.js" async></script>
-			<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Merriweather:400,400italic,700,700italic">
-		<style amp-boilerplate>body{-webkit-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-moz-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-ms-animation:-amp-start 8s steps(1,end) 0s 1 normal both;animation:-amp-start 8s steps(1,end) 0s 1 normal both}@-webkit-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-moz-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-ms-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-o-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}</style><noscript><style amp-boilerplate>body{-webkit-animation:none;-moz-animation:none;-ms-animation:none;animation:none}</style></noscript>
-		<script type="application/ld+json">{"@context":"http:\/\/schema.org","@type":"BlogPosting","mainEntityOfPage":"https:\/\/bartoszmilewski.com\/2017\/05\/13\/enriched-categories\/","publisher":{"@type":"Organization","name":"\u00a0\u00a0Bartosz Milewski&#039;s Programming Cafe","logo":{"@type":"ImageObject","url":"https:\/\/s2.wp.com\/i\/favicons\/apple-touch-icon-60x60.png","width":60,"height":60}},"headline":"Enriched Categories","datePublished":"2017-05-13T05:15:01+00:00","dateModified":"2017-08-03T00:16:21+00:00","author":{"@type":"Person","name":"Bartosz Milewski"},"image":{"@type":"ImageObject","url":"https:\/\/bartoszmilewski.files.wordpress.com\/2017\/05\/assoc.jpg","width":510,"height":240}}</script>
-		<style amp-custom>
-		/* Generic WP styling */
-
-.alignright {
-	float: right;
-}
-
-.alignleft {
-	float: left;
-}
-
-.aligncenter {
-	display: block;
-	margin-left: auto;
-	margin-right: auto;
-}
-
-.amp-wp-enforced-sizes {
-	/** Our sizes fallback is 100vw, and we have a padding on the container; the max-width here prevents the element from overflowing. **/
-	max-width: 100%;
-	margin: 0 auto;
-}
-
-.amp-wp-unknown-size img {
-	/** Worst case scenario when we can't figure out dimensions for an image. **/
-	/** Force the image into a box of fixed dimensions and use object-fit to scale. **/
-	object-fit: contain;
-}
-
-/* Template Styles */
-
-.amp-wp-content,
-.amp-wp-title-bar div {
-		margin: 0 auto;
-	max-width: 510px;
-	}
-
-html {
-	background: #0a89c0;
-}
-
-body {
-	background: #fff;
-	color: #353535;
-	font-family: 'Merriweather', 'Times New Roman', Times, Serif;
-	font-weight: 300;
-	line-height: 1.75em;
-}
-
-p,
-ol,
-ul,
-figure {
-	margin: 0 0 1em;
-	padding: 0;
-}
-
-a,
-a:visited {
-	color: #0a89c0;
-}
-
-a:hover,
-a:active,
-a:focus {
-	color: #353535;
-}
-
-/* Quotes */
-
-blockquote {
-	color: #353535;
-	background: rgba(127,127,127,.125);
-	border-left: 2px solid #0a89c0;
-	margin: 8px 0 24px 0;
-	padding: 16px;
-}
-
-blockquote p:last-child {
-	margin-bottom: 0;
-}
-
-/* UI Fonts */
-
-.amp-wp-meta,
-.amp-wp-header div,
-.amp-wp-title,
-.wp-caption-text,
-.amp-wp-tax-category,
-.amp-wp-tax-tag,
-.amp-wp-comments-link,
-.amp-wp-footer p,
-.back-to-top {
-	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen-Sans", "Ubuntu", "Cantarell", "Helvetica Neue", sans-serif;
-}
-
-/* Header */
-
-.amp-wp-header {
-	background-color: #0a89c0;
-}
-
-.amp-wp-header div {
-	color: #fff;
-	font-size: 1em;
-	font-weight: 400;
-	margin: 0 auto;
-	max-width: calc(840px - 32px);
-	padding: .875em 16px;
-	position: relative;
-}
-
-.amp-wp-header a {
-	color: #fff;
-	text-decoration: none;
-}
-
-/* Site Icon */
-
-.amp-wp-header .amp-wp-site-icon {
-	/** site icon is 32px **/
-	background-color: #fff;
-	border: 1px solid #fff;
-	border-radius: 50%;
-	position: absolute;
-	right: 18px;
-	top: 10px;
-}
-
-/* Article */
-
-.amp-wp-article {
-	color: #353535;
-	font-weight: 400;
-	margin: 1.5em auto;
-	max-width: 840px;
-	overflow-wrap: break-word;
-	word-wrap: break-word;
-}
-
-/* Article Header */
-
-.amp-wp-article-header {
-	align-items: center;
-	align-content: stretch;
-	display: flex;
-	flex-wrap: wrap;
-	justify-content: space-between;
-	margin: 1.5em 16px 1.5em;
-}
-
-.amp-wp-title {
-	color: #353535;
-	display: block;
-	flex: 1 0 100%;
-	font-weight: 900;
-	margin: 0 0 .625em;
-	width: 100%;
-}
-
-/* Article Meta */
-
-.amp-wp-meta {
-	color: #696969;
-	display: inline-block;
-	flex: 2 1 50%;
-	font-size: .875em;
-	line-height: 1.5em;
-	margin: 0;
-	padding: 0;
-}
-
-.amp-wp-article-header .amp-wp-meta:last-of-type {
-	text-align: right;
-}
-
-.amp-wp-article-header .amp-wp-meta:first-of-type {
-	text-align: left;
-}
-
-.amp-wp-byline amp-img,
-.amp-wp-byline .amp-wp-author {
-	display: inline-block;
-	vertical-align: middle;
-}
-
-.amp-wp-byline amp-img {
-	border: 1px solid #0a89c0;
-	border-radius: 50%;
-	position: relative;
-	margin-right: 6px;
-}
-
-.amp-wp-posted-on {
-	text-align: right;
-}
-
-/* Featured image */
-
-.amp-wp-article-featured-image {
-	margin: 0 0 1em;
-}
-.amp-wp-article-featured-image amp-img {
-	margin: 0 auto;
-}
-.amp-wp-article-featured-image.wp-caption .wp-caption-text {
-	margin: 0 18px;
-}
-
-/* Article Content */
-
-.amp-wp-article-content {
-	margin: 0 16px;
-}
-
-.amp-wp-article-content ul,
-.amp-wp-article-content ol {
-	margin-left: 1em;
-}
-
-.amp-wp-article-content amp-img {
-	margin: 0 auto;
-}
-
-.amp-wp-article-content amp-img.alignright {
-	margin: 0 0 1em 16px;
-}
-
-.amp-wp-article-content amp-img.alignleft {
-	margin: 0 16px 1em 0;
-}
-
-/* Captions */
-
-.wp-caption {
-	padding: 0;
-}
-
-.wp-caption.alignleft {
-	margin-right: 16px;
-}
-
-.wp-caption.alignright {
-	margin-left: 16px;
-}
-
-.wp-caption .wp-caption-text {
-	border-bottom: 1px solid #c2c2c2;
-	color: #696969;
-	font-size: .875em;
-	line-height: 1.5em;
-	margin: 0;
-	padding: .66em 10px .75em;
-}
-
-/* AMP Media */
-
-amp-carousel {
-	background: #c2c2c2;
-	margin: 0 -16px 1.5em;
-}
-amp-iframe,
-amp-youtube,
-amp-instagram,
-amp-vine {
-	background: #c2c2c2;
-	margin: 0 -16px 1.5em;
-}
-
-.amp-wp-article-content amp-carousel amp-img {
-	border: none;
-}
-
-amp-carousel > amp-img > img {
-	object-fit: contain;
-}
-
-.amp-wp-iframe-placeholder {
-	background: #c2c2c2 url( https://s2.wp.com/wp-content/plugins/amp/assets/images/placeholder-icon.png ) no-repeat center 40%;
-	background-size: 48px 48px;
-	min-height: 48px;
-}
-
-/* Article Footer Meta */
-
-.amp-wp-article-footer .amp-wp-meta {
-	display: block;
-}
-
-.amp-wp-tax-category,
-.amp-wp-tax-tag {
-	color: #696969;
-	font-size: .875em;
-	line-height: 1.5em;
-	margin: 1.5em 16px;
-}
-
-.amp-wp-comments-link {
-	color: #696969;
-	font-size: .875em;
-	line-height: 1.5em;
-	text-align: center;
-	margin: 2.25em 0 1.5em;
-}
-
-.amp-wp-comments-link a {
-	border-style: solid;
-	border-color: #c2c2c2;
-	border-width: 1px 1px 2px;
-	border-radius: 4px;
-	background-color: transparent;
-	color: #0a89c0;
-	cursor: pointer;
-	display: block;
-	font-size: 14px;
-	font-weight: 600;
-	line-height: 18px;
-	margin: 0 auto;
-	max-width: 200px;
-	padding: 11px 16px;
-	text-decoration: none;
-	width: 50%;
-	-webkit-transition: background-color 0.2s ease;
-			transition: background-color 0.2s ease;
-}
-
-/* AMP Footer */
-
-.amp-wp-footer {
-	border-top: 1px solid #c2c2c2;
-	margin: calc(1.5em - 1px) 0 0;
-}
-
-.amp-wp-footer div {
-	margin: 0 auto;
-	max-width: calc(840px - 32px);
-	padding: 1.25em 16px 1.25em;
-	position: relative;
-}
-
-.amp-wp-footer h2 {
-	font-size: 1em;
-	line-height: 1.375em;
-	margin: 0 0 .5em;
-}
-
-.amp-wp-footer p {
-	color: #696969;
-	font-size: .8em;
-	line-height: 1.5em;
-	margin: 0 85px 0 0;
-}
-
-.amp-wp-footer a {
-	text-decoration: none;
-}
-
-.back-to-top {
-	bottom: 1.275em;
-	font-size: .8em;
-	font-weight: 600;
-	line-height: 2em;
-	position: absolute;
-	right: 16px;
-}
-				/* WordAds */
-		.wpcnt {
-			text-align: center;
-			line-height: 0;
-			display: block;
-			clear: both;
-			margin: 1em 0;
-		}
-
-		.rtl .wpcnt {
-			direction: ltr;
-		}
-
-		.wpa {
-			position: relative;
-			display: inline-block;
-			max-width: 100%;
-			text-align: left;
-			padding: 10px 0 0;
-			min-width: 300px;
-			-webkit-transform: translate3d(0, 0, 0);
-			transform: translate3d(0, 0, 0);
-		}
-
-		.wpa-about {
-			position: absolute;
-			top: 5px;
-			left: 0;
-			right: 0;
-			display: block;
-			min-width: 160px;
-			border-bottom: none;
-			font: 10px/1 "Open Sans", Arial, sans-serif;
-			text-align: left;
-			text-decoration: none;
-			opacity: 0.85;
-		}
-
-		.wpa .u>div, .wpadvert>div>* {
-			display: block;
-			margin-top: 5px;
-			margin-bottom: 1em;
-		}
-
-		div.wpa>div {
-			margin-top: 10px;
-		}	</style>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Category Theory for Programmers</title>
+    <link rel="stylesheet" href="../css/main.css" type="text/css" charset="utf-8">
 </head>
 
-<body class="">
+<body>
 
-<header id="#top" class="amp-wp-header">
-	<div>
-		<a href="https://bartoszmilewski.com">
-						  Bartosz Milewski&#039;s Programming Cafe		</a>
-	</div>
-</header>
-
-<article class="amp-wp-article">
-
-	<header class="amp-wp-article-header">
-		<h1 class="amp-wp-title">Enriched Categories</h1>
-				<div class="amp-wp-meta amp-wp-byline">
-					<amp-img src="https://secure.gravatar.com/avatar/c018f213204496b4bbf481e7c8e6c15c?s=24&#038;d=mm&#038;r=g" width="24" height="24" layout="fixed"></amp-img>
-				<span class="amp-wp-author author vcard">Bartosz Milewski</span>
-	</div>
-<div class="amp-wp-meta amp-wp-posted-on">
-	<time datetime="2017-05-13T05:15:01+00:00">
-		5 months ago	</time>
-</div>
-	</header>
-
-	
-	<div class="amp-wp-article-content">
-				<div class="wpcnt">
-			<div class="wpa wpmrec">
-				<span class="wpa-about">Advertisements</span>
-				<div class="u">
-					<amp-ad width="300" height="250" type="pubmine" data-adsafe="1" data-section="2" data-siteid="2694" data-wordads="0"><div placeholder="" class="amp-wp-iframe-placeholder"></div>
-					</amp-ad></div>
-			</div>
-		</div><blockquote><p>This is part 28 of Categories for Programmers. Previously: <a href="../../../../04/17/kan-extensions/trackback/index.html" target="_blank" rel="noopener noreferrer">Kan Extensions</a>. See the <a title="Table of Contents" href="../../../../../2014/10/28/category-theory-for-programmers-the-preface/trackback/index.html" target="_blank" rel="noopener noreferrer">Table of Contents</a>.</p></blockquote>
+<div>
+        <h1>Enriched Categories</h1>
 <p>A category is <em>small</em> if its objects form a set. But we know that there are things larger than sets. Famously, a set of all sets cannot be formed within the standard set theory (the Zermelo-Fraenkel theory, optionally augmented with the Axiom of Choice). So a category of all sets must be large. There are mathematical tricks like Grothendieck universes that can be used to define collections that go beyond sets. These tricks let us talk about large categories.</p>
 <p>A category is <em>locally small</em> if morphisms between any two objects form a set. If they don’t form a set, we have to rethink a few definitions. In particular, what does it mean to compose morphisms if we can’t even pick them from a set? The solution is to bootstrap ourselves by replacing hom-sets, which are objects in <b>Set</b>, with <em>objects</em> from some other category <i>V</i>. The difference is that, in general, objects don’t have elements, so we are no longer allowed to talk about individual morphisms. We have to define all properties of an <em>enriched</em> category in terms of operations that can be performed on hom-objects as a whole. In order to do that, the category that provides hom-objects must have additional structure — it must be a monoidal category. If we call this monoidal category <i>V</i>, we can talk about a category <i>C</i> enriched over <i>V</i>.</p>
 <p>Beside size reasons, we might be interested in generalizing hom-sets to something that has more structure than mere sets. For instance, a traditional category doesn’t have the notion of a distance between objects. Two objects are either connected by morphisms or not. All objects that are connected to a given object are its neighbors. Unlike in real life; in a category, a friend of a friend of a friend is as close to me as my bosom buddy. In a suitably enriched category, we can define distances between objects.</p>
@@ -499,8 +34,8 @@ amp-carousel > amp-img > img {
 <pre>λ<sub>a</sub> :: i ⊗ a -&gt; a&#13;
 ρ<sub>a</sub> :: a ⊗ i -&gt; a</pre>
 <p>The associator and the unitors must satisfy coherence conditions:</p>
-<p><a href="https://bartoszmilewski.files.wordpress.com/2017/05/assoc.jpg"><amp-img class="alignnone wp-image-8745 size-large amp-wp-enforced-sizes" src="https://bartoszmilewski.files.wordpress.com/2017/05/assoc.jpg?w=510&amp;h=240" alt="" width="510" height="240" srcset="https://bartoszmilewski.files.wordpress.com/2017/05/assoc.jpg?w=510&amp;h=240 510w, https://bartoszmilewski.files.wordpress.com/2017/05/assoc.jpg?w=1020&amp;h=480 1020w, https://bartoszmilewski.files.wordpress.com/2017/05/assoc.jpg?w=150&amp;h=71 150w, https://bartoszmilewski.files.wordpress.com/2017/05/assoc.jpg?w=300&amp;h=141 300w, https://bartoszmilewski.files.wordpress.com/2017/05/assoc.jpg?w=768&amp;h=361 768w" sizes="(min-width: 510px) 510px, 100vw"></amp-img></a></p>
-<p><a href="https://bartoszmilewski.files.wordpress.com/2017/05/idcoherence.jpg"><amp-img class="alignnone wp-image-8751 amp-wp-enforced-sizes" src="https://bartoszmilewski.files.wordpress.com/2017/05/idcoherence.jpg?w=407&amp;h=158" alt="" width="407" height="158" srcset="https://bartoszmilewski.files.wordpress.com/2017/05/idcoherence.jpg?w=407&amp;h=158 407w, https://bartoszmilewski.files.wordpress.com/2017/05/idcoherence.jpg?w=814&amp;h=316 814w, https://bartoszmilewski.files.wordpress.com/2017/05/idcoherence.jpg?w=150&amp;h=58 150w, https://bartoszmilewski.files.wordpress.com/2017/05/idcoherence.jpg?w=300&amp;h=116 300w, https://bartoszmilewski.files.wordpress.com/2017/05/idcoherence.jpg?w=768&amp;h=298 768w" sizes="(min-width: 407px) 407px, 100vw"></amp-img></a></p>
+<p><img class="center" src="../images/assoc.jpg" alt="" width="510" height="240" /></p>
+<p><img class="center" src="../images/idcoherence.jpg" alt="" width="407" height="158" /></p>
 <p>A monoidal category is called <i>symmetric</i> if there is a natural isomorphism with components:</p>
 <pre>γ<sub>a b</sub> :: a ⊗ b -&gt; b ⊗ a</pre>
 <p>whose “square is one”:</p>
@@ -517,16 +52,16 @@ amp-carousel > amp-img > img {
 <p>A category <i>C</i> enriched over a monoidal category <i>V</i> replaces hom-sets with hom-objects. To every pair of objects <code>a</code> and <code>b</code> in <i>C</i> we associate an object <code>C(a, b)</code> in <i>V</i>. We use the same notation for hom-objects as we used for hom-sets, with the understanding that they don’t contain morphisms. On the other hand, <i>V</i> is a regular (non-enriched) category with hom-sets and morphisms. So we are not entirely rid of sets — we just swept them under the rug.</p>
 <p>Since we cannot talk about individual morphisms in <i>C</i>, composition of morphisms is replaced by a family of morphisms in <i>V</i>:</p>
 <pre>∘ :: C(b, c) ⊗ C(a, b) -&gt; C(a, c)</pre>
-<p><a href="https://bartoszmilewski.files.wordpress.com/2017/05/composition.jpg"><amp-img class="alignnone wp-image-8747 amp-wp-enforced-sizes" src="https://bartoszmilewski.files.wordpress.com/2017/05/composition.jpg?w=395&amp;h=282" alt="" width="395" height="282" srcset="https://bartoszmilewski.files.wordpress.com/2017/05/composition.jpg?w=395&amp;h=282 395w, https://bartoszmilewski.files.wordpress.com/2017/05/composition.jpg?w=790&amp;h=564 790w, https://bartoszmilewski.files.wordpress.com/2017/05/composition.jpg?w=150&amp;h=107 150w, https://bartoszmilewski.files.wordpress.com/2017/05/composition.jpg?w=300&amp;h=214 300w, https://bartoszmilewski.files.wordpress.com/2017/05/composition.jpg?w=768&amp;h=549 768w" sizes="(min-width: 395px) 395px, 100vw"></amp-img></a><br/>
+<p><img class="center" src="../images/composition.jpg" alt="" width="395" height="282" /><br/>
 Similarly, identity morphisms are replaced by a family of morphisms in <i>V</i>:</p>
 <pre>j<sub>a</sub> :: i -&gt; C(a, a)</pre>
 <p>where <code>i</code> is the tensor unit in <i>V</i>.</p>
-<p><a href="https://bartoszmilewski.files.wordpress.com/2017/05/id.jpg"><amp-img class="alignnone wp-image-8750 amp-wp-enforced-sizes" src="https://bartoszmilewski.files.wordpress.com/2017/05/id.jpg?w=254&amp;h=218" alt="" width="254" height="218" srcset="https://bartoszmilewski.files.wordpress.com/2017/05/id.jpg?w=254&amp;h=218 254w, https://bartoszmilewski.files.wordpress.com/2017/05/id.jpg?w=508&amp;h=436 508w, https://bartoszmilewski.files.wordpress.com/2017/05/id.jpg?w=150&amp;h=129 150w, https://bartoszmilewski.files.wordpress.com/2017/05/id.jpg?w=300&amp;h=257 300w" sizes="(min-width: 254px) 254px, 100vw"></amp-img></a></p>
+<p><img class="center" src="../images/id.jpg" alt="" width="254" height="218" /></p>
 <p>Associativity of composition is defined in terms of the associator in <i>V</i>:</p>
-<p><a href="https://bartoszmilewski.files.wordpress.com/2017/05/compcoherence.jpg"><amp-img class="alignnone wp-image-8746 amp-wp-enforced-sizes" src="https://bartoszmilewski.files.wordpress.com/2017/05/compcoherence.jpg?w=514&amp;h=122" alt="" width="514" height="122" srcset="https://bartoszmilewski.files.wordpress.com/2017/05/compcoherence.jpg?w=514&amp;h=122 514w, https://bartoszmilewski.files.wordpress.com/2017/05/compcoherence.jpg?w=1028&amp;h=244 1028w, https://bartoszmilewski.files.wordpress.com/2017/05/compcoherence.jpg?w=150&amp;h=36 150w, https://bartoszmilewski.files.wordpress.com/2017/05/compcoherence.jpg?w=300&amp;h=71 300w, https://bartoszmilewski.files.wordpress.com/2017/05/compcoherence.jpg?w=768&amp;h=182 768w, https://bartoszmilewski.files.wordpress.com/2017/05/compcoherence.jpg?w=1024&amp;h=243 1024w" sizes="(min-width: 510px) 510px, 100vw"></amp-img></a></p>
+<p><img class="center" src="../images/compcoherence.jpg" alt="" width="514" height="122" /></p>
 <p>Unit laws are likewise expressed in terms of unitors:</p>
-<p><a href="https://bartoszmilewski.files.wordpress.com/2017/05/rightid.jpg"><amp-img class="alignnone wp-image-8753 amp-wp-enforced-sizes" src="https://bartoszmilewski.files.wordpress.com/2017/05/rightid.jpg?w=446&amp;h=133" alt="" width="446" height="133" srcset="https://bartoszmilewski.files.wordpress.com/2017/05/rightid.jpg?w=446&amp;h=133 446w, https://bartoszmilewski.files.wordpress.com/2017/05/rightid.jpg?w=892&amp;h=266 892w, https://bartoszmilewski.files.wordpress.com/2017/05/rightid.jpg?w=150&amp;h=45 150w, https://bartoszmilewski.files.wordpress.com/2017/05/rightid.jpg?w=300&amp;h=89 300w, https://bartoszmilewski.files.wordpress.com/2017/05/rightid.jpg?w=768&amp;h=229 768w" sizes="(min-width: 446px) 446px, 100vw"></amp-img></a></p>
-<p><a href="https://bartoszmilewski.files.wordpress.com/2017/05/leftid.jpg"><amp-img class="alignnone wp-image-8752 amp-wp-enforced-sizes" src="https://bartoszmilewski.files.wordpress.com/2017/05/leftid.jpg?w=447&amp;h=136" alt="" width="447" height="136" srcset="https://bartoszmilewski.files.wordpress.com/2017/05/leftid.jpg?w=447&amp;h=136 447w, https://bartoszmilewski.files.wordpress.com/2017/05/leftid.jpg?w=894&amp;h=272 894w, https://bartoszmilewski.files.wordpress.com/2017/05/leftid.jpg?w=150&amp;h=46 150w, https://bartoszmilewski.files.wordpress.com/2017/05/leftid.jpg?w=300&amp;h=91 300w, https://bartoszmilewski.files.wordpress.com/2017/05/leftid.jpg?w=768&amp;h=233 768w" sizes="(min-width: 447px) 447px, 100vw"></amp-img></a></p>
+<p><img class="center" src="../images/rightid.jpg" alt="" width="446" height="133" /></p>
+<p><img class="center" src="../images/leftid.jpg" alt="" width="447" height="136" /></p>
 <h2>Preorders</h2>
 <p>A preorder is defined as a thin category, one in which every hom-set is either empty or a singleton. We interpret a non-empty set <code>C(a, b)</code> as the proof that <code>a</code> is less than or equal to <code>b</code>. Such a category can be interpreted as enriched over a very simple monoidal category that contains just two objects, 0 and 1 (sometimes called False and True). Besides the mandatory identity morphisms, this category has a single morphism going from 0 to 1, let’s call it <code>0-&gt;1</code>. A simple monoidal structure can be established in it, with the tensor product modeling the simple arithmetic of 0 and 1 (i.e., the only non-zero product is <code>1⊗1</code>). The identity object in this category is 1. This is a strict monoidal category, that is, the associator and the unitors are identity morphisms.</p>
 <p>Since in a preorder the-hom set is either empty or a singleton, we can easily replace it with a hom-object from our tiny category. The enriched preorder <i>C</i> has a hom-object <code>C(a, b)</code> for any pair of objects <code>a</code> and <code>b</code>. If <code>a</code> is less than or equal to <code>b</code>, this object is 1; otherwise it’s 0.</p>
@@ -547,9 +82,9 @@ Similarly, identity morphisms are replaced by a family of morphisms in <i>V</i>:
 <p>An <em>enriched functor</em> <code>F</code> between two categories <i>C</i> and <i>D</i>, besides mapping objects to objects, also assigns, to every pair of objects in <i>C</i>, a morphism in <i>V</i>:</p>
 <pre>F<sub>a b</sub> :: C(a, b) -&gt; D(F a, F b)</pre>
 <p>A functor is a structure-preserving mapping. For regular functors it meant preserving composition and identity. In the enriched setting, the preservation of composition means that the following diagram commute:</p>
-<p><a href="https://bartoszmilewski.files.wordpress.com/2017/05/functorcomp.jpg"><amp-img class="alignnone size-large wp-image-8748 amp-wp-enforced-sizes" src="https://bartoszmilewski.files.wordpress.com/2017/05/functorcomp.jpg?w=510&amp;h=208" alt="" width="510" height="208" srcset="https://bartoszmilewski.files.wordpress.com/2017/05/functorcomp.jpg?w=510&amp;h=208 510w, https://bartoszmilewski.files.wordpress.com/2017/05/functorcomp.jpg?w=1020&amp;h=416 1020w, https://bartoszmilewski.files.wordpress.com/2017/05/functorcomp.jpg?w=150&amp;h=61 150w, https://bartoszmilewski.files.wordpress.com/2017/05/functorcomp.jpg?w=300&amp;h=122 300w, https://bartoszmilewski.files.wordpress.com/2017/05/functorcomp.jpg?w=768&amp;h=313 768w" sizes="(min-width: 510px) 510px, 100vw"></amp-img></a></p>
+<p><img class="center" src="../images/functorcomp.jpg" alt="" width="510" height="208" /></p>
 <p>The preservation of identity is replaced by the preservation of the morphisms in <i>V</i> that “select” the identity:</p>
-<p><a href="https://bartoszmilewski.files.wordpress.com/2017/05/functorid.jpg"><amp-img class="alignnone wp-image-8749 amp-wp-enforced-sizes" src="https://bartoszmilewski.files.wordpress.com/2017/05/functorid.jpg?w=388&amp;h=175" alt="" width="388" height="175" srcset="https://bartoszmilewski.files.wordpress.com/2017/05/functorid.jpg?w=388&amp;h=175 388w, https://bartoszmilewski.files.wordpress.com/2017/05/functorid.jpg?w=776&amp;h=350 776w, https://bartoszmilewski.files.wordpress.com/2017/05/functorid.jpg?w=150&amp;h=68 150w, https://bartoszmilewski.files.wordpress.com/2017/05/functorid.jpg?w=300&amp;h=135 300w, https://bartoszmilewski.files.wordpress.com/2017/05/functorid.jpg?w=768&amp;h=346 768w" sizes="(min-width: 388px) 388px, 100vw"></amp-img></a></p>
+<p><img class="center" src="../images/functorid.jpg" alt="" width="388" height="175" /></p>
 <h2>Self Enrichment</h2>
 <p>A closed symmetric monoidal category may be self-enriched by replacing hom-sets with internal homs (see the definition above). To make this work, we have to define the composition law for internal homs. In other words, we have to implement a morphism with the following signature:</p>
 <pre>[b, c] ⊗ [a, b] -&gt; [a, c]</pre>
@@ -577,40 +112,6 @@ Similarly, identity morphisms are replaced by a family of morphisms in <i>V</i>:
 <h2>Relation to 2-Categories</h2>
 <p>I talked about 2-categories in the context of <b>Cat</b>, the category of (small) categories. The morphisms between categories are functors, but there is an additional structure: natural transformations between functors. In a 2-category, the objects are often called zero-cells; morphisms, 1-cells; and morphisms between morphisms, 2-cells. In <b>Cat</b> the 0-cells are categories, 1-cells are functors, and 2-cells are natural transformations.</p>
 <p>But notice that functors between two categories form a category too; so, in <b>Cat</b>, we really have a <em>hom-category</em> rather than a hom-set. It turns out that, just like <b>Set</b> can be treated as a category enriched over <b>Set</b>, <b>Cat</b> can be treated as a category enriched over <b>Cat</b>. Even more generally, just like every category can be treated as enriched over <b>Set</b>, every 2-category can be considered enriched over <b>Cat</b>.</p>
-<p>Next: <a href="../../../../07/22/topoi/trackback/index.html">Topoi</a>.</p>
-		<div class="wpcnt">
-			<div class="wpa wpmrec">
-				<span class="wpa-about">Advertisements</span>
-				<div class="u">
-					<amp-ad width="300" height="250" type="pubmine" data-adsafe="1" data-section="0" data-siteid="11416" data-wordads="0"><div placeholder="" class="amp-wp-iframe-placeholder"></div>
-					</amp-ad></div>
-			</div>
-		</div>	</div>
-
-	<footer class="amp-wp-article-footer">
-			<div class="amp-wp-meta amp-wp-tax-category">
-		Categories: <a href="../../../../../category/category-theory/index.html" rel="category tag">Category Theory</a>	</div>
-
-		<div class="amp-wp-meta amp-wp-comments-link">
-		<a href="../trackback/index.html#comments">
-			Leave a Comment		</a>
-	</div>
-	</footer>
-
-</article>
-
-<footer class="amp-wp-footer">
-	<div>
-		<h2>  Bartosz Milewski&#039;s Programming Cafe</h2>
-		<p>
-			<a href="https://wordpress.com/?ref=footer_website">Create a free website or blog at WordPress.com.</a>
-		</p>
-		<a href="index.html#top" class="back-to-top">Back to top</a>
-	</div>
-</footer>
-
-	<amp-pixel src="https://pixel.wp.com/b.gif?rand=RANDOM&#038;host=bartoszmilewski.com&#038;ref=DOCUMENT_REFERRER&#038;amp=1&#038;blog=3549518&#038;v=wpcom&#038;tz=-7&#038;user_id=0&#038;post=8703&#038;subd=bartoszmilewski"></amp-pixel>
-	<amp-pixel src="https://pixel.wp.com/b.gif?rand=RANDOM&#038;v=wpcom-no-pv&#038;crypt=UE5XaGUuOTlwaD85flAmcm1mcmZsaDhkV11YdWtpP0NsWnVkPS9sL0ViLndld3BkTUV5ST9WY3J1RTlUZyw1R3ZSbnIsdHFTX0lCY0ZyS2M4cGlJUXppTGJkNjdSMj0mY2lfVS1NTlpEbGxNVi1YL35jW3M2MzFiUHg4JTdNeHBOUDddcnZJb3dBLnVsPTBLV21uNjluX21mLzRCb0UsP3l4RmFDNGFmNy5FQ3A%2FWGFSRERINUo0X21rZV1OK2M4UEgtPXJraXFMUFdOa01pbndPS05RS3kxYys%3D"></amp-pixel>
-	
+</div>
 </body>
 </html>
