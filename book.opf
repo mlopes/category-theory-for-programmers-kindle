@@ -45,6 +45,7 @@
     <item id="enriched-categories" media-type="application/xhtml+xml" href="pages/3.12-enriched-categories.html"/>
     <item id="topoi" media-type="application/xhtml+xml" href="pages/3.13-topoi.html"/>
     <item id="lawvere-theories" media-type="application/xhtml+xml" href="pages/3.14-lawvere-theories.html"/>
+    <item id="monads-monoids-and-categories" media-type="application/xhtml+xml" href="pages/3.15-monads-monoids-and-categories.html"/>
 
     <item id="ncx-toc" media-type="application/x-dtbncx+xml" href="toc.ncx"/>
 
@@ -227,6 +228,18 @@
     <item media-type="image/png" href="images/liftl.png"/>
     <item media-type="image/png" href="images/equalize1.png"/>
     <item media-type="image/png" href="images/equalize2.png"/>
+
+    <item media-type="image/png" href="images/twocat.png"/>
+    <item media-type="image/png" href="images/bicat.png"/>
+    <item media-type="image/png" href="images/span.png"/>
+    <item media-type="image/png" href="images/compspan.png"/>
+    <item media-type="image/png" href="images/pullspan.png"/>
+    <item media-type="image/png" href="images/morphspan.png"/>
+    <item media-type="image/png" href="images/monad.png"/>
+    <item media-type="image/png" href="images/bimonad.png"/>
+    <item media-type="image/png" href="images/spanmonad.png"/>
+    <item media-type="image/png" href="images/spanunit.png"/>
+    <item media-type="image/png" href="images/spanmul.png"/>
   </manifest>
 
   <spine toc="ncx-toc">
@@ -266,6 +279,7 @@
     <itemref idref="enriched-categories"/>
     <itemref idref="topoi"/>
     <itemref idref="lawvere-theories"/>
+    <itemref idref="monads-monoids-and-categories"/>
   </spine>
 
   <guide>

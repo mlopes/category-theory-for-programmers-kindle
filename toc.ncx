@@ -229,5 +229,12 @@
       </navLabel>
       <content src="pages/3.14-lawvere-theories.html"/>
     </navPoint>
+
+    <navPoint class="chapter" id="monads-monoids-and-categories" playOrder="32">
+      <navLabel>
+        <text>Monads, Monoids, and Categories</text>
+      </navLabel>
+      <content src="pages/3.15-monads-monoids-and-categories.html"/>
+    </navPoint>
   </navMap>
 </ncx>
