@@ -223,11 +223,11 @@
       <content src="pages/3.12-enriched-categories.html"/>
     </navPoint>
 
-    <navPoint class="chapter" id="topoi" playOrder="30">
+    <navPoint class="chapter" id="lawvere-theories" playOrder="31">
       <navLabel>
-        <text>Topoi</text>
+        <text>Lawvere Theories</text>
       </navLabel>
-      <content src="pages/3.13-topoi.html"/>
+      <content src="pages/3.14-lawvere-theories.html"/>
     </navPoint>
   </navMap>
 </ncx>

@@ -44,6 +44,7 @@
     <item id="kan-extensions" media-type="application/xhtml+xml" href="pages/3.11-kan-extensions.html"/>
     <item id="enriched-categories" media-type="application/xhtml+xml" href="pages/3.12-enriched-categories.html"/>
     <item id="topoi" media-type="application/xhtml+xml" href="pages/3.13-topoi.html"/>
+    <item id="lawvere-theories" media-type="application/xhtml+xml" href="pages/3.14-lawvere-theories.html"/>
 
     <item id="ncx-toc" media-type="application/x-dtbncx+xml" href="toc.ncx"/>
 
@@ -220,6 +221,12 @@
     <item media-type="image/png" href="images/notmono.jpg"/>
     <item media-type="image/png" href="images/true.jpg"/>
     <item media-type="image/png" href="images/pullback.jpg"/>
+
+    <item media-type="image/png" href="images/lawvere1.png"/>
+    <item media-type="image/png" href="images/liftpower.png"/>
+    <item media-type="image/png" href="images/liftl.png"/>
+    <item media-type="image/png" href="images/equalize1.png"/>
+    <item media-type="image/png" href="images/equalize2.png"/>
   </manifest>
 
   <spine toc="ncx-toc">
@@ -258,6 +265,7 @@
     <itemref idref="kan-extensions"/>
     <itemref idref="enriched-categories"/>
     <itemref idref="topoi"/>
+    <itemref idref="lawvere-theories"/>
   </spine>
 
   <guide>
