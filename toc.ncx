@@ -201,5 +201,12 @@
       </navLabel>
       <content src="pages/3.9-algebras-for-monads.html"/>
     </navPoint>
+
+    <navPoint class="chapter" id="ends-and-coends" playOrder="27">
+      <navLabel>
+        <text>Ends and Coends</text>
+      </navLabel>
+      <content src="pages/3.10-ends-and-coends.html"/>
+    </navPoint>
   </navMap>
 </ncx>
