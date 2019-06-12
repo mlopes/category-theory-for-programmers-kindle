@@ -17,7 +17,7 @@ Related content on Bartosz Milewski's [youtube channel](https://www.youtube.com/
 kindlegen -verbose -o ctpf.mobi book.opf
 ```
 
-# Epub
+## Epub
 
 I don't own an epub reader, so I haven't attempted to generate an epub file.
 Because the sources are in opf format, it's possible to generate an epub file that can be used in other e-readers. If you attempt to do this, please make a pull request with the instructions on how others can generate it themselves.
